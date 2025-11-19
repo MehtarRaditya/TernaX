@@ -5,30 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac0411c7-252b-4008-84b3-dd2768137a07" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TernaX.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/HewanDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KandangDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KonsumsiDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/ProdukDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Ayam.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Budget.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Daging.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Konsumsi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Konsumsi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Logisitk.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Obat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pakan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pemasukkan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pengeluaran.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Peternak.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Sapi.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/SusuSapi.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Telur.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Vaksin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Vitamin.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
