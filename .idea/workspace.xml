@@ -1,4 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac0411c7-252b-4008-84b3-dd2768137a07" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TernaX.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Ayam.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Budget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Daging.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Konsumsi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Konsumsi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Logisitk.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Obat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pakan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pemasukkan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pengeluaran.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Peternak.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Sapi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/SusuSapi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Telur.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Vaksin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Vitamin.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="35dMn6DspQUXhBVz5oRueseyfCS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/project/TernaX&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Programming\Java\project\TernaX" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac0411c7-252b-4008-84b3-dd2768137a07" name="Changes" comment="" />
+      <created>1763435662054</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763435662054</updated>
+    </task>
+    <servers />
+  </component>
 </project>
