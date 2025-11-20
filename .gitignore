@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Database Connection ###
+src/main/java/utility/DatabaseConnection.java
