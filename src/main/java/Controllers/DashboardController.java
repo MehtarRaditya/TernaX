@@ -6,23 +6,15 @@ package Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import Models.Karyawan;
 
 /**
  * FXML Controller class
  *
- * @author mrifa
+ * @author Muham
  */
-public class LoginController implements Initializable {
-
-    @FXML
-    private TextField txtUser;
-    @FXML
-    private PasswordField txtPass;
+public class DashboardController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -32,8 +24,5 @@ public class LoginController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void HeandleButtonLogin(ActionEvent event) {
-    }
     
 }
