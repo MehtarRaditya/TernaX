@@ -46,7 +46,8 @@ public class KaryawanDAO {
         }
         return karyawan;
     }
-public int getJumlahKaryawan() {
+
+    public int getJumlahKaryawan() {
         String sql = "SELECT COUNT(*) FROM karyawan";
         int jumlah = 0;
 
@@ -65,5 +66,30 @@ public int getJumlahKaryawan() {
         }
 
         return jumlah;
+    }
+
+    public void addKaryawan(Karyawan karyawan) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        String sql = "INSERT INTO karyawan (nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?)";;
+        try{
+            con = DatabaseConnection.getConnection();
+            if (con == null){
+                return;
+            }
+
+            ps = con.prepareStatement(sql);
+            ps.setString(1, karyawan.getName());
+            ps.setString(2, karyawan.getAkun());
+            ps.setString(3, karyawan.getPassword());
+            ps.setString(4, karyawan.getRole());
+            ps.setInt(5, karyawan.getGaji());
+            ps.setString(6, karyawan.getTanggalDirekrut());
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
