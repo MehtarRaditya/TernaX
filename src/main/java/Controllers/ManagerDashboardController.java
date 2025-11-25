@@ -63,8 +63,8 @@ public class ManagerDashboardController implements Initializable {
                 System.out.println("Mengambil data terbaru dari database...");
 
                 int jumlahKaryawan = karyawanDAO.getJumlahKaryawan();
-                int jumlahAyam = ternakDAO.getJumlahTernakByJenis("Ayam");
-                int jumlahSapi = ternakDAO.getJumlahTernakByJenis("Sapi");
+                int jumlahAyam = ternakDAO.getJumlahHewanByJenis("Ayam");
+                int jumlahSapi = ternakDAO.getJumlahHewanByJenis("Sapi");
                 int jumlahSusu = produkDAO.getJumlahProdukByJenis("Susu");
                 int jumlahDaging = produkDAO.getJumlahProdukByJenis("Daging");
                 int jumlahTelur = produkDAO.getJumlahProdukByJenis("Telur");

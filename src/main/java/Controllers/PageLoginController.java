@@ -54,13 +54,69 @@ public class PageLoginController implements Initializable {
     }    
 
     @FXML
+//    private void handleButtonLogin(ActionEvent event) { // HAPUS "throws" clause
+//    if (btnLogin.getText().equals("LOGIN")) {
+//        try {
+//            // Cek login ke database
+//            karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
+//            
+//            if (karyawan != null) {
+//                System.out.println("Login berhasil untuk: " + karyawan.getAkun()); // Asumsi ada getUsername()
+//                
+//                // Muat tampilan dashboard
+//                Parent root = FXMLLoader.load(getClass().getResource("/Views/PeternakDashboard.fxml"));
+//                
+//                // Ganti scene
+//                Stage stage = (Stage) btnLogin.getScene().getWindow();
+//                Scene scene = new Scene(root);
+//                stage.setScene(scene);
+//                stage.show(); // TAMBAHKAN INI
+//                
+//            } else {
+//                // Tampilkan pesan error menggunakan Alert JavaFX
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Login Gagal");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Username atau Password salah!");
+//                alert.showAndWait();
+//            }
+//            
+//        } catch (IOException e) {
+//            // Tangani error jika file FXML tidak ditemukan
+//            System.err.println("Error IO: " + e.getMessage());
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Kesalahan Aplikasi");
+//            alert.setHeaderText("File Tidak Ditemukan");
+//            alert.setContentText("Tidak dapat memuat halaman dashboard.");
+//            alert.showAndWait();
+//            
+//        } catch (SQLException e) {
+//            // Tangani error dari database
+//            System.err.println("Error Database: " + e.getMessage());
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Kesalahan Database");
+//            alert.setHeaderText("Koneksi Gagal");
+//            alert.setContentText("Tidak dapat terhubung ke database.");
+//            alert.showAndWait();
+//            
+//        } catch (Exception e) {
+//            // Tangani error lainnya
+//            System.err.println("Error tak terduga: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
+//}
     private void handleButtonLogin(ActionEvent event) throws IOException, SQLException{
         if(btnLogin.getText().equals("LOGIN")){
             try{
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
+                    System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
+                    System.out.println("Sekarang mencoba memuat dashboard...");
                     Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    URL url = new File("src/main/java/Views/ManagerDashboard.fxml").toURI().toURL();
+                    URL url = new File("src/main/java/Views/PeternakDashboard.fxml").toURI().toURL();
                     Parent root = FXMLLoader.load(url);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
@@ -72,7 +128,7 @@ public class PageLoginController implements Initializable {
             }
         }
         
-    }
+//    }
 //    private void handleButtonLoggin(ActionEvent event) throws IOException {
 //    System.out.println("=== BUTTON DIKLIK ===");
 //    
@@ -98,7 +154,7 @@ public class PageLoginController implements Initializable {
 //            
 //            System.out.println("Mencoba load Dashboard.fxml...");
 //            
-//            Stage stage = (Stage) btnLoggin.getScene().getWindow();
+//            Stage stage = (Stage) btnLogin.getScene().getWindow();
 //            System.out.println("Stage didapat: " + stage);
 //            
 //            URL url = new File("src/main/java/view/Dashboard.fxml").toURI().toURL();
@@ -128,7 +184,7 @@ public class PageLoginController implements Initializable {
 //        System.out.println("ERROR LAINNYA: " + e.getMessage());
 //        e.printStackTrace();
 //    }
-//}
+}
     /*private void handleButtonLoggin(ActionEvent event) throws IOException, SQLException {
         String akun = txtUser.getText();
         String pass = txtPass.getText();

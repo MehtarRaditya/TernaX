@@ -3,67 +3,54 @@ package Models;
 import java.util.ArrayList;
 
 public class Hewan {
-    private int id;
+    private String id;
     private String jenis;
     private String kelamin;
-    private int berat;
+    private double berat;
     private int usia;
     private String kondisi;
-    public String pemilik;
-    private ArrayList<String> kandungan;
+    private String pemilik;
+    private String penyakit;
 
-    protected Hewan(int id, String jenis, String kelamin, int berat, int usia, String kondisi, ArrayList<String> kandungan) {
+    public Hewan(String id, String jenis, String kelamin, float berat, int usia, String kondisi, String pemilik, String penyakit) {
         this.id = id;
         this.jenis = jenis;
         this.kelamin = kelamin;
         this.berat = berat;
         this.usia = usia;
         this.kondisi = kondisi;
-        this.kandungan = new ArrayList<>();
-    }
-
-     public ArrayList<String> getKandungan() {
-        return kandungan;
-    }
-
-    public String getPemilik() {
-        return pemilik;
-    }
-
-    public void setPemilik(String pemilik) {
         this.pemilik = pemilik;
+        this.penyakit = penyakit;
     }
-
-    public String getKondisi() {
-        return kondisi;
-    }
-
-    public void setKondisi(String kondisi) {
-        this.kondisi = kondisi;
-    }
-
-    public int getUsia() {
-        return usia;
-    }
-
-    public void setUsia(int usia) {
-        this.usia = usia;
-    }
-
-    public int getBerat() {
-        return berat;
-    }
-
-    public void setBerat(int berat) {
-        this.berat = berat;
-    }
-
-    public String getKelamin() {
-        return kelamin;
-    }
-
-    public void setKelamin(String kelamin) {
+    
+    public Hewan(String jenis, String kelamin, double berat, int usia, String kondisi, String penyakit) {
+        this.jenis = jenis;
         this.kelamin = kelamin;
+        this.berat = berat;
+        this.usia = usia;
+        this.kondisi = kondisi;
+        this.penyakit = penyakit;
+    }
+
+    public Hewan(String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
+        this.jenis = jenis;
+        this.kelamin = kelamin;
+        this.berat = berat;
+        this.usia = usia;
+        this.kondisi = kondisi;
+        this.pemilik = pemilik;
+        this.penyakit = penyakit;
+    }
+
+      
+    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getJenis() {
@@ -74,15 +61,53 @@ public class Hewan {
         this.jenis = jenis;
     }
 
-    public int getId() {
-        return id;
+    public String getKelamin() {
+        return kelamin;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setKelamin(String kelamin) {
+        this.kelamin = kelamin;
     }
 
-    public double HitungDaging(){
-        return 0;
+    public double getBerat() {
+        return berat;
     }
+
+    public void setBerat(double berat) {
+        this.berat = berat;
+    }
+
+    public int getUsia() {
+        return usia;
+    }
+
+    public void setUsia(int usia) {
+        this.usia = usia;
+    }
+
+    public String getKondisi() {
+        return kondisi;
+    }
+
+    public void setKondisi(String kondisi) {
+        this.kondisi = kondisi;
+    }
+
+    public String getPemilik() {
+        return pemilik;
+    }
+
+    public void setPemilik(String pemilik) {
+        this.pemilik = pemilik;
+    }
+
+    public String getPenyakit() {
+        return penyakit;
+    }
+
+    public void setPenyakit(String penyakit) {
+        this.penyakit = penyakit;
+    }
+    
+    
 }
