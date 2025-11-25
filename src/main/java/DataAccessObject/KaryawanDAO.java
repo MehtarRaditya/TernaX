@@ -46,8 +46,7 @@ public class KaryawanDAO {
         }
         return karyawan;
     }
-    
-     public int getJumlahKaryawan() {
+public int getJumlahKaryawan() {
         String sql = "SELECT COUNT(*) FROM karyawan";
         int jumlah = 0;
 

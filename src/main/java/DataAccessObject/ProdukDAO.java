@@ -30,4 +30,3 @@ public class ProdukDAO {
         return jumlah;
     }
 }
-

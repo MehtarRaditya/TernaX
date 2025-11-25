@@ -1,0 +1,15 @@
+Index: src/main/java/DAO/KaryawanDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\r\n * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license\r\n * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template\r\n */\r\npackage DAO;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport model.Karyawan;\r\nimport util.DatabaseConnectorr;\r\nimport static util.DatabaseConnectorr.closeConnection;\r\n\r\n/**\r\n *\r\n * @author Muham\r\n */\r\npublic class KaryawanDAO {\r\n    public Karyawan checkLogin(String akun, String password) throws SQLException{\r\n        Connection con = null;\r\n        PreparedStatement ps = null;\r\n        ResultSet rs = null;\r\n        Karyawan karyawan = null;\r\n        \r\n        try{\r\n            //manggil methode getcon dari util\r\n            con = DatabaseConnectorr.getConnection();\r\n            if (con == null){\r\n                return null;\r\n            }\r\n        String sql = \"SELECT * FROM karyawan WHERE akun = ? AND password = ?\";\r\n        ps = con.prepareStatement(sql);\r\n        ps.setString(1, akun);\r\n        ps.setString(2, password);\r\n        rs = ps.executeQuery();\r\n        if (rs.next()) {\r\n            karyawan = new Karyawan(\r\n             rs.getString(\"id\"),\r\n             rs.getString(\"nama\"),\r\n             rs.getString(\"role\"),\r\n             rs.getString(\"tanggal_rekrut\"),\r\n             rs.getInt(\"gaji\"),\r\n             rs.getString(\"akun\"),\r\n             rs.getString(\"password\")\r\n                );\r\n            }\r\n        }catch (SQLException e) {\r\n            e.printStackTrace();\r\n        } finally {\r\n            closeConnection(con);\r\n        }\r\n        return karyawan;\r\n        \r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/DAO/KaryawanDAO.java b/src/main/java/DAO/KaryawanDAO.java
+--- a/src/main/java/DAO/KaryawanDAO.java	(revision bf4458b849f43d56ae0b5792d89726aefbf1b386)
++++ b/src/main/java/DAO/KaryawanDAO.java	(date 1763696486214)
+@@ -51,6 +51,5 @@
+             closeConnection(con);
+         }
+         return karyawan;
+-        
+     }
+ }
