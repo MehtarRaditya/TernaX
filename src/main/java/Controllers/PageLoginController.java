@@ -60,7 +60,7 @@ public class PageLoginController implements Initializable {
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
                     Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    URL url = new File("src/main/java/Views/Dashboard.fxml").toURI().toURL();
+                    URL url = new File("src/main/java/Views/ManagerDashboard.fxml").toURI().toURL();
                     Parent root = FXMLLoader.load(url);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
@@ -73,88 +73,4 @@ public class PageLoginController implements Initializable {
         }
         
     }
-//    private void handleButtonLoggin(ActionEvent event) throws IOException {
-//    System.out.println("=== BUTTON DIKLIK ===");
-//    
-//    try {
-//        String akun = txtUser.getText();
-//        String pass = txtPass.getText();
-//        
-//        System.out.println("Username: " + akun);
-//        System.out.println("Password: " + pass);
-//        
-//        if(akun.isEmpty() || pass.isEmpty()){
-//            System.out.println("Username atau password kosong!");
-//            JOptionPane.showMessageDialog(null, "Username dan Password tidak boleh kosong!");
-//            return;
-//        }
-//        
-//        System.out.println("Mengecek login ke database...");
-//        Karyawan loggedInKaryawan = karyawanDAO.checkLogin(akun, pass);
-//        
-//        if (loggedInKaryawan != null) {
-//            System.out.println("LOGIN BERHASIL!");
-//            System.out.println("Nama Karyawan: " + loggedInKaryawan.getName());
-//            
-//            System.out.println("Mencoba load Dashboard.fxml...");
-//            
-//            Stage stage = (Stage) btnLoggin.getScene().getWindow();
-//            System.out.println("Stage didapat: " + stage);
-//            
-//            URL url = new File("src/main/java/view/Dashboard.fxml").toURI().toURL();
-//            System.out.println("URL Dashboard: " + url);
-//            
-//            Parent root = FXMLLoader.load(url);
-//            System.out.println("Root berhasil di-load!");
-//            
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//            
-//            System.out.println("=== SCENE BERHASIL DIGANTI ===");
-//            
-//        } else {
-//            System.out.println("LOGIN GAGAL! Username/password salah");
-//            JOptionPane.showMessageDialog(null, "INVALID USERNAME/PASSWORD!!!");
-//        }
-//        
-//    } catch (SQLException e) {
-//        System.out.println("ERROR DATABASE: " + e.getMessage());
-//        e.printStackTrace();
-//    } catch (IOException e) {
-//        System.out.println("ERROR LOAD FXML: " + e.getMessage());
-//        e.printStackTrace();
-//    } catch (Exception e) {
-//        System.out.println("ERROR LAINNYA: " + e.getMessage());
-//        e.printStackTrace();
-//    }
-//}
-    /*private void handleButtonLoggin(ActionEvent event) throws IOException, SQLException {
-        String akun = txtUser.getText();
-        String pass = txtPass.getText();
-        if(akun.isEmpty() || pass.isEmpty()){
-            System.out.println("Errorr...");
-            return;
-        }
-        Karyawan loggedInKaryawan = karyawanDAO.checkLogin(akun, pass);
-        if(loggedInKaryawan != null){
-            try{
-                //FXMLLoader loader = new FXMLLoader(getClass().getResource("src/main/java/view/Dashboard.fxml"));
-                URL url = new File("src/main/java/view/Dashboard.fxml").toURI().toURL();
-                Parent root = FXMLLoader.load(url);
-                
-                //DashboardController dashboardController = loader.getController();
-                //dashboardController.setKaryawanData(loggedInKaryawan);
-                
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-                
-            }catch (IOException e) {
-                e.printStackTrace();
-        }
-        }
-    }*/
-    
 }
