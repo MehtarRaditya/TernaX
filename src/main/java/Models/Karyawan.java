@@ -1,6 +1,6 @@
 package Models;
 
-public abstract class Karyawan {
+public class Karyawan {
     private String id;
     private String name;
     private String role;

@@ -1,6 +1,6 @@
 package Models;
 
-public abstract class Konsumsi {
+public class Konsumsi {
     private String id;
     private String name;
     private double stok;
