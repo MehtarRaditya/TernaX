@@ -46,4 +46,25 @@ public class KaryawanDAO {
         }
         return karyawan;
     }
+    
+     public int getJumlahKaryawan() {
+        String sql = "SELECT COUNT(*) FROM karyawan";
+        int jumlah = 0;
+
+        // Gunakan try-with-resources untuk menutup koneksi secara otomatis
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                jumlah = rs.getInt(1); // Ambil hasil dari kolom pertama
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error saat mengambil jumlah karyawan: " + e.getMessage());
+            // Dalam aplikasi nyata, kamu mungkin ingin melempar custom exception
+        }
+
+        return jumlah;
+    }
 }

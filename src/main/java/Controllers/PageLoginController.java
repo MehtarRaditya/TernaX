@@ -60,7 +60,7 @@ public class PageLoginController implements Initializable {
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
                     Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    URL url = new File("src/main/java/Views/Dashboard.fxml").toURI().toURL();
+                    URL url = new File("src/main/java/Views/ManagerDashboard.fxml").toURI().toURL();
                     Parent root = FXMLLoader.load(url);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
