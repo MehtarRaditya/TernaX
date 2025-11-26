@@ -1,28 +1,28 @@
 package Models;
 
 public class Kandang {
-    private String nama;
+    private String jenis;
     private int kapasitas;
-    private int terpakai;
-    private int sisa;
-    private String tanggal_terpakai;
+    private int terisi;
+    private int luas;
+    private String tanggal_dibangun;
     private String tanggalPerawatanTerakhir;
 
-    public Kandang(String nama, int kapasitas, int terpakai, int sisa, String tanggal_terpakai, String tanggalPerawatanTerakhir) {
-        this.nama = nama;
+    public Kandang(String jenis, int kapasitas, int terisi, int luas, String tanggal_dibangun, String tanggalPerawatanTerakhir) {
+        this.jenis = jenis;
         this.kapasitas = kapasitas;
-        this.terpakai = terpakai;
-        this.sisa = sisa;
-        this.tanggal_terpakai = tanggal_terpakai;
+        this.terisi = terisi;
+        this.luas = luas;
+        this.tanggal_dibangun = tanggal_dibangun;
         this.tanggalPerawatanTerakhir = tanggalPerawatanTerakhir;
     }
 
-    public String getNama() {
-        return nama;
+    public String getJenis() {
+        return jenis;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setJenis(String jenis) {
+        this.jenis = jenis;
     }
 
     public int getKapasitas() {
@@ -33,28 +33,28 @@ public class Kandang {
         this.kapasitas = kapasitas;
     }
 
-    public int getTerpakai() {
-        return terpakai;
+    public int getTerisi() {
+        return terisi;
     }
 
-    public void setTerpakai(int terpakai) {
-        this.terpakai = terpakai;
+    public void setTerisi(int terisi) {
+        this.terisi = terisi;
     }
 
-    public int getSisa() {
-        return sisa;
+    public int getLuas() {
+        return luas;
     }
 
-    public void setSisa(int sisa) {
-        this.sisa = sisa;
+    public void setLuas(int luas) {
+        this.luas = luas;
     }
 
-    public String getTanggal_terpakai() {
-        return tanggal_terpakai;
+    public String getTanggalDibangun() {
+        return tanggal_dibangun;
     }
 
-    public void setTanggal_terpakai(String tanggal_terpakai) {
-        this.tanggal_terpakai = tanggal_terpakai;
+    public void setTanggalDibangun(String tanggal_dibangun) {
+        this.tanggal_dibangun = tanggal_dibangun;
     }
 
     public String getTanggalPerawatanTerakhir() {
@@ -66,12 +66,12 @@ public class Kandang {
     }
 
     public void TampilkanInfoKandang(){
-        System.out.println("Nama Kandang: " + this.nama);
+        System.out.println("Jenis Kandang: " + this.jenis);
         System.out.println("Kapasitas: " + this.kapasitas);
-        System.out.println("Terpakai: " + this.terpakai);
-        System.out.println("Sisa: " + this.sisa);
-        System.out.println("Tanggal Terakhir: " + this.tanggal_terpakai);
-        System.out.println("Tanggal Perawatan: " + this.tanggalPerawatanTerakhir);
+        System.out.println("Terpakai: " + this.terisi);
+        System.out.println("Sisa: " + this.luas);
+        System.out.println("Tanggal Dibangun: " + this.tanggal_dibangun);
+        System.out.println("Tanggal Perawatan Terakhir: " + this.tanggalPerawatanTerakhir);
     }
 
 }
