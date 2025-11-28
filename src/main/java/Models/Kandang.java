@@ -1,6 +1,7 @@
 package Models;
 
 public class Kandang {
+    private int id;
     private String jenis;
     private int kapasitas;
     private int terisi;
@@ -15,6 +16,14 @@ public class Kandang {
         this.luas = luas;
         this.tanggal_dibangun = tanggal_dibangun;
         this.tanggalPerawatanTerakhir = tanggalPerawatanTerakhir;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getJenis() {
@@ -64,14 +73,4 @@ public class Kandang {
     public void setTanggalPerawatanTerakhir(String tanggalPerawatanTerakhir) {
         this.tanggalPerawatanTerakhir = tanggalPerawatanTerakhir;
     }
-
-    public void TampilkanInfoKandang(){
-        System.out.println("Jenis Kandang: " + this.jenis);
-        System.out.println("Kapasitas: " + this.kapasitas);
-        System.out.println("Terpakai: " + this.terisi);
-        System.out.println("Sisa: " + this.luas);
-        System.out.println("Tanggal Dibangun: " + this.tanggal_dibangun);
-        System.out.println("Tanggal Perawatan Terakhir: " + this.tanggalPerawatanTerakhir);
-    }
-
 }
