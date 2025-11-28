@@ -40,4 +40,17 @@ public class KandangDAO {
             e.printStackTrace();
         }
     }
+
+    public void delete(int id) {
+        String sql = "DELETE FROM kandang WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Gagal menghapus kandang: " + e.getMessage());
+        }
+    }
 }
