@@ -98,12 +98,12 @@ public class HewanDAO {
         }
     }
 
-    public void delete(String id) {
+    public void delete(int id) {
         String sql = "DELETE FROM hewan WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setString(1, id);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
