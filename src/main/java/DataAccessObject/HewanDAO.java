@@ -90,7 +90,7 @@ public class HewanDAO {
             pstmt.setInt(2, hewan.getUsia());
             pstmt.setString(3, hewan.getKondisi());
             pstmt.setString(4, hewan.getPenyakit());
-            pstmt.setString(5, hewan.getId());
+            pstmt.setInt(5, hewan.getId());
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
