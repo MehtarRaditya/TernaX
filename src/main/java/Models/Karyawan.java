@@ -5,11 +5,11 @@ public class Karyawan {
     private String name;
     private String role;
     private String tanggalDirekrut;
-    private float gaji;
+    private int gaji;
     private String akun;
     private String password;
 
-    public Karyawan(String id, String name, String role, String tanggalDirekrut, float gaji, String akun,
+    public Karyawan(String id, String name, String role, String tanggalDirekrut, int gaji, String akun,
             String password) {
         this.id = id;
         this.name = name;
@@ -52,11 +52,11 @@ public class Karyawan {
         this.tanggalDirekrut = tanggalDirekrut;
     }
 
-    public float getGaji() {
+    public int getGaji() {
         return gaji;
     }
 
-    public void setGaji(float gaji) {
+    public void setGaji(int gaji) {
         this.gaji = gaji;
     }
 

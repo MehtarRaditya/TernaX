@@ -12,22 +12,22 @@ import static utility.DatabaseConnection.closeConnection;
 
 public class KaryawanDAO {
     public Karyawan checkLogin(String akun, String password) throws SQLException {
-        Connection con = null;
-        PreparedStatement ps = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
         Karyawan karyawan = null;
 
         try{
-            //manggil methode getcon dari util
-            con = DatabaseConnection.getConnection();
-            if (con == null){
+            //manggil methode getconn dari util
+            conn = DatabaseConnection.getConnection();
+            if (conn == null){
                 return null;
             }
             String sql = "SELECT * FROM karyawan WHERE akun = ? AND password = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, akun);
-            ps.setString(2, password);
-            rs = ps.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, akun);
+            pstmt.setString(2, password);
+            rs = pstmt.executeQuery();
             if (rs.next()) {
                 karyawan = new Karyawan(
                         rs.getString("id"),
@@ -42,19 +42,19 @@ public class KaryawanDAO {
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con);
+            closeConnection(conn);
         }
         return karyawan;
     }
-    
-     public int getJumlahKaryawan() {
+
+    public int getJumlahKaryawan() {
         String sql = "SELECT COUNT(*) FROM karyawan";
         int jumlah = 0;
 
         // Gunakan try-with-resources untuk menutup koneksi secara otomatis
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection connn = DatabaseConnection.getConnection();
+             PreparedStatement pstmttmt = connn.prepareStatement(sql);
+             ResultSet rs = pstmttmt.executeQuery()) {
 
             if (rs.next()) {
                 jumlah = rs.getInt(1); // Ambil hasil dari kolom pertama
@@ -66,5 +66,26 @@ public class KaryawanDAO {
         }
 
         return jumlah;
+    }
+
+    public void addKaryawan(Karyawan karyawan) throws SQLException {
+        String sql = "INSERT INTO karyawan (nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?)";
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            if (conn == null){
+                return;
+            }
+
+            pstmt.setString(1, karyawan.getName());
+            pstmt.setString(2, karyawan.getAkun());
+            pstmt.setString(3, karyawan.getPassword());
+            pstmt.setString(4, karyawan.getRole());
+            pstmt.setInt(5, karyawan.getGaji());
+            pstmt.setString(6, karyawan.getTanggalDirekrut());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

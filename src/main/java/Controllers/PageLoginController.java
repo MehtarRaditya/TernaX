@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import Models.Karyawan;
+import utility.Session;
 
 /**
  * FXML Controller class
@@ -113,6 +114,7 @@ public class PageLoginController implements Initializable {
             try{
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
+                    Session.setLoggedInKaryawan(karyawan);
                     System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
                     System.out.println("Sekarang mencoba memuat dashboard...");
                     Stage stage = (Stage) btnLogin.getScene().getWindow();

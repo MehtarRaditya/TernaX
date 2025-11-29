@@ -3,7 +3,7 @@ package Models;
 import java.util.ArrayList;
 
 public class Hewan {
-    private String id;
+    private int id;
     private String jenis;
     private String kelamin;
     private double berat;
@@ -12,7 +12,12 @@ public class Hewan {
     private String pemilik;
     private String penyakit;
 
-    public Hewan(String id, String jenis, String kelamin, float berat, int usia, String kondisi, String pemilik, String penyakit) {
+    public Hewan() {
+    }
+    
+    
+
+    public Hewan(int id, String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
         this.id = id;
         this.jenis = jenis;
         this.kelamin = kelamin;
@@ -42,14 +47,11 @@ public class Hewan {
         this.penyakit = penyakit;
     }
 
-      
-    
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
