@@ -28,6 +28,7 @@ CREATE TABLE `hewan` (
   `berat` decimal(7,2) NOT NULL,
   `usia_bulan` smallint NOT NULL,
   `kelamin` varchar(15) NOT NULL,
+  `total_produk_dihasilkan` int DEFAULT NULL,
   `pemilik` int NOT NULL,
   `kondisi` varchar(30) NOT NULL,
   `penyakit` varchar(100) NOT NULL,
@@ -195,4 +196,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:20:38
+-- Dump completed on 2025-11-29 20:27:44
