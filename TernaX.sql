@@ -28,11 +28,16 @@ CREATE TABLE `hewan` (
   `berat` decimal(7,2) NOT NULL,
   `usia_bulan` smallint NOT NULL,
   `kelamin` varchar(15) NOT NULL,
-  `pemilik` varchar(100) NOT NULL,
+  `pemilik` int NOT NULL,
   `kondisi` varchar(30) NOT NULL,
   `penyakit` varchar(100) NOT NULL,
+  `kandang` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_hewan_pemilik` (`pemilik`),
+  KEY `fk_hewan_kandang` (`kandang`),
+  CONSTRAINT `fk_hewan_kandang` FOREIGN KEY (`kandang`) REFERENCES `kandang` (`id`),
+  CONSTRAINT `fk_hewan_pemilik` FOREIGN KEY (`pemilik`) REFERENCES `karyawan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,8 +62,7 @@ CREATE TABLE `kandang` (
   `jenis` varchar(20) NOT NULL,
   `luas` int NOT NULL,
   `kapasitas` smallint NOT NULL,
-  `terpakai` smallint NOT NULL,
-  `sisa` smallint NOT NULL,
+  `terisi` smallint NOT NULL,
   `tanggal_dibangun` date NOT NULL,
   `tanggal_terakhir_dibersihkan` date NOT NULL,
   PRIMARY KEY (`id`),
@@ -128,6 +132,31 @@ LOCK TABLES `konsumsi` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `penjualan`
+--
+
+DROP TABLE IF EXISTS `penjualan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `penjualan` (
+  `id` int NOT NULL,
+  `waktu_terjual` datetime NOT NULL,
+  `total_pemasukan` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_penjualan` FOREIGN KEY (`id`) REFERENCES `produk` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+LOCK TABLES `penjualan` WRITE;
+/*!40000 ALTER TABLE `penjualan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `penjualan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `produk`
 --
 
@@ -137,7 +166,9 @@ DROP TABLE IF EXISTS `produk`;
 CREATE TABLE `produk` (
   `id` int NOT NULL AUTO_INCREMENT,
   `jenis` varchar(20) NOT NULL,
+  `jumlah` varchar(45) NOT NULL,
   `kualitas` varchar(20) NOT NULL,
+  `hewan` varchar(45) NOT NULL,
   `tanggal_diperoleh` date NOT NULL,
   `peternak` int NOT NULL,
   `pemeriksa` int DEFAULT NULL,
@@ -164,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-25 15:12:24
+-- Dump completed on 2025-11-29 20:20:38
