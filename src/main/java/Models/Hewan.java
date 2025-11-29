@@ -12,7 +12,7 @@ public class Hewan {
     private String pemilik;
     private String penyakit;
 
-    public Hewan(int id, String jenis, String kelamin, float berat, int usia, String kondisi, String pemilik, String penyakit) {
+    public Hewan(int id, String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
         this.id = id;
         this.jenis = jenis;
         this.kelamin = kelamin;
@@ -105,6 +105,4 @@ public class Hewan {
     public void setPenyakit(String penyakit) {
         this.penyakit = penyakit;
     }
-    
-    
 }

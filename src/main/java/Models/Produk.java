@@ -4,16 +4,50 @@ public class Produk {
     private String id;
     private String tanggalDiperoleh;
     private String tipe;
-    private boolean layakJual;
+    private double kuantitas;
     private String kualitas;
+    private int idHewan;
     
-    public Produk(String id, String tanggalDiperoleh, String tipe, boolean layakJual, String kualitas) {
+    
+    public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
         this.tipe = tipe;
-        this.layakJual = layakJual;
+        this.kuantitas = kuantitas;
         this.kualitas = kualitas;
     }
+
+    public Produk(String id, String tanggalDiperoleh, String tipe, String kualitas) {
+        this.id = id;
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.tipe = tipe;
+        this.kualitas = kualitas;
+    }
+
+    public Produk(String tanggalDiperoleh, String tipe, double kuantitas) {
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.tipe = tipe;
+        this.kuantitas = kuantitas;
+    }
+
+    public Produk(String tanggalDiperoleh, String tipe, double kuantitas, String kualitas, int idHewan) {
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.tipe = tipe;
+        this.kuantitas = kuantitas;
+        this.kualitas = kualitas;
+        this.idHewan = idHewan;
+    }
+    
+    
+
+    public Produk() {
+    }
+    
+    
+    
+    
+    
+    
 
     public String getId() {
         return id;
@@ -39,14 +73,6 @@ public class Produk {
         this.tipe = tipe;
     }
 
-    public boolean isLayakJual() {
-        return layakJual;
-    }
-
-    public void setLayakJual(boolean layakJual) {
-        this.layakJual = layakJual;
-    }
-
     public String getKualitas() {
         return kualitas;
     }
@@ -55,11 +81,21 @@ public class Produk {
         this.kualitas = kualitas;
     }
 
-    public void displayProduk(){
-        System.out.println("id: " + getId());
-        System.out.println("Tipe: " + getTipe());
-        System.out.println("Tanggal Diperoleh: " + getTanggalDiperoleh());
-        System.out.println("Kelayakan: " + isLayakJual());
-        System.out.println("Kualitas: " + getKualitas());
+    public int getIdHewan() {
+        return idHewan;
     }
+
+    public void setIdHewan(int idHewan) {
+        this.idHewan = idHewan;
+    }
+
+    public double getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(double kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+    
+
 }

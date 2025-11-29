@@ -69,7 +69,7 @@ public class KaryawanDAO {
     }
 
     public void addKaryawan(Karyawan karyawan) throws SQLException {
-        String sql = "INSERT INTO karyawan (nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?)";;
+        String sql = "INSERT INTO karyawan (nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?)";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
             if (conn == null){
