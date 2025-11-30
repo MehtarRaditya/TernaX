@@ -1,23 +1,41 @@
 package Models;
 
 public class Konsumsi {
-    private String id;
+    private int id;
     private String name;
-    private double stok;
+    private String tipe;
+    private int idLogistik;
     private String tanggalExpire;
-    
-    public Konsumsi(String id, String name, double stok, String tanggalExpire) {
+
+    public Konsumsi(int id, String name, String tipe, int idLogistik, String tanggalExpire) {
         this.id = id;
         this.name = name;
-        this.stok = stok;
+        this.tipe = tipe;
+        this.idLogistik = idLogistik;
         this.tanggalExpire = tanggalExpire;
     }
 
-    public String getId() {
+    public Konsumsi(String name, String tipe, int idLogistik, String tanggalExpire) {
+        this.name = name;
+        this.tipe = tipe;
+        this.idLogistik = idLogistik;
+        this.tanggalExpire = tanggalExpire;
+    }
+
+    public Konsumsi(String name, String tipe, String tanggalExpire) {
+        this.name = name;
+        this.tipe = tipe;
+        this.tanggalExpire = tanggalExpire;
+    }
+    
+    
+    
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -29,12 +47,20 @@ public class Konsumsi {
         this.name = name;
     }
 
-    public double getStok() {
-        return stok;
+    public String getTipe() {
+        return tipe;
     }
 
-    public void setStok(double stok) {
-        this.stok = stok;
+    public void setTipe(String tipe) {
+        this.tipe = tipe;
+    }
+
+    public int getIdLogistik() {
+        return idLogistik;
+    }
+
+    public void setIdLogistik(int idLogistik) {
+        this.idLogistik = idLogistik;
     }
 
     public String getTanggalExpire() {
@@ -44,11 +70,9 @@ public class Konsumsi {
     public void setTanggalExpire(String tanggalExpire) {
         this.tanggalExpire = tanggalExpire;
     }
+    
+    
+    
 
-    public void tampilkanKonsumsi(){
-        System.out.println("id: " + this.getId());
-        System.out.println("Nama: " + this.getName());
-        System.out.println("Stok: " + this.getStok());
-        System.out.println("Tanggal Expire: " + this.getTanggalExpire());
-    }
+    
 }
