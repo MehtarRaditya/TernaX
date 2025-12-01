@@ -1,0 +1,103 @@
+Index: src/main/java/DataAccessObject/KaryawanDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DataAccessObject;\r\n\r\npublic class KaryawanDAO {\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/DataAccessObject/KaryawanDAO.java b/src/main/java/DataAccessObject/KaryawanDAO.java
+--- a/src/main/java/DataAccessObject/KaryawanDAO.java	(revision 380fa05736cccb5cb4b0daa4948f32f600e0ac76)
++++ b/src/main/java/DataAccessObject/KaryawanDAO.java	(date 1763696692654)
+@@ -1,5 +1,48 @@
+ package DataAccessObject;
+ 
++import Models.Karyawan;
++import utility.DatabaseConnection;
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++
++import static utility.DatabaseConnection.closeConnection;
++
+ public class KaryawanDAO {
++    public Karyawan checkLogin(String akun, String password) throws SQLException {
++        Connection con = null;
++        PreparedStatement ps = null;
++        ResultSet rs = null;
++        Karyawan karyawan = null;
+ 
++        try{
++            con = DatabaseConnection.getConnection();
++            if (con == null){
++                return null;
++            }
++            String sql = "SELECT * FROM karyawan WHERE akun = ? AND password = ?";
++            ps = con.prepareStatement(sql);
++            ps.setString(1, akun);
++            ps.setString(2, password);
++            rs = ps.executeQuery();
++            if (rs.next()) {
++                karyawan = new Karyawan(
++                        rs.getString("id"),
++                        rs.getString("nama"),
++                        rs.getString("role"),
++                        rs.getString("tanggal_rekrut"),
++                        rs.getInt("gaji"),
++                        rs.getString("akun"),
++                        rs.getString("password")
++                );
++            }
++        }catch (SQLException e) {
++            e.printStackTrace();
++        } finally {
++            closeConnection(con);
++        }
++        return karyawan;
++    }
+ }
+Index: src/main/java/utility/DatabaseConnection.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package utility;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.DriverManager;\r\nimport java.sql.SQLException;\r\n\r\npublic class DatabaseConnection {\r\n    private static final String URL = \"jdbc:mysql://localhost:3306/ternax\";\r\n    private static final String USER = \"YOUR-USERNAME\";\r\n    private static final String PASS = \"YOUR-PASSWORD\";\r\n\r\n    public static Connection getConnection() throws SQLException {\r\n        return DriverManager.getConnection(URL, USER, PASS);\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/utility/DatabaseConnection.java b/src/main/java/utility/DatabaseConnection.java
+--- a/src/main/java/utility/DatabaseConnection.java	(revision 380fa05736cccb5cb4b0daa4948f32f600e0ac76)
++++ b/src/main/java/utility/DatabaseConnection.java	(date 1763696692666)
+@@ -12,4 +12,16 @@
+     public static Connection getConnection() throws SQLException {
+         return DriverManager.getConnection(URL, USER, PASS);
+     }
++
++    public static void closeConnection(Connection connection){
++        if(connection != null){
++            try{
++                connection.close();
++                System.out.println("Koneksi ditutup");
++            }catch(SQLException e){
++                System.out.println("gagal tutup");
++                e.printStackTrace();
++            }
++        }
++    }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"4731397e-e6eb-47f0-8c7c-2f57ffb4bc05\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/Controllers/LoginController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Views/login.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Views/login.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"35k4TvbciMyx4bhWjYOMACdlpGM\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;JafaVx-Awokawok&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Programming\\Java\\project\\TernaX\\src\\main\\java\\Controllers\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main\" />\r\n      <module name=\"TernaX\" />\r\n      <option name=\"VM_PARAMETERS\" value=\"--module-path &quot;C:\\Programming\\Java\\lib\\javafx-sdk-24.0.2\\lib&quot; --add-modules javafx.controls,javafx.fxml\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"4731397e-e6eb-47f0-8c7c-2f57ffb4bc05\" name=\"Changes\" comment=\"\" />\r\n      <created>1763640748346</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1763640748346</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 380fa05736cccb5cb4b0daa4948f32f600e0ac76)
++++ b/.idea/workspace.xml	(date 1763696754353)
+@@ -5,10 +5,9 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="4731397e-e6eb-47f0-8c7c-2f57ffb4bc05" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/Controllers/LoginController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/login.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/utility/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility/DatabaseConnection.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
