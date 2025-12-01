@@ -31,12 +31,9 @@ CREATE TABLE `hewan` (
   `kelamin` varchar(15) NOT NULL,
   `pemilik` int NOT NULL,
   `penyakit` varchar(100) NOT NULL,
-  `kandang` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_hewan_pemilik` (`pemilik`),
-  KEY `fk_hewan_kandang` (`kandang`),
-  CONSTRAINT `fk_hewan_kandang` FOREIGN KEY (`kandang`) REFERENCES `kandang` (`id`),
   CONSTRAINT `fk_hewan_pemilik` FOREIGN KEY (`pemilik`) REFERENCES `karyawan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,6 +48,8 @@ LOCK TABLES `hewan` WRITE;
 UNLOCK TABLES;
 
 --
+<<<<<<< HEAD
+=======
 -- Table structure for table `kandang`
 --
 
@@ -80,6 +79,7 @@ LOCK TABLES `kandang` WRITE;
 UNLOCK TABLES;
 
 --
+>>>>>>> d8de0436a3ccb05fa658f0b0b92fcc52c38ac22f
 -- Table structure for table `karyawan`
 --
 
@@ -120,6 +120,10 @@ CREATE TABLE `konsumsi` (
   `id` int NOT NULL,
   `nama` varchar(45) NOT NULL,
   `tipe` varchar(20) NOT NULL,
+<<<<<<< HEAD
+  `kuantitas` int NOT NULL,
+=======
+>>>>>>> d8de0436a3ccb05fa658f0b0b92fcc52c38ac22f
   `tanggal_exp` date DEFAULT NULL,
   `pembelian` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -231,4 +235,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
+-- Dump completed on 2025-12-01 15:31:48
+=======
 -- Dump completed on 2025-12-01 13:43:13
+>>>>>>> d8de0436a3ccb05fa658f0b0b92fcc52c38ac22f
