@@ -40,7 +40,6 @@ public class ProdukDAO {
     
     public void addProduk(Produk produk) {
         Karyawan karyawan = Session.getLoggedInKaryawan();
-        Hewan hewan = new Hewan();
         if (karyawan == null) {
             System.err.println("Gagal menambah Hewan: belum ada karyawan yang login.");
             return;
@@ -50,7 +49,7 @@ public class ProdukDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, produk.getTanggalDiperoleh());
-            pstmt.setInt(2, hewan.getId());
+            pstmt.setInt(2, produk.getId());
             pstmt.setString(3, produk.getTipe());
             pstmt.setDouble(4, produk.getKuantitas())   ;
             pstmt.setString(5, produk.getKualitas());
@@ -75,7 +74,7 @@ public class ProdukDAO {
              PreparedStatement stmt = conn.prepareStatement(sql);) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("id");
+                int id = rs.getInt("id");
                 String tanggalDiperoleh = rs.getString("tanggal");
                 int idHewan = rs.getInt("id_hewan");
                 String tipe = rs.getString("tipe");
