@@ -5,11 +5,11 @@
 package Controllers;
 
 import DataAccessObject.KonsumsiDAO;
-import DataAccessObject.TransaksiKonsumsiDAO;
+import DataAccessObject.PembelianDAO;
 import DataAccessObject.ViewLogistikDAO;
 import Models.Konsumsi;
 import Models.LogistikRow;
-import Models.TransaksiKonsumsi;
+import Models.Pembelian;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -59,7 +59,7 @@ public class LogistikDashboardController implements Initializable {
  
     private ObservableList<String> tipe = FXCollections.observableArrayList("Obat", "Vitamin", "Pakan");
     private KonsumsiDAO konsumsiDAO ;
-    private TransaksiKonsumsiDAO tkDAO;
+    private PembelianDAO tkDAO;
     private ViewLogistikDAO viewLogistikDAO;
     /**
      * Initializes the controller class.
@@ -76,7 +76,7 @@ public class LogistikDashboardController implements Initializable {
         tanggalExpCol.setCellValueFactory(new PropertyValueFactory<>("tanggalExp"));
         viewLogistikDAO = new ViewLogistikDAO();
         konsumsiDAO = new KonsumsiDAO();
-        tkDAO = new TransaksiKonsumsiDAO();
+        tkDAO = new PembelianDAO();
         loadDataFromDatabase();
     }    
 
@@ -95,7 +95,7 @@ public class LogistikDashboardController implements Initializable {
         String tanggalExpired = dateExpired.getValue().toString();
         Konsumsi k1 = new Konsumsi(nama, tipe, tanggalExpired);
         String tanggalKeluar = "belum tau";
-        TransaksiKonsumsi k2 = new TransaksiKonsumsi(tanggalDibeli, kuantitas);
+        Pembelian k2 = new Pembelian(tanggalDibeli, kuantitas);
         int idKonsumsiBaru = konsumsiDAO.addKonsumsi(k1);
         if (idKonsumsiBaru == -1) {
         System.err.println("Gagal insert konsumsi.");
