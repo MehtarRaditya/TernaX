@@ -16,176 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ayam`
---
-
-DROP TABLE IF EXISTS `ayam`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ayam` (
-  `id` int NOT NULL,
-  `butir_telur_harian` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ayam`
---
-
-LOCK TABLES `ayam` WRITE;
-/*!40000 ALTER TABLE `ayam` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ayam` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `bangun_kandang`
---
-
-DROP TABLE IF EXISTS `bangun_kandang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bangun_kandang` (
-  `id` int NOT NULL,
-  `kapasitas_awal` tinyint DEFAULT NULL,
-  `luas_awal` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bangun_kandang`
---
-
-LOCK TABLES `bangun_kandang` WRITE;
-/*!40000 ALTER TABLE `bangun_kandang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bangun_kandang` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `beli_hewan`
---
-
-DROP TABLE IF EXISTS `beli_hewan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `beli_hewan` (
-  `id` int NOT NULL,
-  `jenis` varchar(45) NOT NULL,
-  `usia_dibeli` varchar(45) NOT NULL,
-  `berat_dibeli` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `beli_hewan`
---
-
-LOCK TABLES `beli_hewan` WRITE;
-/*!40000 ALTER TABLE `beli_hewan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `beli_hewan` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `beli_konsumsi`
---
-
-DROP TABLE IF EXISTS `beli_konsumsi`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `beli_konsumsi` (
-  `id` int NOT NULL,
-  `jenis` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `beli_konsumsi`
---
-
-LOCK TABLES `beli_konsumsi` WRITE;
-/*!40000 ALTER TABLE `beli_konsumsi` DISABLE KEYS */;
-/*!40000 ALTER TABLE `beli_konsumsi` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `budget`
---
-
-DROP TABLE IF EXISTS `budget`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `budget` (
-  `id` int NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `deskripsi` text,
-  `uang` varchar(45) NOT NULL,
-  `pelaku` int NOT NULL,
-  `waktu` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `budget`
---
-
-LOCK TABLES `budget` WRITE;
-/*!40000 ALTER TABLE `budget` DISABLE KEYS */;
-/*!40000 ALTER TABLE `budget` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `daging`
---
-
-DROP TABLE IF EXISTS `daging`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `daging` (
-  `id` int NOT NULL,
-  `jenis` varchar(45) NOT NULL,
-  `berat_stok` float NOT NULL,
-  `berat_terjual` float NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `daging`
---
-
-LOCK TABLES `daging` WRITE;
-/*!40000 ALTER TABLE `daging` DISABLE KEYS */;
-/*!40000 ALTER TABLE `daging` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gaji`
---
-
-DROP TABLE IF EXISTS `gaji`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gaji` (
-  `id` varchar(45) NOT NULL,
-  `karyawan` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gaji`
---
-
-LOCK TABLES `gaji` WRITE;
-/*!40000 ALTER TABLE `gaji` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gaji` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hewan`
 --
 
@@ -195,14 +25,19 @@ DROP TABLE IF EXISTS `hewan`;
 CREATE TABLE `hewan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `jenis` varchar(10) NOT NULL,
+  `kondisi` varchar(45) NOT NULL,
   `berat` decimal(7,2) NOT NULL,
-  `usia` smallint NOT NULL,
+  `usia_bulan` smallint NOT NULL,
   `kelamin` varchar(15) NOT NULL,
-  `pemilik` varchar(100) NOT NULL,
-  `kondisi` varchar(30) NOT NULL,
+  `pemilik` int NOT NULL,
   `penyakit` varchar(100) NOT NULL,
+  `kandang` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_hewan_pemilik` (`pemilik`),
+  KEY `fk_hewan_kandang` (`kandang`),
+  CONSTRAINT `fk_hewan_kandang` FOREIGN KEY (`kandang`) REFERENCES `kandang` (`id`),
+  CONSTRAINT `fk_hewan_pemilik` FOREIGN KEY (`pemilik`) REFERENCES `karyawan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,10 +62,9 @@ CREATE TABLE `kandang` (
   `jenis` varchar(20) NOT NULL,
   `luas` int NOT NULL,
   `kapasitas` smallint NOT NULL,
-  `terpakai` smallint NOT NULL,
-  `sisa` smallint NOT NULL,
+  `terisi` smallint NOT NULL,
   `tanggal_dibangun` date NOT NULL,
-  `tanggal_terakhir_dibersihkan` date NOT NULL,
+  `tanggal_perawatan_terakhir` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -271,7 +105,89 @@ CREATE TABLE `karyawan` (
 
 LOCK TABLES `karyawan` WRITE;
 /*!40000 ALTER TABLE `karyawan` DISABLE KEYS */;
+INSERT INTO `karyawan` VALUES (1,'Lorem Ipsum','Lorem','admin1234','Manajer',19000000,'2025-01-01'),(2,'John Doe','John','j0hn','Peternak',5000000,'2025-02-02');
 /*!40000 ALTER TABLE `karyawan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `konsumsi`
+--
+
+DROP TABLE IF EXISTS `konsumsi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `konsumsi` (
+  `id` int NOT NULL,
+  `nama` varchar(45) NOT NULL,
+  `tipe` varchar(20) NOT NULL,
+  `tanggal_exp` date DEFAULT NULL,
+  `pembelian` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_konsumsi_pembelian_idx` (`pembelian`),
+  CONSTRAINT `fk_konsumsi_pembelian` FOREIGN KEY (`pembelian`) REFERENCES `pembelian` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `konsumsi`
+--
+
+LOCK TABLES `konsumsi` WRITE;
+/*!40000 ALTER TABLE `konsumsi` DISABLE KEYS */;
+/*!40000 ALTER TABLE `konsumsi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pembelian`
+--
+
+DROP TABLE IF EXISTS `pembelian`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pembelian` (
+  `id` int NOT NULL,
+  `karyawan_pemasok` int NOT NULL,
+  `tanggal_pembelian` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_pembelian_karyawan_idx` (`karyawan_pemasok`),
+  CONSTRAINT `fk_pembelian_karyawan` FOREIGN KEY (`karyawan_pemasok`) REFERENCES `karyawan` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pembelian`
+--
+
+LOCK TABLES `pembelian` WRITE;
+/*!40000 ALTER TABLE `pembelian` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pembelian` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `penjualan`
+--
+
+DROP TABLE IF EXISTS `penjualan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `penjualan` (
+  `id` int NOT NULL,
+  `karyawan_penjual` int NOT NULL,
+  `total_pemasukan` int NOT NULL,
+  `waktu_terjual` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_penjualan_karyawan_idx` (`karyawan_penjual`),
+  CONSTRAINT `fk_penjualan_karyawan` FOREIGN KEY (`karyawan_penjual`) REFERENCES `karyawan` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+LOCK TABLES `penjualan` WRITE;
+/*!40000 ALTER TABLE `penjualan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `penjualan` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -284,12 +200,16 @@ DROP TABLE IF EXISTS `produk`;
 CREATE TABLE `produk` (
   `id` int NOT NULL AUTO_INCREMENT,
   `jenis` varchar(20) NOT NULL,
+  `jumlah` varchar(45) NOT NULL,
   `kualitas` varchar(20) NOT NULL,
+  `hewan` varchar(45) NOT NULL,
   `tanggal_diperoleh` date NOT NULL,
-  `peternak` int NOT NULL,
   `pemeriksa` int DEFAULT NULL,
   `status_kelayakan` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `penjualan` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_produk_penjualan_idx` (`penjualan`),
+  CONSTRAINT `fk_produk_penjualan` FOREIGN KEY (`penjualan`) REFERENCES `penjualan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -301,103 +221,6 @@ LOCK TABLES `produk` WRITE;
 /*!40000 ALTER TABLE `produk` DISABLE KEYS */;
 /*!40000 ALTER TABLE `produk` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sapi`
---
-
-DROP TABLE IF EXISTS `sapi`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sapi` (
-  `id` int NOT NULL,
-  `liter_susu_harian` smallint NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sapi`
---
-
-LOCK TABLES `sapi` WRITE;
-/*!40000 ALTER TABLE `sapi` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sapi` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `susu`
---
-
-DROP TABLE IF EXISTS `susu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `susu` (
-  `id` int NOT NULL,
-  `liter_stok` smallint NOT NULL,
-  `liter_terjual` smallint NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `susu`
---
-
-LOCK TABLES `susu` WRITE;
-/*!40000 ALTER TABLE `susu` DISABLE KEYS */;
-/*!40000 ALTER TABLE `susu` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `telur`
---
-
-DROP TABLE IF EXISTS `telur`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telur` (
-  `id` int NOT NULL,
-  `butir_stok` float NOT NULL,
-  `butir_terjual` float NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `telur`
---
-
-LOCK TABLES `telur` WRITE;
-/*!40000 ALTER TABLE `telur` DISABLE KEYS */;
-/*!40000 ALTER TABLE `telur` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tingkat_kandang`
---
-
-DROP TABLE IF EXISTS `tingkat_kandang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tingkat_kandang` (
-  `id` int NOT NULL,
-  `kapasitas_sebelum` int NOT NULL,
-  `kapasitas_sesudah` int NOT NULL,
-  `luas_sebelum` int NOT NULL,
-  `luas_sesudah` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tingkat_kandang`
---
-
-LOCK TABLES `tingkat_kandang` WRITE;
-/*!40000 ALTER TABLE `tingkat_kandang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tingkat_kandang` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -408,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-10 15:31:55
+-- Dump completed on 2025-12-01 13:43:13
