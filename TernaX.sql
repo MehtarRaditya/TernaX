@@ -25,12 +25,11 @@ DROP TABLE IF EXISTS `hewan`;
 CREATE TABLE `hewan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `jenis` varchar(10) NOT NULL,
+  `kondisi` varchar(45) NOT NULL,
   `berat` decimal(7,2) NOT NULL,
   `usia_bulan` smallint NOT NULL,
   `kelamin` varchar(15) NOT NULL,
-  `total_produk_dihasilkan` int DEFAULT NULL,
   `pemilik` int NOT NULL,
-  `kondisi` varchar(30) NOT NULL,
   `penyakit` varchar(100) NOT NULL,
   `kandang` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -65,7 +64,7 @@ CREATE TABLE `kandang` (
   `kapasitas` smallint NOT NULL,
   `terisi` smallint NOT NULL,
   `tanggal_dibangun` date NOT NULL,
-  `tanggal_terakhir_dibersihkan` date NOT NULL,
+  `tanggal_perawatan_terakhir` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -119,7 +118,13 @@ DROP TABLE IF EXISTS `konsumsi`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `konsumsi` (
   `id` int NOT NULL,
-  PRIMARY KEY (`id`)
+  `nama` varchar(45) NOT NULL,
+  `tipe` varchar(20) NOT NULL,
+  `tanggal_exp` date DEFAULT NULL,
+  `pembelian` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_konsumsi_pembelian_idx` (`pembelian`),
+  CONSTRAINT `fk_konsumsi_pembelian` FOREIGN KEY (`pembelian`) REFERENCES `pembelian` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,6 +138,32 @@ LOCK TABLES `konsumsi` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pembelian`
+--
+
+DROP TABLE IF EXISTS `pembelian`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pembelian` (
+  `id` int NOT NULL,
+  `karyawan_pemasok` int NOT NULL,
+  `tanggal_pembelian` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_pembelian_karyawan_idx` (`karyawan_pemasok`),
+  CONSTRAINT `fk_pembelian_karyawan` FOREIGN KEY (`karyawan_pemasok`) REFERENCES `karyawan` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pembelian`
+--
+
+LOCK TABLES `pembelian` WRITE;
+/*!40000 ALTER TABLE `pembelian` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pembelian` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `penjualan`
 --
 
@@ -141,10 +172,12 @@ DROP TABLE IF EXISTS `penjualan`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `penjualan` (
   `id` int NOT NULL,
-  `waktu_terjual` datetime NOT NULL,
+  `karyawan_penjual` int NOT NULL,
   `total_pemasukan` int NOT NULL,
+  `waktu_terjual` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_penjualan` FOREIGN KEY (`id`) REFERENCES `produk` (`id`)
+  KEY `fk_penjualan_karyawan_idx` (`karyawan_penjual`),
+  CONSTRAINT `fk_penjualan_karyawan` FOREIGN KEY (`karyawan_penjual`) REFERENCES `karyawan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -171,10 +204,12 @@ CREATE TABLE `produk` (
   `kualitas` varchar(20) NOT NULL,
   `hewan` varchar(45) NOT NULL,
   `tanggal_diperoleh` date NOT NULL,
-  `peternak` int NOT NULL,
   `pemeriksa` int DEFAULT NULL,
   `status_kelayakan` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `penjualan` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_produk_penjualan_idx` (`penjualan`),
+  CONSTRAINT `fk_produk_penjualan` FOREIGN KEY (`penjualan`) REFERENCES `penjualan` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -196,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-29 20:27:44
+-- Dump completed on 2025-12-01 13:43:13
