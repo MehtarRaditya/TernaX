@@ -7,16 +7,28 @@ package Controllers;
 import DataAccessObject.HewanDAO;
 import DataAccessObject.KaryawanDAO;
 import DataAccessObject.ProdukDAO;
+import Models.Hewan;
+import Models.Karyawan;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -46,12 +58,71 @@ public class ManagerDashboardController implements Initializable {
     private Label labelDaging;
     @FXML
     private Label labelTelur;
+    @FXML
+    private TableView<Karyawan> tvKaryawan;
+    @FXML
+    private TableColumn<Karyawan, Integer> idCol;
+    @FXML
+    private TableColumn<Karyawan, String> namaCol;
+    @FXML
+    private TableColumn<Karyawan, String> akunCol;
+    @FXML
+    private TableColumn<Karyawan, String> passCol;
+    @FXML
+    private TableColumn<Karyawan, String> roleCol;
+    @FXML
+    private TableColumn<Karyawan, String> gajiCol;
+    @FXML
+    private TableColumn<Karyawan, String> tanggalCol;
+    @FXML
+    private Label labelKaryawan1;
+    @FXML
+    private Label labelAyam1;
+    @FXML
+    private Label labelSapi1;
+    @FXML
+    private Label labelDaging1;
+    @FXML
+    private Label labelSusu1;
+    @FXML
+    private Label labelTelur1;
+    @FXML
+    private TextField txtId;
+    @FXML
+    private TextField txtNama;
+    @FXML
+    private TextField txtAkun;
+    @FXML
+    private TextField txtPass;
+    @FXML
+    private TextField txtGaji;
+    @FXML
+    private DatePicker dateTanggalRekrut;
+    @FXML
+    private ChoiceBox<String> chcRole;
+    private ObservableList<Karyawan> dataKaryawan;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//        karyawanDAO = new KaryawanDAO();
+        
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namaCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        akunCol.setCellValueFactory(new PropertyValueFactory<>("akun"));
+        passCol.setCellValueFactory(new PropertyValueFactory<>("password"));
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+        gajiCol.setCellValueFactory(new PropertyValueFactory<>("gaji"));
+        tanggalCol.setCellValueFactory(new PropertyValueFactory<>("tanggalDirekrut"));
+        chcRole.setItems(FXCollections.observableArrayList(
+            "Logistik",
+            "Peternak",
+            "Penjual"
+    ));
+    // optional: langsung pilih default
+    chcRole.getSelectionModel().selectFirst();
         // Buat scheduler dengan satu thread
         scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -84,12 +155,93 @@ public class ManagerDashboardController implements Initializable {
         // Jalankan tugas pertama kali secara langsung (delay 0 detik)
         // lalu ulangi setiap 5 detik
         scheduler.scheduleAtFixedRate(updateDataTask, 0, 5, TimeUnit.SECONDS);
+        loadDataFromDatabase();
+        
+    }
+    private void loadDataFromDatabase() {
+        List<Karyawan> list = karyawanDAO.getAll();
+        dataKaryawan = FXCollections.observableArrayList(list);
+        tvKaryawan.setItems(dataKaryawan);
     }
     
     public void shutdown() {
         if (scheduler != null && !scheduler.isShutdown()) {
             System.out.println("Mematikan scheduler dashboard...");
             scheduler.shutdown();
+        }
+    }
+    private void clearForm() {
+        txtId.clear();
+        txtNama.clear();
+        txtGaji.clear();
+        txtPass.clear();
+        txtAkun.clear();
+    }
+
+    @FXML
+    private void handleButtonDelete(ActionEvent event) {
+        Karyawan selectedKaryawan = tvKaryawan.getSelectionModel().getSelectedItem();
+        if (selectedKaryawan != null) {
+            // Hapus dari database via DAO
+            karyawanDAO.delete(selectedKaryawan.getId());
+            
+            // Refresh TableView
+            loadDataFromDatabase();
+        } else {
+            System.out.println("Pilih data yang akan dihapus!");
+        }
+    }
+
+    @FXML
+    private void handleButtonEdit(ActionEvent event) {
+        Karyawan selectedKaryawan = tvKaryawan.getSelectionModel().getSelectedItem();
+        if (selectedKaryawan != null) {
+            // Ambil data dari form
+            selectedKaryawan.setName(txtNama.getText());
+            selectedKaryawan.setGaji(Integer.parseInt(txtGaji.getText()));
+            selectedKaryawan.setAkun(txtAkun.getText());
+            selectedKaryawan.setPassword(txtPass.getText());
+            selectedKaryawan.setRole(chcRole.getValue());
+//            selectedKaryawan.setUsia(Integer.parseInt(txtUsia.getText()));
+            // NIP tidak perlu diubah karena primary key
+            
+            // Update di database via DAO
+            karyawanDAO.update(selectedKaryawan);
+            
+            // Refresh TableView
+            loadDataFromDatabase();
+            clearForm();
+        } else {
+            System.out.println("Pilih data yang akan diupdate!");
+        }
+    }
+
+    @FXML
+    private void handleButtonAdd(ActionEvent event) {
+        String id = txtId.getText();
+        String name = txtNama.getText();
+        String role = chcRole.getValue();
+        String tanggalDirekrut = dateTanggalRekrut.getValue().toString();
+        int gaji = Integer.parseInt(txtGaji.getText());
+        String akun = txtAkun.getText();
+        String password = txtPass.getText();
+        if (id.isEmpty() || name.isEmpty() || role.isEmpty() || tanggalDirekrut.isEmpty()) {
+            System.out.println("Yang Itu itu wajib diisi ya");
+            return;
+        }
+        try{
+            Karyawan baru = new Karyawan(id, name, role, tanggalDirekrut, gaji, akun,password);
+        
+            // Simpan ke database via DAO
+            karyawanDAO.addKaryawan(baru);
+            
+            // Refresh TableView
+            loadDataFromDatabase();
+            clearForm();
+            // Kosongkan form
+            //clearForm();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 }
