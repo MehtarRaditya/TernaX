@@ -20,6 +20,11 @@ public class Karyawan {
         this.password = password;
     }
 
+    public Karyawan() {
+    }
+    
+    
+
     public String getId() {
         return id;
     }

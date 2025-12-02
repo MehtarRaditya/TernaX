@@ -12,6 +12,11 @@ public class Hewan {
     private String pemilik;
     private String penyakit;
 
+    public Hewan() {
+    }
+    
+    
+
     public Hewan(int id, String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
         this.id = id;
         this.jenis = jenis;
@@ -105,4 +110,6 @@ public class Hewan {
     public void setPenyakit(String penyakit) {
         this.penyakit = penyakit;
     }
+    
+    
 }

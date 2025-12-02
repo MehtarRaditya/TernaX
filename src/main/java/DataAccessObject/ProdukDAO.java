@@ -39,54 +39,69 @@ public class ProdukDAO {
     }
     
     public void addProduk(Produk produk) {
-        Karyawan karyawan = Session.getLoggedInKaryawan();
-        if (karyawan == null) {
-            System.err.println("Gagal menambah Hewan: belum ada karyawan yang login.");
-            return;
-        }
-        String sql = "INSERT INTO produk (tanggal, id_hewan, tipe, kuantitas, status_kelayakan) VALUES (?, ?, ?, ?,?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, produk.getTanggalDiperoleh());
-            pstmt.setInt(2, produk.getId());
-            pstmt.setString(3, produk.getTipe());
-            pstmt.setDouble(4, produk.getKuantitas())   ;
-            pstmt.setString(5, produk.getKualitas());
-                
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Gagal menambah produk: " + e.getMessage());
-        }
+            Karyawan karyawan = Session.getLoggedInKaryawan();
+            //Hewan hewan = new Hewan();
+             if (karyawan == null) {
+        System.err.println("Gagal menambah Hewan: belum ada karyawan yang login.");
+        return;
     }
+            String sql = "INSERT INTO produk (jenis,jumlah,kualitas,hewan,tanggal_diperoleh) VALUES (?, ?, ?, ?,?)";
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setString(1, produk.getTipe());
+                pstmt.setDouble(2, produk.getKuantitas());
+                pstmt.setString(3, produk.getKualitas());
+                pstmt.setInt(4, produk.getIdHewan());
+                pstmt.setString(5, produk.getTanggalDiperoleh());
+                
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                System.err.println("Gagal menambah produk: " + e.getMessage());
+            }
+        }
     
     public List<Produk> getAll() {
-        List<Produk> produkList = new ArrayList<>();
-        Karyawan karyawan = Session.getLoggedInKaryawan();
-        if(karyawan == null){
-            System.out.println("Belum ada karyawan yang login");
-            return produkList;
-        }
+                    List<Produk> produkList = new ArrayList<>();
+                     Karyawan karyawan = Session.getLoggedInKaryawan();
+                     if(karyawan == null){
+                         System.out.println("Belum ada karyawan yang login");
+                         return produkList;
+                     }
 
-        String sql = "SELECT * FROM produk";
+                     String sql = "SELECT * FROM produk";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String tanggalDiperoleh = rs.getString("tanggal");
-                int idHewan = rs.getInt("id_hewan");
-                String tipe = rs.getString("tipe");
-                double kuantitas = rs.getDouble("kuantitas");
-                String kualitas = rs.getString("status_kelayakan");
-                Produk p = new Produk(id, tanggalDiperoleh, tipe, kuantitas, kualitas);
-                p.setIdHewan(idHewan);                    // 👉 SET KE OBJEK
-                produkList.add(p);
-            }
-        } catch (SQLException e) {
-            System.err.println("Gagal mengambil data Produk: " + e.getMessage());
-        }
-        return produkList;
-    }
+                    try (Connection conn = DatabaseConnection.getConnection();
+                         PreparedStatement stmt = conn.prepareStatement(sql);
+                      ) {
+                        
+
+                        ResultSet rs = stmt.executeQuery();
+                        
+                        while (rs.next()) {
+                            String id = rs.getString("id");
+                            String jenis = rs.getString("jenis");
+                            double jumlah = rs.getDouble("jumlah");
+                            String kualitas = rs.getString("kualitas");
+                            int hewan_id = rs.getInt("hewan");
+                            String tanggalDiperoleh = rs.getString("tanggal_diperoleh");
+                            //String tanggalDiperoleh = rs.getString("tanggal");
+                            //int idHewan = rs.getInt("id_hewan");
+                            //String tipe = rs.getString("tipe");
+                            //double kuantitas = rs.getDouble("kuantitas");
+                            //String kualitas = rs.getString("status_kelayakan");
+                            
+
+                            Produk p = new Produk(id, tanggalDiperoleh, jenis, jumlah, kualitas);
+            p.setIdHewan(hewan_id);                    // 👉 SET KE OBJEK
+
+            produkList.add(p);
+                        }
+                    } catch (SQLException e) {
+                        System.err.println("Gagal mengambil data Produk: " + e.getMessage());
+                    }
+
+                    return produkList;
+                }
 }

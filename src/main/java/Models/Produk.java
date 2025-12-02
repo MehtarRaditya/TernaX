@@ -1,7 +1,7 @@
 package Models;
 
 public class Produk {
-    private int id;
+    private String id;
     private String tanggalDiperoleh;
     private String tipe;
     private double kuantitas;
@@ -9,7 +9,7 @@ public class Produk {
     private int idHewan;
     
     
-    public Produk(int id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
+    public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
         this.tipe = tipe;
@@ -17,7 +17,7 @@ public class Produk {
         this.kualitas = kualitas;
     }
 
-    public Produk(int id, String tanggalDiperoleh, String tipe, String kualitas) {
+    public Produk(String id, String tanggalDiperoleh, String tipe, String kualitas) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
         this.tipe = tipe;
@@ -49,11 +49,11 @@ public class Produk {
     
     
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

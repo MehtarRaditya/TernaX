@@ -3,12 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="444.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakDashboardController">
+<AnchorPane id="AnchorPane" prefHeight="444.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakDashboardController">
    <children>
       <TextField fx:id="txtJenis" layoutX="30.0" layoutY="26.0" />
       <TextField fx:id="txtBerat" layoutX="30.0" layoutY="62.0" />
@@ -17,7 +19,7 @@
       <TextField fx:id="txtKondisi" layoutX="30.0" layoutY="170.0" />
       <TextField fx:id="txtPenyakit" layoutX="30.0" layoutY="207.0" />
       <Button layoutX="517.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleActionTambah" text="Tambah" />
-      <TableView fx:id="tvHewan" layoutX="220.0" layoutY="25.0" prefHeight="158.0" prefWidth="361.0">
+      <TableView fx:id="tvHewan" layoutX="220.0" layoutY="25.0" prefHeight="158.0" prefWidth="432.0">
         <columns>
           <TableColumn fx:id="JenisCol" prefWidth="50.4000244140625" text="Jenis" />
           <TableColumn fx:id="BeratCol" prefWidth="60.0" text="Berat" />
@@ -26,6 +28,7 @@
             <TableColumn fx:id="KondisiCol" prefWidth="53.60003662109375" text="Kondisi" />
             <TableColumn fx:id="PenyakitCol" prefWidth="53.60003662109375" text="Penyakit" />
             <TableColumn fx:id="idHewanCol" prefWidth="53.60003662109375" text="id" />
+            <TableColumn fx:id="idKandangCol" prefWidth="67.19997558593752" text="id_kandang" />
         </columns>
       </TableView>
       <Button layoutX="36.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleActionHapus" text="Hapus" />
@@ -43,5 +46,17 @@
       <DatePicker fx:id="txtDateProduk" layoutX="31.0" layoutY="301.0" prefHeight="14.0" prefWidth="150.0" />
       <Button layoutX="402.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleSubmitProduk" style="-fx-background-color: red;" text="Button" />
       <ChoiceBox fx:id="chcTipe" layoutX="120.0" layoutY="266.0" prefHeight="26.0" prefWidth="59.0" />
+      <VBox layoutX="615.0" layoutY="226.0" prefHeight="74.0" prefWidth="78.0">
+         <children>
+            <Label prefHeight="37.0" prefWidth="77.0" text="Pakan Sapi" />
+            <Label prefHeight="31.0" prefWidth="68.0" text="Pakan Ayam" />
+         </children>
+      </VBox>
+      <VBox layoutX="693.0" layoutY="231.0" prefHeight="74.0" prefWidth="52.0">
+         <children>
+            <Label prefHeight="31.0" prefWidth="124.0" text="Label" />
+            <Label prefHeight="31.0" prefWidth="55.0" text="Label" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

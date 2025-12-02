@@ -5,7 +5,7 @@
 package DataAccessObject;
 
 import Models.Karyawan;
-import Models.Pembelian;
+import Models.TransaksiKonsumsi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,8 +16,8 @@ import utility.Session;
  *
  * @author Muham
  */
-public class PembelianDAO {
-    public void addKonsumsi(Pembelian Tk) {
+public class TransaksiKonsumsiDAO {
+    public void addKonsumsi(TransaksiKonsumsi Tk) {
             Karyawan karyawan = Session.getLoggedInKaryawan();
              if (karyawan == null) {
         System.err.println("Gagal menambah Hewan: belum ada karyawan yang login.");

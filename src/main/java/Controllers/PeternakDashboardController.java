@@ -236,6 +236,7 @@ public class PeternakDashboardController implements Initializable {
 
     @FXML
     private void handleSubmitProduk(ActionEvent event) {
+        loadDataFromDatabaseProduk();
         Hewan selectedHewan = tvHewan.getSelectionModel().getSelectedItem();
         if (selectedHewan == null) {
         System.out.println("Pilih dulu hewan di tabel!");
@@ -246,12 +247,17 @@ public class PeternakDashboardController implements Initializable {
         String tanggal = txtDateProduk.getValue().toString();
         String tipe = chcTipe.getValue();
         double kuantitass = Double.parseDouble(kuantitas);
-        String kualitas = "null";   
+        String kualitas = "Belum diisi";   
         
         try{
         Produk baru = new Produk(tanggal,tipe,kuantitass,kualitas,id_hewan);
         produkDAO.addProduk(baru);
         System.out.println("Tipe produk: " + tipe);
+        if("daging".equalsIgnoreCase(tipe)){
+            hewanDAO.updateKondisi(id_hewan, "Death");
+            selectedHewan.setKondisi("Death");
+            loadDataFromDatabase();
+        }
         loadDataFromDatabaseProduk();
         }catch(Exception e){
             e.printStackTrace();
