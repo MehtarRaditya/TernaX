@@ -178,6 +178,25 @@ public class HewanDAO {
 
     return list;
 }
+    
+    public String getJenisById(int id) {
+        String jenis = "";
+        String sql = "SELECT jenis FROM hewan WHERE id = ?";
+        
+        try (java.sql.Connection conn = utility.DatabaseConnection.getConnection();
+             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, id);
+            java.sql.ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                jenis = rs.getString("jenis");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jenis;
+    }
 
     
 }

@@ -1,0 +1,57 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 3 Dec 2025, 10.17.08
+    Author     : USER
+*/
+.mainFxmlClass {
+    /* --- LOGIN PAGE STYLING --- */
+
+/* 1. Styling untuk TextField (Username) dan PasswordField */
+.text-field, .password-field {
+    -fx-background-color: transparent; /* Latar transparan */
+    -fx-border-color: #000080;         /* Warna border bawah (Navy) */
+    -fx-border-width: 0px 0px 2px 0px; /* Hanya border bawah */
+    -fx-text-fill: #333333;            /* Warna teks ketikan (Abu gelap) */
+    -fx-prompt-text-fill: #808080;     /* Warna teks prompt (Abu terang) */
+    -fx-padding: 0 0 5 0;              /* Jarak teks ke garis bawah */
+}
+
+/* Efek saat diklik/fokus: Garis berubah warna jadi Hijau Sage */
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #a9ba9d;         
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Sedikit putih transparan */
+}
+
+/* Efek saat mouse lewat di atasnya (Hover) */
+.text-field:hover, .password-field:hover {
+    -fx-border-color: #4a4a4a; 
+}
+
+/* 2. Styling untuk Tombol Login */
+.button {
+    -fx-background-color: #a9ba9d;     /* Warna Hijau Sage (Default) */
+    -fx-text-fill: white;              /* Warna tulisan tombol */
+    -fx-background-radius: 30;         /* Membuat tombol bulat (Pill shape) */
+    -fx-font-family: "Nirmala UI Bold";
+    -fx-font-size: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3); /* Bayangan */
+}
+
+/* Efek saat tombol diarahkan mouse (Hover) */
+.button:hover {
+    -fx-background-color: #8fa382;     /* Hijau lebih gelap */
+    -fx-cursor: hand;                  /* Kursor jadi tangan */
+    -fx-scale-x: 1.05;                 /* Sedikit membesar */
+    -fx-scale-y: 1.05;
+}
+
+/* Efek saat tombol ditekan (Pressed) */
+.button:pressed {
+    -fx-background-color: #768a6b;     /* Hijau sangat gelap */
+    -fx-effect: none;                  /* Hilangkan bayangan */
+    -fx-translate-y: 2;                /* Efek tombol mendesak ke bawah */
+}
+}

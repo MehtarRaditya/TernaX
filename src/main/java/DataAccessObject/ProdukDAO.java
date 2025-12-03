@@ -45,7 +45,7 @@ public class ProdukDAO {
         System.err.println("Gagal menambah Hewan: belum ada karyawan yang login.");
         return;
     }
-            String sql = "INSERT INTO produk (jenis,jumlah,kualitas,hewan,tanggal_diperoleh) VALUES (?, ?, ?, ?,?)";
+            String sql = "INSERT INTO produk (jenis,kuantitas,kualitas,hewan,tanggal_diperoleh) VALUES (?, ?, ?, ?,?)";
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -82,7 +82,7 @@ public class ProdukDAO {
                         while (rs.next()) {
                             String id = rs.getString("id");
                             String jenis = rs.getString("jenis");
-                            double jumlah = rs.getDouble("jumlah");
+                            double jumlah = rs.getDouble("kuantitas");
                             String kualitas = rs.getString("kualitas");
                             int hewan_id = rs.getInt("hewan");
                             String tanggalDiperoleh = rs.getString("tanggal_diperoleh");

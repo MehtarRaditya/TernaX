@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="1008.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakPanenController">
+    <stylesheets>
+        <URL value="@peternakpanen.css" />
+    </stylesheets>
+   <children>
+      
+      <Pane layoutX="7.0" layoutY="10.0" prefWidth="291.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <ImageView fitHeight="119.0" fitWidth="148.0" layoutX="-34.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Logo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btHewan" layoutX="-1.0" layoutY="224.0" mnemonicParsing="false" onAction="#btnHewan" prefHeight="83.0" prefWidth="292.0" stylesheets="@../css/peternakhewan.css" text="HEWAN">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Pane layoutX="-3.0" layoutY="180.0" prefHeight="6.0" prefWidth="294.0" style="-fx-background-color: gray;" />
+            <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="-1.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/box.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnProduk" layoutX="-2.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnProduk" prefHeight="83.0" prefWidth="294.0" stylesheets="@../css/peternakhewan.css" text="PRODUKSI">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="83.0" fitWidth="89.0" layoutX="-3.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/pakan.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnKonsum" layoutX="-2.0" layoutY="391.0" mnemonicParsing="false" onAction="#btnKonsum" prefHeight="83.0" prefWidth="294.0" stylesheets="@../css/peternakhewan.css" text="KONSUMSI">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="198.0" fitWidth="285.0" layoutX="1.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/logo%20ternax.png" />
+               </image>
+            </ImageView>
+            
+            <Button fx:id="btnLogout" layoutX="7.0" layoutY="554.0" mnemonicParsing="false" onAction="#btnLogout" prefHeight="83.0" prefWidth="282.0" stylesheets="@../css/peternakhewan.css" text="Logout">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="62.0" fitWidth="57.0" layoutX="17.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/logout.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+
+      <Pane layoutX="332.0" layoutY="15.0" prefHeight="110.0" style="-fx-background-color: white; -fx-background-radius: 50;" AnchorPane.leftAnchor="332.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="772.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Peternak.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+
+      <Pane layoutX="350.0" layoutY="137.0" prefHeight="295.0" prefWidth="867.0" style="-fx-background-color: transparent; -fx-background-radius: 25;">
+         <children>
+            <Pane layoutX="11.0" layoutY="8.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text fx:id="totalDagingSapi" layoutX="60.0" layoutY="101.0" styleClass="summary-value" wrappingWidth="138.0" />
+                  <Text layoutX="-15.0" layoutY="26.0" styleClass="summary-label" text="Total Daging sapi" textAlignment="CENTER" wrappingWidth="253.0" />
+                  <Label fx:id="totalDaging" layoutX="18.0" layoutY="60.0" prefHeight="43.0" prefWidth="202.0" text="Angka" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <Bloom />
+               </effect>
+            </Pane>
+            <Pane layoutX="299.0" layoutY="9.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text fx:id="" layoutX="65.0" layoutY="99.0" styleClass="summary-value" wrappingWidth="138.0" />
+                  <Text layoutX="4.0" layoutY="28.0" styleClass="summary-label" text="Total Daging ayam" textAlignment="CENTER" wrappingWidth="220.0" />
+                  <Label fx:id="totalDagingAyam" layoutX="80.0" layoutY="58.0" text="Angka" />
+               </children>
+            </Pane>
+            <Pane layoutX="592.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text fx:id="totalTelur" layoutX="69.0" layoutY="99.0" styleClass="summary-value" wrappingWidth="138.0" />
+                  <Text layoutX="15.0" layoutY="31.0" styleClass="summary-label" text="Total Telur " wrappingWidth="129.5" />
+                  <Label fx:id="totaltelur" layoutX="86.0" layoutY="56.0" text="Angka" />
+               </children>
+            </Pane>
+            <Pane layoutX="12.0" layoutY="149.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text layoutX="60.0" layoutY="101.0" styleClass="summary-value" wrappingWidth="138.0" />
+                  <Text layoutX="-15.0" layoutY="26.0" styleClass="summary-label" text="Total Susu" textAlignment="CENTER" wrappingWidth="253.0" />
+                  <Label fx:id="totalSusu" layoutX="68.0" layoutY="65.0" text="Angka" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+
+      <TableView fx:id="tvProduk" layoutX="373.0" layoutY="425.3333333333333" prefHeight="490.0" prefWidth="973.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="373.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="425.0">
+        
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
+
+        <columns>
+          <TableColumn fx:id="idColProduk" text="Id" />
+          <TableColumn fx:id="dateColProduk" text="tanggal" />
+            <TableColumn fx:id="idHewanCol" text="hewan" />
+            <TableColumn fx:id="tipeColProduk" text="tipe" />
+            <TableColumn fx:id="kuantitasColProduk" text="kuantitas" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
