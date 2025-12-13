@@ -1,0 +1,300 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+/* --- MODERN TABLE DESIGN --- */
+
+/* 1. Kontainer Utama Tabel */
+.table-view {
+    -fx-background-color: transparent; /* Transparan agar shadow terlihat */
+    -fx-background-radius: 15px;       /* Sudut melengkung */
+    -fx-border-radius: 15px;
+    -fx-padding: 0;
+    /* Memberikan efek bayangan lembut (floating effect) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);
+}
+
+/* 2. Header (Judul Kolom) */
+.table-view .column-header-background {
+    /* Gradient Hijau Keren */
+    -fx-background-color: linear-gradient(to right, #11998e, #38ef7d);
+    -fx-background-radius: 15px 15px 0 0; /* Hanya sudut atas yang melengkung */
+    -fx-background-insets: 0 0 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 50px; /* Tinggi Header */
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;      /* Warna teks header Putih */
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* 3. Isi Baris Tabel */
+.table-view .table-cell {
+    -fx-text-fill: #444444;    /* Warna teks isi abu gelap */
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 15px;       /* Jarak teks dari pinggir */
+    -fx-border-color: transparent; /* Hilangkan garis vertikal */
+}
+
+/* Mengatur Tinggi Baris */
+.table-view .table-row-cell {
+    -fx-cell-size: 45px;       /* Tinggi per baris */
+    -fx-background-color: white;
+    -fx-border-width: 0 0 1 0; /* Garis tipis hanya di bawah */
+    -fx-border-color: #EEEEEE;
+}
+
+/* 4. Efek Baris Ganjil-Genap (Zebra) - Opsional, agar lebih mudah dibaca */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFAFA; /* Abu sangat muda */
+}
+
+/* 5. Efek Saat Mouse Lewat (Hover) */
+.table-view .table-row-cell:hover {
+    -fx-background-color: #E8F5E9; /* Hijau pudar */
+    -fx-cursor: hand;
+}
+
+/* 6. Efek Saat Baris Dipilih (Selected) */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #dcedc8; /* Hijau muda yang lembut */
+    -fx-background-insets: 0;
+    -fx-border-width: 0 0 0 5;     /* Garis tebal di kiri sebagai penanda */
+    -fx-border-color: transparent transparent transparent #2E7D32;
+}
+
+/* Teks tetap gelap saat dipilih (agar kontras tetap bagus) */
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1B5E20; 
+    -fx-font-weight: bold;
+}
+
+/* --- 7. Custom Scrollbar (Supaya tidak merusak pemandangan) --- */
+
+/* Track (Latar belakang scroll) */
+.table-view .scroll-bar:vertical .track,
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+/* Thumb (Batang yang digeser) */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #CCCCCC; /* Abu soft */
+    -fx-background-radius: 5em;
+}
+
+/* Saat mouse di atas scrollbar */
+.table-view .scroll-bar:vertical .thumb:hover,
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #AAAAAA;
+}
+
+/* Pojok kanan bawah (pertemuan scroll vertikal & horizontal) */
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* --- 1. Desain Sidebar (Panel Kiri) --- */
+#sidebarPanel {
+    -fx-background-color: white; /* Warna dasar */
+    
+    /* Membuat sudut kanan atas & bawah melengkung */
+    -fx-background-radius: 0 25 25 0; 
+    -fx-border-radius: 0 25 25 0;
+
+    /* Memberi bayangan agar terlihat timbul (3D Effect) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 4, 0);
+}
+
+/* --- 2. Desain Header (Panel Atas) --- */
+#headerPanel {
+    -fx-background-color: white;
+    
+    /* Membuat semua sudut melengkung bulat */
+    -fx-background-radius: 50; 
+    -fx-border-radius: 50;
+
+    /* Bayangan halus di bawah header */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* --- 3. Desain Panel Info (Kotak Hijau) --- */
+/* Karena kotak hijau ada banyak, kita pakai CLASS (.) bukan ID (#) */
+.summary-box {
+    /* Gradasi Hijau Modern */
+    -fx-background-color: linear-gradient(to bottom right, #56ab2f, #a8e063);
+    
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 3);
+}
+
+/* Efek saat mouse diarahkan ke kotak hijau (Hover) */
+.summary-box:hover {
+    -fx-background-color: linear-gradient(to bottom right, #60c934, #b4ec70); /* Jadi lebih terang */
+    -fx-scale-x: 1.02; /* Sedikit membesar */
+    -fx-scale-y: 1.02;
+    -fx-cursor: hand;
+}
+
+/* --- Styling Angka Besar (Value) --- */
+.summary-value {
+    -fx-fill: white;             /* Warna Teks (Gunakan -fx-fill untuk object Text) */
+    -fx-font-family: "Segoe UI"; /* Jenis Font */
+    -fx-font-weight: bold;       /* Tebal */
+    -fx-font-size: 42px;         /* Ukuran Font */
+    
+    /* Bayangan teks (Text Shadow) agar kontras */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1);
+}
+
+/* --- Styling Label Judul (Label) --- */
+.summary-label {
+    -fx-fill: #e8f5e9;           /* Putih agak transparan (biar tidak balapan sama angka) */
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;  /* Rata tengah */
+    
+    /* Ubah jadi huruf besar semua (Opsional) */
+    /* Sayangnya CSS JavaFX versi lama tidak support text-transform, 
+       jadi lebih baik ketik huruf besar di FXML atau Java */
+}
+
+/* =========================================
+   1. GAYA KOTAK RINGKASAN (SUMMARY BOX)
+   ========================================= */
+
+.summary-box {
+    /* Gradasi Hijau Modern (Kiri atas ke Kanan bawah) */
+    -fx-background-color: linear-gradient(to bottom right, #11998e, #38ef7d);
+    
+    /* Sudut Melengkung */
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    
+    /* Bayangan Timbul (Shadow) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Efek saat mouse diarahkan ke kotak (Hover) */
+.summary-box:hover {
+    -fx-scale-x: 1.02; /* Sedikit membesar */
+    -fx-scale-y: 1.02;
+    -fx-cursor: hand;  /* Kursor berubah jadi tangan */
+    -fx-effect: dropshadow(three-pass-box, rgba(56, 239, 125, 0.4), 15, 0, 0, 5); /* Shadow hijau bersinar */
+}
+
+/* --- Judul Kecil (Misal: "Total Telur") --- */
+.summary-label {
+    -fx-fill: #E8F5E9;           /* Putih kehijauan (agar tidak terlalu kontras) */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
+}
+
+/* --- Angka Besar (Label "Angka") --- */
+/* Ini otomatis menargetkan Label yang ada di dalam summary-box */
+.summary-box .label {
+    -fx-text-fill: white;        /* Warna Putih Bersih */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: 900;        /* Extra Bold */
+    -fx-font-size: 36px;         /* Ukuran Besar */
+    -fx-alignment: center;       /* Rata tengah */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1); /* Bayangan teks sedikit */
+}
+
+/* Jika Anda menggunakan Text node untuk angka (summary-value) */
+.summary-value {
+    -fx-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 36px;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1);
+}
+
+
+/* =========================================
+   2. GAYA TABEL (TABLE VIEW)
+   ========================================= */
+
+.table-view {
+    -fx-background-color: transparent; /* Transparan agar shadow terlihat */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 0;
+    /* Bayangan lembut di sekeliling tabel */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Header Kolom (Bagian Atas Tabel) */
+.table-view .column-header-background {
+    /* Gunakan warna hijau yang senada dengan kotak di atas */
+    -fx-background-color: linear-gradient(to right, #11998e, #38ef7d);
+    -fx-background-radius: 10px 10px 0 0; /* Lengkung hanya di atas */
+    -fx-background-insets: 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 45px; /* Tinggi Header */
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Isi Tabel (Baris) */
+.table-view .table-cell {
+    -fx-text-fill: #444444;    /* Teks abu gelap */
+    -fx-alignment: CENTER-LEFT;
+    -fx-font-size: 14px;
+    -fx-padding: 0 15px;
+    -fx-border-color: transparent;
+}
+
+.table-view .table-row-cell {
+    -fx-cell-size: 40px;       /* Tinggi Baris Data */
+    -fx-background-color: white;
+    -fx-border-width: 0 0 1 0; /* Garis tipis di bawah setiap baris */
+    -fx-border-color: #F0F0F0;
+}
+
+/* Warna selang-seling (Zebra Stripe) agar mudah dibaca */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+/* Efek saat baris dipilih */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #E0F2F1; /* Hijau pudar */
+    -fx-table-cell-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-width: 0 0 0 5;     /* Indikator garis tebal di kiri */
+    -fx-border-color: transparent transparent transparent #11998e;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #00695C; /* Teks jadi hijau tua saat dipilih */
+    -fx-font-weight: bold;
+}
+
+/* Sembunyikan Scrollbar jika tidak perlu (opsional) */
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+}

@@ -14,6 +14,16 @@ public class Main extends Application {
         URL url = new File("src/main/java/Views/login.fxml").toURI().toURL();
         Scene s = new Scene(FXMLLoader.load(url));
         stage.setScene(s);
+
+        // HAPUS bagian stage.setWidth(...) dan stage.setHeight(...)
+        
+        // TAMBAHKAN INI:
+        // Memaksa Stage menyesuaikan ukurannya dengan ukuran Desain FXML
+        stage.sizeToScene(); 
+        
+        // Opsional: Taruh di tengah layar
+        stage.centerOnScreen();
+
         stage.show();
     }
 
