@@ -13,15 +13,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,6 +32,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
+import javafx.util.Duration;
 
 
 /**
@@ -250,7 +263,7 @@ public class PeternakHewanController implements Initializable {
     private void btnEdit(ActionEvent event) {
         Hewan selected = tvHewan.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Peringatan", "Pilih hewan di tabel dulu!");
+            showFancyAlert("ERROR", "Gagal", "Pilih hewan di tabel dulu!");
             return;
         }
         // Isi Form
@@ -279,6 +292,12 @@ public class PeternakHewanController implements Initializable {
             displayAddHewan.setVisible(true);
             tvHewan.setDisable(true); 
         }
+        if (btnSimpanTambah != null) {
+        btnSimpanTambah.setVisible(true); 
+    }
+        if (btnUpdate != null) {
+        btnUpdate.setVisible(false); 
+    }
     }
 
     @FXML
@@ -286,7 +305,7 @@ public class PeternakHewanController implements Initializable {
         Hewan selected = tvHewan.getSelectionModel().getSelectedItem();
         
         if (selected == null) {
-            showAlert("Peringatan", "Pilih hewan dulu!");
+            showFancyAlert("WARNING","Peringatan", "Pilih hewan dulu!");
             return;
         }
 
@@ -357,7 +376,7 @@ public class PeternakHewanController implements Initializable {
             produkDAO.addProduk(baru);
             
             System.out.println("Tipe produk: " + tipe);
-            showAlert("Sukses", "Produk berhasil ditambakan " + tipe);
+            showFancyAlert("SUCCESS","Sukses", "Produk berhasil ditambakan " + tipe);
 
             // (Update Kondisi Hewan jadi Death)
             if ("daging".equalsIgnoreCase(tipe)) {
@@ -401,10 +420,10 @@ public class PeternakHewanController implements Initializable {
                 selected.setPenyakit(txtPenyakit.getText());
 
                 hewanDAO.update(selected); 
-                showAlert("Sukses", "Data Berhasil Diupdate!");
+                showFancyAlert("SUCCESS","Sukses", "Data Berhasil Diupdate!");
                 
             } catch (Exception e) {
-                showAlert("Error", "Gagal update: " + e.getMessage());
+                showFancyAlert("ERROR","Waduh Gagal!", "Gagal update: " + e.getMessage());
             } finally {
                 loadDataFromDatabase();
                 clearForm();
@@ -443,7 +462,7 @@ public class PeternakHewanController implements Initializable {
 
             // Validasi
             if (beratStr.isEmpty() || usiaStr.isEmpty() || kondisi.isEmpty()) {
-                showAlert("Error", "Mohon isi Berat, Usia, dan Kondisi!");
+                showFancyAlert("WARNING","Error", "Mohon isi Berat, Usia, dan Kondisi!");
                 return;
             }
 
@@ -466,10 +485,10 @@ public class PeternakHewanController implements Initializable {
             tvHewan.setDisable(false); 
             displayAddHewan.setVisible(false); // Tutup popup
             
-            showAlert("Sukses", "Data Hewan Berhasil Ditambahkan!");
+            showFancyAlert("SUCCESS","Sukses", "Data Hewan Berhasil Ditambahkan!");
 
         } catch (NumberFormatException e) {
-            showAlert("Error", "Berat dan Usia harus berupa angka!");
+            showFancyAlert("ERROR","Error", "Berat dan Usia harus berupa angka!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -538,13 +557,83 @@ public class PeternakHewanController implements Initializable {
         loadDataFromDatabase();
     }
 
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+    private void showFancyAlert(String type, String title, String message) {
+    // 1. Setup Stage Tanpa Bingkai
+    Stage stage = new Stage();
+    stage.initModality(Modality.APPLICATION_MODAL); // Blokir window belakang
+    stage.initStyle(StageStyle.TRANSPARENT); // Transparan (GOKILNYA DISINI)
+    
+    // 2. Tentukan Warna & Ikon berdasarkan Tipe
+    String colorCode = "#11998e"; // Default Hijau (Success)
+    String iconSymbol = "✔";
+    if (type.equalsIgnoreCase("ERROR")) {
+        colorCode = "#ff5f6d"; // Merah
+        iconSymbol = "X";
+    } else if (type.equalsIgnoreCase("WARNING")) {
+        colorCode = "#ffc371"; // Kuning/Oranye
+        iconSymbol = "!";
     }
+
+    // 3. Buat Layout Ikon (Lingkaran)
+    Circle iconCircle = new Circle(35, Color.web(colorCode));
+    Text iconText = new Text(iconSymbol);
+    iconText.setStyle("-fx-font-size: 30px; -fx-fill: white; -fx-font-weight: bold;");
+    StackPane iconPane = new StackPane(iconCircle, iconText);
+    iconPane.setTranslateY(-40); // Geser ke atas biar nongol (Floating Effect)
+
+    // 4. Buat Label Judul & Pesan
+    Label lblTitle = new Label(title);
+    lblTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;");
+    
+    Label lblMessage = new Label(message);
+    lblMessage.setStyle("-fx-font-size: 14px; -fx-text-fill: #666; -fx-wrap-text: true; -fx-text-alignment: center;");
+    
+    // 5. Buat Tombol OK
+    Button btnOk = new Button("OKE, MENGERTI");
+    btnOk.setStyle(
+        "-fx-background-color: " + colorCode + ";" +
+        "-fx-text-fill: white;" +
+        "-fx-font-weight: bold;" +
+        "-fx-font-size: 14px;" +
+        "-fx-background-radius: 20;" +
+        "-fx-padding: 10 30;" +
+        "-fx-cursor: hand;"
+    );
+    // Efek Hover Tombol
+    String finalColor = colorCode;
+    btnOk.setOnMouseEntered(e -> btnOk.setStyle("-fx-background-color: " + finalColor + "; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 20; -fx-padding: 10 30; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);"));
+    btnOk.setOnMouseExited(e -> btnOk.setStyle("-fx-background-color: " + finalColor + "; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 20; -fx-padding: 10 30; -fx-cursor: hand;"));
+    btnOk.setOnAction(e -> stage.close());
+
+    // 6. Susun Layout Kartu (Card)
+    VBox cardLayout = new VBox(15, iconPane, lblTitle, lblMessage, btnOk);
+    cardLayout.setAlignment(Pos.CENTER);
+    cardLayout.setStyle(
+        "-fx-background-color: white;" +
+        "-fx-background-radius: 20;" +
+        "-fx-padding: 30 20 20 20;" +
+        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 20, 0, 0, 10);"
+    );
+    cardLayout.setMaxWidth(350);
+    cardLayout.setMinHeight(200);
+
+    // 7. Bungkus dalam Root Transparan agar shadow tidak terpotong
+    StackPane root = new StackPane(cardLayout);
+    root.setStyle("-fx-background-color: transparent; -fx-padding: 20;"); // Padding buat bayangan
+
+    // 8. Tampilkan Scene
+    Scene scene = new Scene(root);
+    scene.setFill(Color.TRANSPARENT); // Background Scene Transparan
+    stage.setScene(scene);
+    
+    // 9. ANIMASI MUNCUL (Pop Up Scale)
+    ScaleTransition st = new ScaleTransition(Duration.millis(250), cardLayout);
+    st.setFromX(0.5); st.setFromY(0.5);
+    st.setToX(1.0); st.setToY(1.0);
+    st.play();
+
+    stage.showAndWait();
+}
     
     
     

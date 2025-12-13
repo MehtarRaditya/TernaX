@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -87,61 +88,88 @@ public class PeternakPanenController implements Initializable {
         idColProduk.setCellValueFactory(new PropertyValueFactory<>("id"));
         idHewanCol.setCellValueFactory(new PropertyValueFactory<>("idHewan"));
         
+        kuantitasColProduk.setCellFactory(column -> new TableCell<Produk, Double>() {
+    @Override
+    protected void updateItem(Double item, boolean empty) {
+        super.updateItem(item, empty);
+
+        if (empty || item == null) {
+            setText(null);
+        } else {
+            // Ambil data satu baris (objek Produk) untuk cek Tipe-nya
+            Produk produkSaatIni = getTableView().getItems().get(getIndex());
+            String tipe = produkSaatIni.getTipe(); // Pastikan di class Produk ada method getTipe()
+
+            // LOGIKA FORMATTING
+            if (tipe != null && tipe.equalsIgnoreCase("Telur")) {
+                // KHUSUS TELUR: Ubah Double jadi Integer (hilangkan .0)
+                setText(item.intValue() + " Butir");
+            } else if (tipe != null && tipe.equalsIgnoreCase("Susu")) {
+                // Susu tetap Double
+                setText(item + " Liter");
+            } else {
+                // Default (Daging, dll) tambah Kg
+                setText(item + " Kg");
+            }
+        }
+    }
+});
+        
         loadDataFromDatabaseProduk();
         
         
     }
 
-    private void loadDataFromDatabaseProduk() {
-        List<Produk> list = produkDAO.getAll();
-        dataProduk = FXCollections.observableArrayList(list);
-        tvProduk.setItems(dataProduk);
-        
-        double hitungDagingSapi = 0;
-        double hitungDagingAyam = 0;
-        double hitungTelur = 0;
-        double hitungSusu = 0;
-        
-        for (Produk p : list) {
-            String tipe = p.getTipe(); 
-            double qty = p.getKuantitas();
-            int idHewan = p.getIdHewan(); // Ambil ID Hewan dari produk
-            
-            if (tipe != null) {
-                if (tipe.equalsIgnoreCase("Daging")) {
-                    // CEK JENIS HEWANNYA APA?
-                    String jenisHewan = hewanDAO.getJenisById(idHewan);
-                    
-                    if (jenisHewan.equalsIgnoreCase("Sapi")) {
-                        hitungDagingSapi += qty;
-                    } else if (jenisHewan.equalsIgnoreCase("Ayam")) {
-                        hitungDagingAyam += qty;
+        private void loadDataFromDatabaseProduk() {
+            List<Produk> list = produkDAO.getAll();
+            dataProduk = FXCollections.observableArrayList(list);
+            tvProduk.setItems(dataProduk);
+
+            double hitungDagingSapi = 0;
+            double hitungDagingAyam = 0;
+            double hitungTelur = 0;
+            double hitungSusu = 0;
+
+            for (Produk p : list) {
+                String tipe = p.getTipe(); 
+                double qty = p.getKuantitas();
+                int idHewan = p.getIdHewan(); // Ambil ID Hewan dari produk
+
+                if (tipe != null) {
+                    if (tipe.equalsIgnoreCase("Daging")) {
+                        // CEK JENIS HEWANNYA APA?
+                        String jenisHewan = hewanDAO.getJenisById(idHewan);
+
+                        if (jenisHewan.equalsIgnoreCase("Sapi")) {
+                            hitungDagingSapi += qty;
+                        } else if (jenisHewan.equalsIgnoreCase("Ayam")) {
+                            hitungDagingAyam += qty;
+                        }
+
+                    } else if (tipe.equalsIgnoreCase("Telur")) {
+                        hitungTelur += qty;
+                    } else if (tipe.equalsIgnoreCase("Susu")) {
+                        hitungSusu += qty;
                     }
-                    
-                } else if (tipe.equalsIgnoreCase("Telur")) {
-                    hitungTelur += qty;
-                } else if (tipe.equalsIgnoreCase("Susu")) {
-                    hitungSusu += qty;
                 }
             }
-        }
-        
-        // --- TAMPILKAN KE LABEL ---
-        
-        
-        // Total Daging Sapi Saja
-        if(totalDaging != null) { // Pastikan fx:id label ini ada
-            totalDaging.setText(String.valueOf(hitungDagingSapi+ " Kg"));
-        }
-        
-        // Total Daging Ayam Saja
-        if(totalDagingAyam != null) { // Pastikan fx:id label ini ada
-            totalDagingAyam.setText(String.valueOf(hitungDagingAyam) + " Kg");
-        }
 
-        if(totaltelur != null) totaltelur.setText(String.valueOf(hitungTelur + " Butir"));
-        if(totalSusu != null) totalSusu.setText(String.valueOf(hitungSusu + " Liter"));
-    }
+            // --- TAMPILKAN KE LABEL ---
+
+
+            // Total Daging Sapi Saja
+            if(totalDaging != null) { // Pastikan fx:id label ini ada
+                totalDaging.setText(String.valueOf(hitungDagingSapi+ " Kg"));
+            }
+
+            // Total Daging Ayam Saja
+            if(totalDagingAyam != null) { // Pastikan fx:id label ini ada
+                totalDagingAyam.setText(String.valueOf(hitungDagingAyam) + " Kg");
+            }
+
+            if(totaltelur != null) totaltelur.setText((int) hitungTelur + " Butir");
+            if(totalSusu != null) totalSusu.setText(String.valueOf(hitungSusu + " Liter"));
+        }
 
     @FXML
     private void btnHewan(ActionEvent event) {
