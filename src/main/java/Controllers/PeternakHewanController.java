@@ -501,7 +501,7 @@ public class PeternakHewanController implements Initializable {
             javafx.stage.Stage stage = (javafx.stage.Stage) btnLogout.getScene().getWindow();
             
             // 2. Cari file FXML tujuan
-            java.io.File file = new java.io.File("src/main/java/Views/login.fxml");
+            java.io.File file = new java.io.File("src/main/java/Views/Login.fxml");
             
             // 3. Ubah jadi URL
             java.net.URL url = file.toURI().toURL();

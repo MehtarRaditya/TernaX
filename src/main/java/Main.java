@@ -11,7 +11,7 @@ import static javafx.application.Application.launch;
 
 public class Main extends Application {
     public void start(Stage stage) throws Exception {
-        URL url = new File("src/main/java/Views/login.fxml").toURI().toURL();
+        URL url = new File("src/main/java/Views/Login.fxml").toURI().toURL();
         Scene s = new Scene(FXMLLoader.load(url));
         stage.setScene(s);
 
