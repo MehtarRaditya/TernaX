@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="peternakTampilan" prefHeight="512.0" prefWidth="1016.0" style="-fx-background-color: #d3d3d3;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
+<AnchorPane id="AnchorPane" fx:id="peternakTampilan" prefHeight="512.0" prefWidth="1016.0" style="-fx-background-color: d3d3d3;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
     <stylesheets>
         <URL value="@peternakhewan.css" />
     </stylesheets>
@@ -34,48 +34,35 @@
             </children>
         </Pane>
 
-        <Pane depthTest="DISABLE" layoutX="405.0" layoutY="125.0" prefHeight="70.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 15;">
-            <children>
-                <Text layoutX="31.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL HEWAN PERTENAKAN" wrappingWidth="438.7814636230469">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="30.0" />
-                    </font>
-                </Text>
-            </children>
-        </Pane>
+        <Pane depthTest="DISABLE" layoutX="405.0" layoutY="125.0" prefHeight="70.0" prefWidth="500.0" styleClass="header-box">
+         <children>
+            <Text layoutX="31.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL HEWAN PETERNAKAN" wrappingWidth="438.78" styleClass="header-text">
+               <font>
+                  <Font name="Nirmala UI Bold" size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
 
-        <Pane layoutX="320.0" layoutY="210.0" prefHeight="150.0" prefWidth="680.0" style="-fx-background-color: transpard; -fx-background-radius: 25;">
-            <children>
-                <Pane layoutX="50.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" style="-fx-background-color: #96c8a2; -fx-background-radius: 10;">
-                    <children>
-                        <Text layoutX="93.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AYAM" wrappingWidth="75.92916870117188">
-                            <font>
-                                <Font name="Nirmala UI Bold" size="23.0" />
-                            </font>
-                        </Text>
-                        <Label fx:id="totalAyam" alignment="CENTER" layoutX="65.0" layoutY="67.0" prefHeight="42.0" prefWidth="130.0" text="Total Ayam" textAlignment="CENTER">
-                            <font>
-                                <Font size="21.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </Pane>
-                <Pane layoutX="370.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" style="-fx-background-color: #96c8a2; -fx-background-radius: 10;">
-                    <children>
-                        <Text layoutX="110.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAPI" wrappingWidth="56.946876525878906">
-                            <font>
-                                <Font name="Nirmala UI Bold" size="23.0" />
-                            </font>
-                        </Text>
-                        <Label fx:id="totalSapi" alignment="CENTER" layoutX="71.0" layoutY="70.0" prefHeight="42.0" prefWidth="130.0" text="Total Sapi" textAlignment="CENTER">
-                            <font>
-                                <Font size="21.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </Pane>
-            </children>
-        </Pane>
+      <Pane layoutX="320.0" layoutY="210.0" prefHeight="150.0" prefWidth="680.0" style="-fx-background-color: transparent;">
+         <children>
+            
+            <Pane layoutX="50.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="AYAM" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" text="0 Ekor" styleClass="summary-value" />
+               </children>
+            </Pane>
+            
+            <Pane layoutX="370.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="SAPI" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalSapi" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" text="0 Ekor" styleClass="summary-value" />
+               </children>
+            </Pane>
+            
+         </children>
+      </Pane>
 
         <Pane layoutX="310.0" layoutY="370.0" prefHeight="265.0" prefWidth="680.0" style="-fx-background-color: white; -fx-background-radius: 25;">
             <children>
@@ -115,7 +102,7 @@
             </children>
         </Pane>
 
-        <Pane layoutX="-3.0" prefHeight="641.0" prefWidth="275.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+        <Pane layoutX="-3.0" prefHeight="641.0" prefWidth="275.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <ImageView fitHeight="119.0" fitWidth="148.0" layoutX="-34.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -130,7 +117,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <Pane layoutX="-3.0" layoutY="140.0" prefHeight="11.0" prefWidth="279.0" style="-fx-background-color: gray;" />
+                <Pane layoutX="-3.0" layoutY="140.0" prefHeight="11.0" prefWidth="275.0" style="-fx-background-color: gray;" />
                 
                 <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="-1.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -174,7 +161,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="25.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="17.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../image/logout.jpg" />
                     </image>
@@ -224,7 +211,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-                <Button fx:id="btnUpdate" layoutX="147.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleActionEdit" prefHeight="37.0" prefWidth="97.0" stylesheets="@../css/peternakhewan.css" text="Update" />
+                <Button fx:id="btnUpdate" layoutX="33.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleActionEdit" prefHeight="37.0" prefWidth="97.0" stylesheets="@../css/peternakhewan.css" text="Update" />
                 <Button fx:id="btnKembali" layoutX="465.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleBackAddHewan" prefHeight="37.0" prefWidth="104.0" stylesheets="@../css/peternakhewan.css" text="Kembali" />
             </children>
         </AnchorPane>
