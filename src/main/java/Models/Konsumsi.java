@@ -4,33 +4,21 @@ public class Konsumsi {
     private int id;
     private String name;
     private String tipe;
-    private int idLogistik;
-    private String tanggalExpire;
+    private int Stok;
 
-    public Konsumsi(int id, String name, String tipe, int idLogistik, String tanggalExpire) {
+    public Konsumsi(int id, String name, String tipe, int Stok) {
         this.id = id;
         this.name = name;
         this.tipe = tipe;
-        this.idLogistik = idLogistik;
-        this.tanggalExpire = tanggalExpire;
+        this.Stok = Stok;
     }
 
-    public Konsumsi(String name, String tipe, int idLogistik, String tanggalExpire) {
-        this.name = name;
-        this.tipe = tipe;
-        this.idLogistik = idLogistik;
-        this.tanggalExpire = tanggalExpire;
+    
+    public Konsumsi() {
     }
 
-    public Konsumsi(String name, String tipe, String tanggalExpire) {
-        this.name = name;
-        this.tipe = tipe;
-        this.tanggalExpire = tanggalExpire;
-    }
     
     
-    
-
     public int getId() {
         return id;
     }
@@ -55,24 +43,11 @@ public class Konsumsi {
         this.tipe = tipe;
     }
 
-    public int getIdLogistik() {
-        return idLogistik;
+    public int getStok() {
+        return Stok;
     }
 
-    public void setIdLogistik(int idLogistik) {
-        this.idLogistik = idLogistik;
+    public void setStok(int Stok) {
+        this.Stok = Stok;
     }
-
-    public String getTanggalExpire() {
-        return tanggalExpire;
-    }
-
-    public void setTanggalExpire(String tanggalExpire) {
-        this.tanggalExpire = tanggalExpire;
-    }
-    
-    
-    
-
-    
 }
