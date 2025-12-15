@@ -82,7 +82,7 @@ public class ProdukDAO {
                         while (rs.next()) {
                             String id = rs.getString("id");
                             String jenis = rs.getString("jenis");
-                            double jumlah = rs.getDouble("kuantitas");
+                            double jumlah = rs.getDouble("jumlah");
                             String kualitas = rs.getString("kualitas");
                             int hewan_id = rs.getInt("hewan");
                             String tanggalDiperoleh = rs.getString("tanggal_diperoleh");
@@ -104,4 +104,42 @@ public class ProdukDAO {
 
                     return produkList;
                 }
+    public double getStokById(Connection conn, String produkId) throws SQLException {
+        String sql = "SELECT kuantitas FROM produk WHERE id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            setId(ps, 1, produkId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("kuantitas");
+                }
+            }
+        }
+
+        throw new SQLException("Produk tidak ditemukan (id=" + produkId + ")");
+    }
+    
+    public void kurangiStok(Connection conn, String produkId, double qty) throws SQLException {
+        String sql = """
+            UPDATE produk
+            SET kuantitas = kuantitas - ?
+            WHERE id = ?
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setDouble(1, qty);
+            setId(ps, 2, produkId);
+            ps.executeUpdate();
+        }
+    }
+    
+    private void setId(PreparedStatement ps, int index, String id) throws SQLException {
+        if (id != null && id.matches("\\d+")) {
+            ps.setInt(index, Integer.parseInt(id));
+        } else {
+            ps.setString(index, id);
+        }
+    }
+
 }

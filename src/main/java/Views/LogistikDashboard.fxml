@@ -15,13 +15,13 @@
     </stylesheets>
    <children>
       <DatePicker fx:id="dtPickPembelian" layoutX="42.0" layoutY="40.0" promptText="tanggal pembelian" />
-      <ComboBox fx:id="ChbBox" layoutX="42.0" layoutY="76.0" prefHeight="26.0" prefWidth="175.0" promptText="Konsumsi" />
+      <ComboBox fx:id="ChbKonsumsi" layoutX="42.0" layoutY="76.0" onAction="#handleTipeChanged" prefHeight="26.0" prefWidth="175.0" promptText="Konsumsi" />
       <TextField fx:id="txtKuantitas" layoutX="42.0" layoutY="146.0" prefHeight="26.0" prefWidth="175.0" promptText="Kuantitas" />
       <Button layoutX="42.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleButtonTambah" text="Tambah" />
-      <Button fx:id="handleButtonSimpan" layoutX="518.0" layoutY="346.0" mnemonicParsing="false" text="Simpan" />
+      <Button fx:id="handleButtonSimpan" layoutX="518.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleButtonSimpan" text="Simpan" />
       <Button layoutX="274.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleButtonHapus" text="Hapus" />
-      <ComboBox layoutX="42.0" layoutY="110.0" prefHeight="26.0" prefWidth="175.0" promptText="Nama Konsumsi" />
-      <TableView layoutX="250.0" layoutY="46.0" prefHeight="256.0" prefWidth="318.0">
+      <ComboBox fx:id="chbNamaKonsum" layoutX="42.0" layoutY="110.0" prefHeight="26.0" prefWidth="175.0" promptText="Nama Konsumsi" />
+      <TableView fx:id="tvkeranjang" layoutX="250.0" layoutY="46.0" prefHeight="256.0" prefWidth="318.0">
         <columns>
           <TableColumn fx:id="colNamaKonsum" prefWidth="112.79998779296875" text="Nama Konsumsi" />
           <TableColumn fx:id="colTipe" prefWidth="90.4000244140625" text="Tipe" />

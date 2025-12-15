@@ -7,8 +7,16 @@ public class Produk {
     private double kuantitas;
     private String kualitas;
     private int idHewan;
-    
-    
+
+    public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas, int idHewan) {
+        this.id = id;
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.tipe = tipe;
+        this.kuantitas = kuantitas;
+        this.kualitas = kualitas;
+        this.idHewan = idHewan;
+    }
+
     public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
@@ -16,13 +24,9 @@ public class Produk {
         this.kuantitas = kuantitas;
         this.kualitas = kualitas;
     }
+    
 
-    public Produk(String id, String tanggalDiperoleh, String tipe, String kualitas) {
-        this.id = id;
-        this.tanggalDiperoleh = tanggalDiperoleh;
-        this.tipe = tipe;
-        this.kualitas = kualitas;
-    }
+    
 
     public Produk(String tanggalDiperoleh, String tipe, double kuantitas) {
         this.tanggalDiperoleh = tanggalDiperoleh;
@@ -37,17 +41,9 @@ public class Produk {
         this.kualitas = kualitas;
         this.idHewan = idHewan;
     }
-    
-    
 
     public Produk() {
     }
-    
-    
-    
-    
-    
-    
 
     public String getId() {
         return id;
@@ -73,6 +69,14 @@ public class Produk {
         this.tipe = tipe;
     }
 
+    public double getKuantitas() {
+        return kuantitas;
+    }
+
+    public void setKuantitas(double kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+
     public String getKualitas() {
         return kualitas;
     }
@@ -88,14 +92,10 @@ public class Produk {
     public void setIdHewan(int idHewan) {
         this.idHewan = idHewan;
     }
-
-    public double getKuantitas() {
-        return kuantitas;
-    }
-
-    public void setKuantitas(double kuantitas) {
-        this.kuantitas = kuantitas;
-    }
+    
+    
+    
+    
     
 
 }

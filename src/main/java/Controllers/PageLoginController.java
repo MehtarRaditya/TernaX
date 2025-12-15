@@ -120,12 +120,7 @@ public class PageLoginController implements Initializable {
                     System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
                     System.out.println("Sekarang mencoba memuat dashboard...");
                     Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    if (role.equals("Manager")) {
-                        url = new File("src/main/java/Views/ManagerKaryawan.fxml").toURI().toURL();
-                    }
-                    else if (role.equals("Peternak")) {
-                        url = new File("src/main/java/Views/peternakHewan.fxml").toURI().toURL();
-                    }
+                    URL url = new File("src/main/java/Views/PemberianPakanDashboard.fxml").toURI().toURL();
                     Parent root = FXMLLoader.load(url);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
