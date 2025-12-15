@@ -39,9 +39,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author Muham
  */
-
-    
 public class LogistikDashboardController implements Initializable {
+
     private ObservableList<DetailPembelianItem> keranjang = FXCollections.observableArrayList();
     private final KonsumsiDAO konsumsiDAO = new KonsumsiDAO();
     private final TransaksiPembelianDAO transaksiPembelianDAO = new TransaksiPembelianDAO();
@@ -70,41 +69,41 @@ public class LogistikDashboardController implements Initializable {
      * Initializes the controller class.
      */
     private final Map<String, List<String>> konsumsiByTipe = new HashMap<>();
-    
-     private final ObservableList<String> tipeList = FXCollections.observableArrayList(
-        "Pakan Ayam", "Pakan Sapi", "Vitamin", "Obat"
+
+    private final ObservableList<String> tipeList = FXCollections.observableArrayList(
+            "Pakan Ayam", "Pakan Sapi", "Vitamin", "Obat"
     );
 
     private final ObservableList<String> pakanAyam = FXCollections.observableArrayList(
-        "Jagung", "Cacing", "KFC"
+            "Jagung", "Cacing", "KFC"
     );
 
     private final ObservableList<String> pakanSapi = FXCollections.observableArrayList(
-        "Rumput gajah", "Dedak Padi"
+            "Rumput gajah", "Dedak Padi"
     );
 
     private final ObservableList<String> vitamin = FXCollections.observableArrayList(
-        "Vitamin larut lemak", "Vitamin B Kompleks", "Vitamin C"
+            "Vitamin larut lemak", "Vitamin B Kompleks", "Vitamin C"
     );
 
     private final ObservableList<String> obat = FXCollections.observableArrayList(
-        "Antibiotik/Antibakteri", "Antiparasit"
+            "Antibiotik/Antibakteri", "Antiparasit"
     );
-    
+
     private List<Konsumsi> allKonsumsi;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          // 1) ambil semua konsumsi dari DB
+        // 1) ambil semua konsumsi dari DB
         allKonsumsi = konsumsiDAO.getAll();
 
         // 2) isi combo TIPE (distinct)
         ObservableList<String> tipeList = FXCollections.observableArrayList(
-            allKonsumsi.stream()
-                .map(Konsumsi::getTipe)
-                .filter(t -> t != null && !t.isBlank())
-                .distinct()
-                .collect(Collectors.toList())
+                allKonsumsi.stream()
+                        .map(Konsumsi::getTipe)
+                        .filter(t -> t != null && !t.isBlank())
+                        .distinct()
+                        .collect(Collectors.toList())
         );
         ChbKonsumsi.setItems(tipeList);
 
@@ -130,8 +129,8 @@ public class LogistikDashboardController implements Initializable {
             }
 
             List<Konsumsi> filtered = allKonsumsi.stream()
-                .filter(k -> newVal.equalsIgnoreCase(k.getTipe()))
-                .collect(Collectors.toList());
+                    .filter(k -> newVal.equalsIgnoreCase(k.getTipe()))
+                    .collect(Collectors.toList());
 
             chbNamaKonsum.setItems(FXCollections.observableArrayList(filtered));
             chbNamaKonsum.getSelectionModel().clearSelection();
@@ -143,7 +142,7 @@ public class LogistikDashboardController implements Initializable {
             }
         });
     }
-    
+
     private void setKonsumsiComboBoxDisplay(ComboBox<Konsumsi> combo) {
         combo.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -162,7 +161,7 @@ public class LogistikDashboardController implements Initializable {
         });
     }
 
-@FXML
+    @FXML
     private void handleButtonTambah(ActionEvent event) {
         String tipe = ChbKonsumsi.getValue();
         Konsumsi selected = chbNamaKonsum.getValue(); // <-- object Konsumsi
@@ -202,7 +201,6 @@ public class LogistikDashboardController implements Initializable {
         txtKuantitas.clear();
     }
 
-
     @FXML
     private void handleButtonHapus(ActionEvent event) {
         DetailPembelianItem selectedItem = tvkeranjang.getSelectionModel().getSelectedItem();
@@ -215,7 +213,7 @@ public class LogistikDashboardController implements Initializable {
 
     @FXML
     private void handleButtonSimpan(ActionEvent event) throws SQLException {
-         if (dtPickPembelian.getValue() == null) {
+        if (dtPickPembelian.getValue() == null) {
             System.out.println("Tanggal pembelian belum diisi!");
             return;
         }
@@ -237,9 +235,9 @@ public class LogistikDashboardController implements Initializable {
         // 2) detail + update stok
         for (DetailPembelianItem item : keranjang) {
             DetailPembelian detail = new DetailPembelian(
-                idPembelianBaru,
-                item.getIdKonsumsi(),
-                item.getKuantitas()
+                    idPembelianBaru,
+                    item.getIdKonsumsi(),
+                    item.getKuantitas()
             );
             detailPembelianDAO.insert(detail);
 
@@ -257,15 +255,9 @@ public class LogistikDashboardController implements Initializable {
 
         System.out.println("Berhasil simpan transaksi pembelian. ID: " + idPembelianBaru);
     }
+
     @FXML
     private void handleTipeChanged(ActionEvent event) {
-        
-    }
-    }
 
-    
-        
-
-    
-    
-    
+    }
+}

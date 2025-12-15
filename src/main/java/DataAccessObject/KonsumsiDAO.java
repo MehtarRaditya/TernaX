@@ -82,4 +82,20 @@ public class KonsumsiDAO {
               System.err.println("gagal update"+ e.getMessage());
         }
     }
+    
+    public int getStokById(int idKonsumsi) {
+    String sql = "SELECT stok FROM konsumsi WHERE id = ?";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, idKonsumsi);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt("stok");
+        }
+    } catch (SQLException e) {
+        System.err.println("Gagal ambil stok: " + e.getMessage());
+    }
+    return -1;
+}
+
 }
