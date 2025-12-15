@@ -1,0 +1,91 @@
+/* ===============================
+   TABLE VIEW UTAMA
+   =============================== */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #cfcfcf;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 5;
+}
+
+/* ===============================
+   HEADER TABLE
+   =============================== */
+.table-view .column-header-background {
+    -fx-background-color: #96c8a2;
+    -fx-background-radius: 15 15 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #7fb18b transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #1f3d2b;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER;
+}
+
+/* ===============================
+   ROW & CELL
+   =============================== */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #eeeeee transparent;
+    -fx-cell-size: 36px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f7fdf9;
+}
+
+/* Hover row */
+.table-row-cell:hover {
+    -fx-background-color: #e2f2e8;
+}
+
+/* Selected row */
+.table-row-cell:selected {
+    -fx-background-color: #6fb98f;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white;
+}
+
+/* ===============================
+   CELL TEXT
+   =============================== */
+.table-cell {
+    -fx-text-fill: #333333;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER;
+}
+
+/* ===============================
+   SCROLLBAR
+   =============================== */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #96c8a2;
+    -fx-background-radius: 10;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #96c8a2;
+    -fx-background-radius: 10;
+}
+
+/* ===============================
+   PLACEHOLDER (DATA KOSONG)
+   =============================== */
+.table-view .placeholder .label {
+    -fx-text-fill: #999999;
+    -fx-font-size: 14px;
+}

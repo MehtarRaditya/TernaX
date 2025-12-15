@@ -114,6 +114,8 @@ public class PageLoginController implements Initializable {
             try{
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
+                    URL url = null;
+                    String role = karyawan.getRole();
                     Session.setLoggedInKaryawan(karyawan);
                     System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
                     System.out.println("Sekarang mencoba memuat dashboard...");

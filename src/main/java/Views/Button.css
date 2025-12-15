@@ -1,0 +1,130 @@
+/* Button Berwarna Hijau*/
+#btnGreen {
+    -fx-background-color: linear-gradient(to bottom right, #4CAF50, #2E7D32);
+    -fx-text-fill: #ffffff;        /* teks putih */
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Nirmala UI";
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 8;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
+}
+
+#btnGreen:hover {
+    -fx-background-color: linear-gradient(to bottom right, #66BB6A, #388E3C);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
+}
+
+/*Button Berwarna Abu*/
+#btnGrey {
+    -fx-background-color: linear-gradient(to bottom right, #e0e0e0, #bfbfbf);
+    -fx-text-fill: #000000;        /* teks hitam */
+    -fx-font-size: 12px;           /* ukuran kecil */
+    -fx-font-weight: bold;
+    -fx-font-family: "Nirmala UI";
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-padding: 6 14 6 14;        /* kecil dan proporsional */
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 8;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.20), 6, 0.25, 0, 1);
+}
+
+#btnGrey:hover {
+    -fx-background-color: linear-gradient(to bottom right, #f2f2f2, #c9c9c9);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
+}
+
+/*Button Berwarna Merah*/
+#btnWarning {
+    -fx-background-color: linear-gradient(to bottom right, #F44336, #C62828);
+    -fx-text-fill: #ffffff;        /* teks putih */
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Nirmala UI";
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 8;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
+}
+#btnWarning:hover {
+    -fx-background-color: linear-gradient(to bottom right, #EF5350, #D32F2F);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
+}
+#btnWarning:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #C62828, #B71C1C);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: none;
+}
+
+/*Button Berwarna Biru*/
+#btnBlue {
+    -fx-background-color: linear-gradient(to bottom right, #2196F3, #1565C0);
+    -fx-text-fill: #ffffff;        /* teks putih */
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Nirmala UI";
+
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 8;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
+}
+
+#btnBlue:hover {
+    -fx-background-color: linear-gradient(to bottom right, #42A5F5, #1976D2);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
+}
+
+#btnBlue:pressed {
+    -fx-background-color: linear-gradient(to bottom right, #1565C0, #0D47A1);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: none;
+}
+
+
+/*Button Navigation Bar*/
+#btnNavBar {
+    -fx-background-color: #00000000;
+    -fx-text-fill: #16213e;
+    -fx-background-radius: 12;
+    -fx-font-size: 16px;
+    -fx-font-family: "Nirmala UI";
+    -fx-font-weight: bold;
+}
+#btnNavBar:hover {
+    -fx-background-color: rgba(128, 128, 128, 0.45);
+}
+#btnNavBar:pressed {
+    -fx-background-color: rgba(128, 128, 128, 0.60);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
