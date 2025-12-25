@@ -551,6 +551,33 @@ public class PeternakHewanController implements Initializable {
     @FXML
     private void handleActionToProdukKonsumsi(ActionEvent event) {
     }
+
+    @FXML
+    void handleActionToPakan(ActionEvent event) {
+        try {
+            // 1. Ambil Stage (Layar) dari tombol btnProduk
+            javafx.stage.Stage stage = (javafx.stage.Stage) btnProduk.getScene().getWindow();
+
+            // 2. Cari file FXML tujuan
+            java.io.File file = new java.io.File("src/main/java/Views/PemberianPakanDashboard.fxml");
+
+            // 3. Ubah jadi URL
+            java.net.URL url = file.toURI().toURL();
+
+            // 4. Load FXML
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
+
+            // 5. Pasang Scene Baru
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Gagal pindah ke halaman Produk/Panen!");
+            e.printStackTrace();
+        }
+    }
     
     @FXML
     private void btnHewan(ActionEvent event) {
@@ -633,8 +660,9 @@ public class PeternakHewanController implements Initializable {
     st.play();
 
     stage.showAndWait();
-}
-    
-    
-    
+    }
+    @FXML
+    void btnLogout(ActionEvent event) {
+
+    }
 }

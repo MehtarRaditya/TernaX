@@ -1,0 +1,51 @@
+/* =========================================
+   1. GAYA KOTAK RINGKASAN (SUMMARY BOX)
+   ========================================= */
+
+.summary-box {
+    /* Gradasi Hijau Modern (Kiri atas ke Kanan bawah) */
+    -fx-background-color: linear-gradient(to bottom right, #11998e, #38ef7d);
+
+    /* Sudut Melengkung */
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+
+    /* Bayangan Timbul (Shadow) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Efek saat mouse diarahkan ke kotak (Hover) */
+.summary-box:hover {
+    -fx-scale-x: 1.02; /* Sedikit membesar */
+    -fx-scale-y: 1.02;
+    -fx-cursor: hand;  /* Kursor berubah jadi tangan */
+    -fx-effect: dropshadow(three-pass-box, rgba(56, 239, 125, 0.4), 15, 0, 0, 5); /* Shadow hijau bersinar */
+}
+
+/* --- Judul Kecil (Misal: "Total Telur") --- */
+.summary-label {
+    -fx-fill: #E8F5E9;           /* Putih kehijauan (agar tidak terlalu kontras) */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
+}
+
+/* --- Angka Besar (Label "Angka") --- */
+/* Ini otomatis menargetkan Label yang ada di dalam summary-box */
+.summary-box .label {
+    -fx-text-fill: white;        /* Warna Putih Bersih */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-weight: 900;        /* Extra Bold */
+    -fx-font-size: 36px;         /* Ukuran Besar */
+    -fx-alignment: center;       /* Rata tengah */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1); /* Bayangan teks sedikit */
+}
+
+/* Jika Anda menggunakan Text node untuk angka (summary-value) */
+.summary-value {
+    -fx-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 36px;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 1, 1);
+}
