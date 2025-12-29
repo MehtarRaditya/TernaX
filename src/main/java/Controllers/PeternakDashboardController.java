@@ -145,7 +145,7 @@ public class PeternakDashboardController implements Initializable {
     }
     
     private void loadDataFromDatabaseProduk() {
-        List<Produk> list = produkDAO.getAll();
+        List<Produk> list = produkDAO.getAllRiwayat();
         dataProduk = FXCollections.observableArrayList(list);
         tvProduk.setItems(dataProduk);
     }

@@ -7,6 +7,7 @@ package Controllers;
 import DataAccessObject.HewanDAO;
 import DataAccessObject.ProdukDAO;
 import Models.Hewan;
+import Models.KatalogProduk;
 import Models.Produk;
 import java.net.URL;
 import java.time.LocalDate;
@@ -89,7 +90,7 @@ public class PeternakHewanController implements Initializable {
     @FXML
     private DatePicker txtDateProduk;
     @FXML
-    private ChoiceBox<String> chcTipe;
+    private ChoiceBox<KatalogProduk> chcTipe;
     @FXML
     private Button btnKembaliProduk;
     @FXML
@@ -126,6 +127,8 @@ public class PeternakHewanController implements Initializable {
     private Button btnpanenn;
     @FXML
     private AnchorPane displayPanenProduk;
+    
+    private List<KatalogProduk> listMasterKatalog;
 
     /**
      * Initializes the controller class.
@@ -224,6 +227,15 @@ public class PeternakHewanController implements Initializable {
         if(displayAddHewan != null) {
             displayAddHewan.setVisible(false);
         }
+        
+        txtUsia.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePromptBerat();
+        });
+
+        // 2. Pasang mata-mata di pilihan JENIS (Sapi/Ayam)
+        chcJenis.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            updatePromptBerat();
+        });
       
         // Load data dari database saat aplikasi dimulai
         loadDataFromDatabase();
@@ -231,22 +243,34 @@ public class PeternakHewanController implements Initializable {
     }
 
     private void loadDataFromDatabase() {
-        List<Hewan> list = hewanDAO.getAll();
+        // 1. Ambil SEMUA data dari database (termasuk yang mati)
+        List<Hewan> allData = hewanDAO.getAll();
         
-        // hanya tampilkan hewan yang kondisinya bkn "Mati"
-        // jadi kalau tadi habis panen daging, hewannya hilang dari tabel
-        List<Hewan> hewanHidup = list.stream()
-                .filter(h -> !h.getKondisi().equalsIgnoreCase("Mati"))
+        // 2. FILTER: Ambil hanya yang MASIH HIDUP (Kondisi != "Mati")
+        // Ini akan mencakup status: "Alive", "Sehat", "Sakit", dll.
+        List<Hewan> hewanHidup = allData.stream()
+                .filter(h -> h.getKondisi() != null && !h.getKondisi().equalsIgnoreCase("Mati"))
                 .collect(Collectors.toList());
                 
+        // 3. Masukkan data yang sudah difilter ke Tabel
         dataHewan = FXCollections.observableArrayList(hewanHidup);
         tvHewan.setItems(dataHewan);
         
-        // Hitung total
-        long ayam = list.stream().filter(h -> h.getJenis().equalsIgnoreCase("Ayam")).count();
-        long sapi = list.stream().filter(h -> h.getJenis().equalsIgnoreCase("Sapi")).count();
-        if(totalAyam != null) totalAyam.setText(String.valueOf(ayam));
-        if(totalSapi != null) totalSapi.setText(String.valueOf(sapi));
+        // 4. Hitung TOTAL untuk LABEL (Pakai list 'hewanHidup', BUKAN 'allData')
+        
+        // Hitung Ayam Hidup
+        long countAyam = hewanHidup.stream()
+                .filter(h -> h.getJenis().equalsIgnoreCase("Ayam"))
+                .count();
+
+        // Hitung Sapi Hidup
+        long countSapi = hewanHidup.stream()
+                .filter(h -> h.getJenis().equalsIgnoreCase("Sapi"))
+                .count();
+
+        // 5. Update Text Label (Null Safety check biar gak error)
+        if(totalAyam != null) totalAyam.setText(String.valueOf(countAyam));
+        if(totalSapi != null) totalSapi.setText(String.valueOf(countSapi));
         
     }
 
@@ -266,7 +290,8 @@ public class PeternakHewanController implements Initializable {
             showFancyAlert("ERROR", "Gagal", "Pilih hewan di tabel dulu!");
             return;
         }
-        // Isi Form
+        
+        // Isi Form dengan data lama
         chcJenis.setValue(selected.getJenis());
         chcKelamin.setValue(selected.getKelamin());
         txtBerat.setText(String.valueOf(selected.getBerat()));
@@ -274,136 +299,182 @@ public class PeternakHewanController implements Initializable {
         txtKondisi.setText(selected.getKondisi());
         txtPenyakit.setText(selected.getPenyakit());
 
-        // Tampilkan Popup & Matikan Tabel
+        // --- ATURAN EDIT ---
+        chcJenis.setDisable(true);    // Jenis gabisa ganti
+        chcKelamin.setDisable(true);  // Kelamin gabisa ganti
+        txtKondisi.setDisable(true);  // Kondisi gabisa ganti
+        
+        // Penyakit BOLEH GANTI (Misal dari Sehat jadi Flu)
+        txtPenyakit.setDisable(false); 
+        // -------------------
+
         if (displayAddHewan != null) {
             displayAddHewan.setVisible(true);
             tvHewan.setDisable(true);
         }
-        // Atur Tombol Simpan
         if (btnSimpanTambah != null) btnSimpanTambah.setVisible(false);
         if (btnUpdate != null) btnUpdate.setVisible(true);
-        
     }
 
     @FXML
     private void btnTambah(ActionEvent event) {
-        clearForm();
+        clearForm(); // Bersihkan form dulu
+        
+        // 1. Jenis & Kelamin -> BOLEH PILIH (Karena hewan baru)
+        chcJenis.setDisable(false);
+        chcKelamin.setDisable(false);
+        
+        // 2. KONDISI -> OTOMATIS "Alive" & DIKUNCI
+        txtKondisi.setText("Alive"); 
+        txtKondisi.setDisable(true); 
+        
+        // 3. PENYAKIT -> OTOMATIS "Sehat" & DIKUNCI
+        txtPenyakit.setText("Sehat"); 
+        txtPenyakit.setDisable(true);
+        
+        // Reset Prompt Text Berat
+        txtBerat.setPromptText("Masukkan Berat (Kg)");
+
+        // Tampilkan Popup
         if (displayAddHewan != null) {
             displayAddHewan.setVisible(true);
             tvHewan.setDisable(true); 
         }
-        if (btnSimpanTambah != null) {
-        btnSimpanTambah.setVisible(true); 
-    }
-        if (btnUpdate != null) {
-        btnUpdate.setVisible(false); 
-    }
+        
+        // Atur tombol Simpan/Update
+        if (btnSimpanTambah != null) btnSimpanTambah.setVisible(true); 
+        if (btnUpdate != null) btnUpdate.setVisible(false);
     }
 
     @FXML
     private void btnPanenProduk(ActionEvent event) {
         Hewan selected = tvHewan.getSelectionModel().getSelectedItem();
-        
-        if (selected == null) {
-            showFancyAlert("WARNING","Peringatan", "Pilih hewan dulu!");
-            return;
-        }
+    
+    if (selected == null) {
+        showFancyAlert("WARNING", "Peringatan", "Pilih hewan dulu!");
+        return;
+    }
 
-        // Reset Form
-        txtKuantitas.clear();
-        txtDateProduk.setValue(LocalDate.now());
-        chcTipe.getItems().clear();
+    // 1. AMBIL DATA MASTER DARI DATABASE (Cek null biar gak query terus)
+    // Pastikan produkDAO sudah di-new di method initialize() ya!
+    if (listMasterKatalog == null || listMasterKatalog.isEmpty()) {
+        if (produkDAO == null) produkDAO = new ProdukDAO(); // Jaga-jaga kalau lupa init
+        listMasterKatalog = produkDAO.getKatalogList();
+    }
 
-        // logika penentuan tipe produk (Sapi/Ayam & Jantan/Betina)
-        String jenis = selected.getJenis();     // "Sapi" atau "Ayam"
-        String kelamin = selected.getKelamin(); // "Jantan" atau "Betina"
+    // Reset Form
+    txtKuantitas.clear();
+    txtDateProduk.setValue(LocalDate.now());
+    chcTipe.getItems().clear(); // Bersihkan pilihan lama
 
-        if (jenis.equalsIgnoreCase("Sapi")) {
+    // 2. LOGIKA FILTER (Sesuai Gender & Jenis Hewan)
+    String jenis = selected.getJenis();      // "Sapi" atau "Ayam"
+    String kelamin = selected.getKelamin();  // "Jantan" atau "Betina"
+
+    for (KatalogProduk item : listMasterKatalog) {
+        String namaProduk = item.getNamaProduk().toLowerCase();
+
+        // --- FILTER UNTUK SAPI ---
+        if (jenis.equalsIgnoreCase("Sapi") && namaProduk.contains("sapi")) {
             if (kelamin.equalsIgnoreCase("Jantan")) {
-                chcTipe.getItems().add("Daging");
-            } else { // Betina
-                chcTipe.getItems().addAll("Daging", "Susu");
+                // Sapi Jantan = Cuma bisa Daging
+                if (namaProduk.contains("daging")) {
+                    chcTipe.getItems().add(item);
+                }
+            } else {
+                // Sapi Betina = Bisa Daging & Susu (Semua produk sapi masuk)
+                chcTipe.getItems().add(item);
             }
-        } else if (jenis.equalsIgnoreCase("Ayam")) {
+        } 
+        // --- FILTER UNTUK AYAM ---
+        else if (jenis.equalsIgnoreCase("Ayam") && (namaProduk.contains("ayam") || namaProduk.contains("telur"))) {
             if (kelamin.equalsIgnoreCase("Jantan")) {
-                chcTipe.getItems().add("Daging");
-            } else { // Betina
-                chcTipe.getItems().addAll("Telur", "Daging");
+                // Ayam Jantan = Cuma bisa Daging
+                if (namaProduk.contains("daging")) {
+                    chcTipe.getItems().add(item);
+                }
+            } else {
+                // Ayam Betina = Bisa Daging & Telur
+                chcTipe.getItems().add(item);
             }
         }
-        
-        // Default pilih item pertama
-        if (!chcTipe.getItems().isEmpty()) {
-            chcTipe.setValue(chcTipe.getItems().get(0));
-        }
+    }
 
-        // Tampilkan Popup
-        displayPanenProduk.setVisible(true);
-        // ... (Validasi selectedHewan dll) ...
-        
-        // Di bagian paling bawah method ini (saat popup ditampilkan):
-        displayPanenProduk.setVisible(true);
-        tvHewan.setDisable(true);
+    // Validasi Jika Kosong
+    if (chcTipe.getItems().isEmpty()) {
+        showFancyAlert("ERROR", "Data Kosong", "Pastikan tabel katalog_produk di database sudah diisi (Susu, Daging, dll)!");
+        return;
+    }
+
+    // Pilih item pertama otomatis
+    chcTipe.getSelectionModel().selectFirst();
+
+    // Tampilkan Popup
+    displayPanenProduk.setVisible(true);
+    tvHewan.setDisable(true);
     }
 
     @FXML
     private void handleSubmitProduk(ActionEvent event) {
-       // 1. Cek Hewan Terpilih
-        Hewan selectedHewan = tvHewan.getSelectionModel().getSelectedItem();
-        if (selectedHewan == null) {
-            System.out.println("Pilih dulu hewan di tabel!");
+       Hewan selectedHewan = tvHewan.getSelectionModel().getSelectedItem();
+    
+    // Cek Hewan
+    if (selectedHewan == null) {
+        showFancyAlert("WARNING", "Pilih Hewan", "Pilih dulu hewan di tabel!");
+        return;
+    }
+
+    try {
+        // 1. AMBIL INPUTAN
+        String kuantitasStr = txtKuantitas.getText();
+        KatalogProduk produkTerpilih = chcTipe.getValue(); 
+        
+        // 2. VALIDASI FORM
+        if (kuantitasStr.isEmpty() || txtDateProduk.getValue() == null || produkTerpilih == null) {
+            showFancyAlert("WARNING", "Data Kurang", "Mohon lengkapi semua form!");
             return;
         }
 
-        try {
-            // Ambil Data dari Form Popup
-            String kuantitasStr = txtKuantitas.getText();
-            String tipe = chcTipe.getValue();
+        // 3. SIAPKAN DATA
+        int idHewan = selectedHewan.getId();
+        int idKatalog = produkTerpilih.getId();
+        String tanggal = txtDateProduk.getValue().toString();
+        double qty = Double.parseDouble(kuantitasStr);
+
+        // 4. BUAT OBJEK PRODUK
+        Produk panenBaru = new Produk(idKatalog, idHewan, tanggal, qty, "Pending");
+
+        // 5. SIMPAN KE DATABASE
+        if (produkDAO.addProduk(panenBaru)) {
             
-            // Validasi Input Kosong
-            if (kuantitasStr.isEmpty() || txtDateProduk.getValue() == null || tipe == null) {
-                System.out.println("Data harus lengkap (Kuantitas, Tanggal, Tipe)!");
-                return;
-            }
-
-            int id_hewan = selectedHewan.getId();
-            String tanggal = txtDateProduk.getValue().toString();
-            double kuantitass = Double.parseDouble(kuantitasStr);
-            String kualitas = "Belum diisi"; 
-
-            // Simpan ke Database Produk
-            Produk baru = new Produk(tanggal, tipe, kuantitass, kualitas, id_hewan);
-            produkDAO.addProduk(baru);
-            
-            System.out.println("Tipe produk: " + tipe);
-            showFancyAlert("SUCCESS","Sukses", "Produk berhasil ditambakan " + tipe);
-
-            // (Update Kondisi Hewan jadi Death)
-            if ("daging".equalsIgnoreCase(tipe)) {
-                // Update di Database
-                hewanDAO.updateKondisi(id_hewan, "Death");
-               
-                selectedHewan.setKondisi("Death");
+            // --- LOGIKA HEWAN MATI (SAPI/AYAM POTONG) ---
+            // Jika produk mengandung kata "daging", hewan dianggap mati
+            if (produkTerpilih.getNamaProduk().toLowerCase().contains("daging")) {
+                // Update status di Database jadi "Mati"
+                hewanDAO.updateKondisi(idHewan, "Mati");
             }
             
-            //Refresh Tabel & Tutup Popup
-            loadDataFromDatabase(); // Refresh agar hewan yg "Death" hilang
+            showFancyAlert("SUCCESS", "Berhasil", "Panen " + produkTerpilih.getNamaProduk() + " tercatat!");
+
+            // --- INI KUNCINYA AGAR REALTIME & HILANG DARI TABEL ---
+            // Kita load ulang data dari database.
+            // Method ini otomatis membuang hewan mati dari tabel & menghitung ulang total label.
+            loadDataFromDatabase(); 
             
-            // Tutup popup setelah berhasil
-            if (displayPanenProduk != null) {
-                displayPanenProduk.setVisible(false);
-            }
+            // Tutup Popup & Bersihkan
+            displayPanenProduk.setVisible(false);
             txtKuantitas.clear();
             tvHewan.setDisable(false);
             
-        } catch (NumberFormatException e) {
-            System.out.println("Kuantitas harus berupa angka!");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            showFancyAlert("ERROR", "Gagal", "Terjadi kesalahan database.");
         }
-        
-        
-        
+
+    } catch (NumberFormatException e) {
+        showFancyAlert("ERROR", "Input Salah", "Kuantitas harus berupa angka!");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
 
@@ -412,23 +483,36 @@ public class PeternakHewanController implements Initializable {
         Hewan selected = tvHewan.getSelectionModel().getSelectedItem();
         if (selected != null) {
             try {
-                selected.setJenis(chcJenis.getValue());
-                selected.setKelamin(chcKelamin.getValue());
+                // Update data berat & usia
                 selected.setBerat(Double.parseDouble(txtBerat.getText()));
                 selected.setUsia(Integer.parseInt(txtUsia.getText()));
-                selected.setKondisi(txtKondisi.getText());
+                
+                // Ambil penyakit dari inputan (karena pas edit boleh diubah)
                 selected.setPenyakit(txtPenyakit.getText());
+
+                // Validasi Logic Berat
+                if (!isBeratLogis(selected.getJenis(), selected.getUsia(), selected.getBerat())) {
+                     showFancyAlert("WARNING", "Data Tidak Logis", "Cek kembali berat dan usia.");
+                     return;
+                }
 
                 hewanDAO.update(selected); 
                 showFancyAlert("SUCCESS","Sukses", "Data Berhasil Diupdate!");
                 
             } catch (Exception e) {
-                showFancyAlert("ERROR","Waduh Gagal!", "Gagal update: " + e.getMessage());
+                showFancyAlert("ERROR","Gagal", "Gagal update: " + e.getMessage());
             } finally {
                 loadDataFromDatabase();
                 clearForm();
+                
+                // Reset Disable Status (PENTING BIAR PAS TAMBAH LAGI GAK ERROR)
+                chcJenis.setDisable(false);
+                chcKelamin.setDisable(false);
+                txtKondisi.setDisable(false); 
+                txtPenyakit.setDisable(false);
+                
                 if (displayAddHewan != null) displayAddHewan.setVisible(false);
-                tvHewan.setDisable(false); // 
+                tvHewan.setDisable(false); 
             }
         }
     }
@@ -439,6 +523,12 @@ public class PeternakHewanController implements Initializable {
             displayAddHewan.setVisible(false);
         }
         clearForm();
+        
+        // Reset disable agar normal kembali
+        chcJenis.setDisable(false);
+        chcKelamin.setDisable(false);
+        txtKondisi.setDisable(false);
+        
         tvHewan.setDisable(false);
     }
 
@@ -453,39 +543,46 @@ public class PeternakHewanController implements Initializable {
     @FXML
     private void handleActionTambahHewan(ActionEvent event) {
         try {
+            // Ambil input user
             String jenis = chcJenis.getValue();
             String kelamin = chcKelamin.getValue();
             String beratStr = txtBerat.getText();
             String usiaStr = txtUsia.getText();
-            String kondisi = txtKondisi.getText();
-            String penyakit = txtPenyakit.getText();
+            
+            // --- INI PERUBAHANNYA ---
+            // Kita HARDCODE (Tulis Mati) biar datanya pasti bener
+            String kondisi = "Alive"; 
+            String penyakit = "Sehat"; 
+            // ------------------------
 
-            // Validasi
-            if (beratStr.isEmpty() || usiaStr.isEmpty() || kondisi.isEmpty()) {
-                showFancyAlert("WARNING","Error", "Mohon isi Berat, Usia, dan Kondisi!");
+            // Validasi input kosong
+            if (beratStr.isEmpty() || usiaStr.isEmpty()) { 
+                showFancyAlert("WARNING","Error", "Mohon isi Berat dan Usia!");
                 return;
             }
 
             double berat = Double.parseDouble(beratStr);
             int usia = Integer.parseInt(usiaStr);
 
-            // Buat Objek
+            // Validasi Logika Berat (Pakai method helper yang tadi)
+            if (!isBeratLogis(jenis, usia, berat)) {
+                showFancyAlert("WARNING", "Data Tidak Logis", 
+                    "Berat " + berat + " kg tidak wajar untuk " + jenis + " usia " + usia + " bulan."
+                );
+                return;
+            }
+
+            // Simpan ke Database
             Hewan hewanBaru = new Hewan(jenis, kelamin, berat, usia, kondisi, penyakit);
-            
-            // Simpan ke DB
             hewanDAO.add(hewanBaru);
             
-            // Refresh
+            // Reset & Tutup
             loadDataFromDatabase();
             clearForm();
-
-            if (displayAddHewan != null) {
-                displayAddHewan.setVisible(false);
-            }
+            if (displayAddHewan != null) displayAddHewan.setVisible(false);
             tvHewan.setDisable(false); 
-            displayAddHewan.setVisible(false); // Tutup popup
             
-            showFancyAlert("SUCCESS","Sukses", "Data Hewan Berhasil Ditambahkan!");
+            showFancyAlert("SUCCESS","Sukses", "Data Hewan (" + kondisi + " & " + penyakit + ") Berhasil Ditambahkan!");
 
         } catch (NumberFormatException e) {
             showFancyAlert("ERROR","Error", "Berat dan Usia harus berupa angka!");
@@ -550,29 +647,25 @@ public class PeternakHewanController implements Initializable {
 
     @FXML
     private void handleActionToProdukKonsumsi(ActionEvent event) {
-    }
-
-    @FXML
-    void handleActionToPakan(ActionEvent event) {
         try {
             // 1. Ambil Stage (Layar) dari tombol btnProduk
-            javafx.stage.Stage stage = (javafx.stage.Stage) btnProduk.getScene().getWindow();
-
+            javafx.stage.Stage stage = (javafx.stage.Stage) btnKonsum.getScene().getWindow();
+            
             // 2. Cari file FXML tujuan
-            java.io.File file = new java.io.File("src/main/java/Views/PemberianPakanDashboard.fxml");
-
+            java.io.File file = new java.io.File("src/main/java/Views/peternakKonsumsi.fxml");
+            
             // 3. Ubah jadi URL
             java.net.URL url = file.toURI().toURL();
-
+            
             // 4. Load FXML
             javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
-
+            
             // 5. Pasang Scene Baru
             javafx.scene.Scene scene = new javafx.scene.Scene(root);
             stage.setScene(scene);
-            stage.centerOnScreen();
+            stage.centerOnScreen(); 
             stage.show();
-
+            
         } catch (Exception e) {
             System.out.println("Gagal pindah ke halaman Produk/Panen!");
             e.printStackTrace();
@@ -582,6 +675,80 @@ public class PeternakHewanController implements Initializable {
     @FXML
     private void btnHewan(ActionEvent event) {
         loadDataFromDatabase();
+    }
+    
+    // Method Validasi Berat berdasarkan Usia
+    private boolean isBeratLogis(String jenis, int usia, double berat) {
+        double minBerat = 0;
+        double maxBerat = 0;
+
+        // --- LOGIKA UNTUK SAPI ---
+        if (jenis.equalsIgnoreCase("Sapi")) {
+            // Asumsi Sapi: Lahir ~30kg, Dewasa bisa 400-800kg
+            // Rumus estimasi kasar: 
+            // Minimal: 30kg + (10kg per bulan)
+            // Maksimal: 60kg + (50kg per bulan)
+            
+            minBerat = 30 + (usia * 10); 
+            maxBerat = 100 + (usia * 60); 
+            
+            // Cap Maksimal Sapi Limosin misal 1.2 Ton
+            if (maxBerat > 1200) maxBerat = 1200; 
+
+        } 
+        // --- LOGIKA UNTUK AYAM ---
+        else if (jenis.equalsIgnoreCase("Ayam")) {
+            // Asumsi Ayam: Lahir ~0.04kg, Dewasa ~2-4kg
+            // Minimal: 0.05kg + (0.1kg per bulan)
+            // Maksimal: 0.2kg + (1kg per bulan)
+            
+            minBerat = 0.05 + (usia * 0.1);
+            maxBerat = 0.5 + (usia * 1.5);
+            
+            // Cap Maksimal Ayam Broiler misal 5-6kg
+            if (maxBerat > 6) maxBerat = 6;
+        }
+
+        // Cek apakah berat inputan ada di dalam rentang?
+        if (berat < minBerat || berat > maxBerat) {
+            System.out.println("Validasi Gagal: " + jenis + " Usia " + usia + " bulan.");
+            System.out.println("Seharusnya berat antara " + minBerat + "kg - " + maxBerat + "kg.");
+            return false; // TIDAK LOGIS
+        }
+        
+        return true; // LOGIS
+    }
+    
+    private void updatePromptBerat() {
+        String usiaStr = txtUsia.getText();
+        String jenis = chcJenis.getValue();
+
+        // Kalau usia kosong atau jenis belum pilih, reset prompt
+        if (usiaStr.isEmpty() || !usiaStr.matches("\\d+") || jenis == null) {
+            txtBerat.setPromptText("Masukkan Berat (Kg)");
+            return;
+        }
+
+        int usia = Integer.parseInt(usiaStr);
+        double minBerat = 0;
+        double maxBerat = 0;
+
+        // --- RUMUS LOGIKA (Sama dengan validasi) ---
+        if (jenis.equalsIgnoreCase("Sapi")) {
+            // Rumus Sapi
+            minBerat = 30 + (usia * 10);
+            maxBerat = 100 + (usia * 60);
+            if (maxBerat > 1200) maxBerat = 1200;
+        } else {
+            // Rumus Ayam
+            minBerat = 0.05 + (usia * 0.1);
+            maxBerat = 0.5 + (usia * 1.5);
+            if (maxBerat > 6) maxBerat = 6;
+        }
+
+        // --- UBAH PROMPT TEXT ---
+        // Contoh hasil: "Rentang Wajar: 40.0 - 160.0 kg"
+        txtBerat.setPromptText("Wajar: " + String.format("%.1f", minBerat) + " - " + String.format("%.1f", maxBerat) + " kg");
     }
 
     private void showFancyAlert(String type, String title, String message) {
@@ -660,9 +827,8 @@ public class PeternakHewanController implements Initializable {
     st.play();
 
     stage.showAndWait();
-    }
-    @FXML
-    void btnLogout(ActionEvent event) {
-
-    }
+}
+    
+    
+    
 }

@@ -24,7 +24,7 @@ public class PenjualanDetail {
     public void setQty(double qty) {
         this.qty = qty;
     }
-    public String getId(){
+    public int getId(){
         return produk.getId();
     }
     public String getJenis(){

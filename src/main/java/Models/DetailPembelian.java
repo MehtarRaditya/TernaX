@@ -6,7 +6,7 @@ package Models;
 
 /**
  *
- * @author Muham
+ * @author USER
  */
 public class DetailPembelian {
     private int id;
@@ -63,5 +63,4 @@ public class DetailPembelian {
     public void setKuantitas(int kuantitas) {
         this.kuantitas = kuantitas;
     }
-    
 }

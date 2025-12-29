@@ -73,104 +73,99 @@ public class PeternakPanenController implements Initializable {
     private TableColumn<?, ?> idColProduk;
     @FXML
     private TableColumn<?, ?> idHewanCol;
+    
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         produkDAO = new ProdukDAO();
-        hewanDAO = new HewanDAO();
-        dateColProduk.setCellValueFactory(new PropertyValueFactory<>("tanggalDiperoleh"));
-        tipeColProduk.setCellValueFactory(new PropertyValueFactory<>("tipe"));
-        kuantitasColProduk.setCellValueFactory(new PropertyValueFactory<>("kuantitas"));
+        // hewanDAO = new HewanDAO(); // Gak perlu lagi
+        
+        // 1. SETUP KOLOM TABEL (Sesuaikan dengan Getter di Model Produk.java)
         idColProduk.setCellValueFactory(new PropertyValueFactory<>("id"));
         idHewanCol.setCellValueFactory(new PropertyValueFactory<>("idHewan"));
+        dateColProduk.setCellValueFactory(new PropertyValueFactory<>("tanggalDiperoleh")); // Ganti 'tanggalDiperoleh' jadi 'tanggalPanen'
         
-        kuantitasColProduk.setCellFactory(column -> new TableCell<Produk, Double>() {
-    @Override
-    protected void updateItem(Double item, boolean empty) {
-        super.updateItem(item, empty);
-
-        if (empty || item == null) {
-            setText(null);
-        } else {
-            // Ambil data satu baris (objek Produk) untuk cek Tipe-nya
-            Produk produkSaatIni = getTableView().getItems().get(getIndex());
-            String tipe = produkSaatIni.getTipe(); // Pastikan di class Produk ada method getTipe()
-
-            // LOGIKA FORMATTING
-            if (tipe != null && tipe.equalsIgnoreCase("Telur")) {
-                // KHUSUS TELUR: Ubah Double jadi Integer (hilangkan .0)
-                setText(item.intValue() + " Butir");
-            } else if (tipe != null && tipe.equalsIgnoreCase("Susu")) {
-                // Susu tetap Double
-                setText(item + " Liter");
-            } else {
-                // Default (Daging, dll) tambah Kg
-                setText(item + " Kg");
-            }
-        }
-    }
-});
+        // PENTING: tipeColProduk sekarang menampilkan 'namaProduk' dari hasil JOIN
+        tipeColProduk.setCellValueFactory(new PropertyValueFactory<>("namaProduk")); 
         
+        kuantitasColProduk.setCellValueFactory(new PropertyValueFactory<>("kuantitas"));
+        
+        // 2. SETUP FORMATTING CELL (Untuk Satuan Kg/Liter/Butir)
+        setupKuantitasCellFactory();
+        
+        // 3. LOAD DATA
         loadDataFromDatabaseProduk();
-        
-        
     }
+    
+    private void setupKuantitasCellFactory() {
+        kuantitasColProduk.setCellFactory(column -> new TableCell<Produk, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
 
-        private void loadDataFromDatabaseProduk() {
-            List<Produk> list = produkDAO.getAll();
-            dataProduk = FXCollections.observableArrayList(list);
-            tvProduk.setItems(dataProduk);
-
-            double hitungDagingSapi = 0;
-            double hitungDagingAyam = 0;
-            double hitungTelur = 0;
-            double hitungSusu = 0;
-
-            for (Produk p : list) {
-                String tipe = p.getTipe(); 
-                double qty = p.getKuantitas();
-                int idHewan = p.getIdHewan(); // Ambil ID Hewan dari produk
-
-                if (tipe != null) {
-                    if (tipe.equalsIgnoreCase("Daging")) {
-                        // CEK JENIS HEWANNYA APA?
-                        String jenisHewan = hewanDAO.getJenisById(idHewan);
-
-                        if (jenisHewan.equalsIgnoreCase("Sapi")) {
-                            hitungDagingSapi += qty;
-                        } else if (jenisHewan.equalsIgnoreCase("Ayam")) {
-                            hitungDagingAyam += qty;
-                        }
-
-                    } else if (tipe.equalsIgnoreCase("Telur")) {
-                        hitungTelur += qty;
-                    } else if (tipe.equalsIgnoreCase("Susu")) {
-                        hitungSusu += qty;
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    // Ambil baris data saat ini
+                    Produk p = getTableView().getItems().get(getIndex());
+                    String satuan = p.getSatuan(); // Pastikan getter getSatuan() ada di Model
+                    
+                    // Format angka: Jika "Butir" hilangkan koma, selain itu biarkan
+                    if (satuan != null && satuan.equalsIgnoreCase("Kg")) {
+                         setText(String.format("%.1f Kg", item)); // 10.5 Kg
+                    } else if (satuan != null && satuan.equalsIgnoreCase("Liter")) {
+                         setText(String.format("%.1f Liter", item));
+                    } else {
+                         setText(item.intValue() + " " + satuan); // 10 Butir
                     }
                 }
             }
+        });
+    }
 
-            // --- TAMPILKAN KE LABEL ---
+    private void loadDataFromDatabaseProduk() {
+        // Ambil data yang sudah di-JOIN (ada namaProduk & satuan)
+        List<Produk> list = produkDAO.getAll(); 
+        dataProduk = FXCollections.observableArrayList(list);
+        tvProduk.setItems(dataProduk);
 
+        // --- LOGIKA PERHITUNGAN TOTAL ---
+        double hitungDagingSapi = 0;
+        double hitungDagingAyam = 0;
+        double hitungTelur = 0;
+        double hitungSusu = 0;
 
-            // Total Daging Sapi Saja
-            if(totalDaging != null) { // Pastikan fx:id label ini ada
-                totalDaging.setText(String.valueOf(hitungDagingSapi+ " Kg"));
+        for (Produk p : list) {
+            // Ambil Nama Produk (Contoh: "Daging Sapi Premium", "Telur Ayam")
+            String nama = p.getNamaProduk().toLowerCase(); 
+            double qty = p.getKuantitas();
+
+            if (nama.contains("sapi")) {
+                if (nama.contains("daging")) {
+                    hitungDagingSapi += qty;
+                } else if (nama.contains("susu")) {
+                    hitungSusu += qty;
+                }
+            } 
+            else if (nama.contains("ayam")) {
+                if (nama.contains("daging")) {
+                    hitungDagingAyam += qty;
+                } else if (nama.contains("telur")) {
+                    hitungTelur += qty;
+                }
             }
-
-            // Total Daging Ayam Saja
-            if(totalDagingAyam != null) { // Pastikan fx:id label ini ada
-                totalDagingAyam.setText(String.valueOf(hitungDagingAyam) + " Kg");
-            }
-
-            if(totaltelur != null) totaltelur.setText((int) hitungTelur + " Butir");
-            if(totalSusu != null) totalSusu.setText(String.valueOf(hitungSusu + " Liter"));
         }
 
+        // --- UPDATE LABEL TAMPILAN ---
+        if(totalDaging != null) totalDaging.setText(String.format("%.1f Kg", hitungDagingSapi));
+        if(totalDagingAyam != null) totalDagingAyam.setText(String.format("%.1f Kg", hitungDagingAyam));
+        if(totaltelur != null) totaltelur.setText((int)hitungTelur + " Butir");
+        if(totalSusu != null) totalSusu.setText(String.format("%.1f Liter", hitungSusu));
+    }
     @FXML
     private void btnHewan(ActionEvent event) {
         try {
@@ -205,7 +200,29 @@ public class PeternakPanenController implements Initializable {
 
     @FXML
     private void btnKonsum(ActionEvent event) {
-        pindahScene(event, "/Views/pageLogin.fxml");
+        try {
+            // 1. Ambil Stage (Layar) dari tombol btnProduk
+            javafx.stage.Stage stage = (javafx.stage.Stage) btnKonsum.getScene().getWindow();
+            
+            // 2. Cari file FXML tujuan
+            java.io.File file = new java.io.File("src/main/java/Views/peternakKonsumsi.fxml");
+            
+            // 3. Ubah jadi URL
+            java.net.URL url = file.toURI().toURL();
+            
+            // 4. Load FXML
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
+            
+            // 5. Pasang Scene Baru
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen(); 
+            stage.show();
+            
+        } catch (Exception e) {
+            System.out.println("Gagal pindah ke halaman Produk/Panen!");
+            e.printStackTrace();
+        }
     }
 
     @FXML

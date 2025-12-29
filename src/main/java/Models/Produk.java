@@ -1,14 +1,19 @@
 package Models;
 
 public class Produk {
-    private String id;
+    private int idKatalog;
+    private int id;
     private String tanggalDiperoleh;
     private String tipe;
     private double kuantitas;
     private String kualitas;
     private int idHewan;
+    private String statusKelayakan;
+    
+    private String namaProduk; 
+    private String satuan;
 
-    public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas, int idHewan) {
+    public Produk(int id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas, int idHewan) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
         this.tipe = tipe;
@@ -17,7 +22,7 @@ public class Produk {
         this.idHewan = idHewan;
     }
 
-    public Produk(String id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
+    public Produk(int id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas) {
         this.id = id;
         this.tanggalDiperoleh = tanggalDiperoleh;
         this.tipe = tipe;
@@ -42,14 +47,48 @@ public class Produk {
         this.idHewan = idHewan;
     }
 
+    public Produk(int idKatalog,int idHewan, String tanggalDiperoleh, double kuantitas,  String statusKelayakan) {
+        this.idKatalog = idKatalog;
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.kuantitas = kuantitas;
+        this.idHewan = idHewan;
+        this.statusKelayakan = statusKelayakan;
+    }
+
+    public Produk(int idKatalog, int id, String tanggalDiperoleh, double kuantitas, int idHewan, String statusKelayakan, String namaProduk, String satuan) {
+        this.idKatalog = idKatalog;
+        this.id = id;
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.kuantitas = kuantitas;
+        this.idHewan = idHewan;
+        this.statusKelayakan = statusKelayakan;
+        this.namaProduk = namaProduk;
+        this.satuan = satuan;
+    }
+
+    public Produk( int id, int idKatalog,int idHewan,String tanggalDiperoleh, double kuantitas, String statusKelayakan, String namaProduk, String satuan) {
+        this.idKatalog = idKatalog;
+        this.id = id;
+        this.tanggalDiperoleh = tanggalDiperoleh;
+        this.tipe = tipe;
+        this.kuantitas = kuantitas;
+        this.kualitas = kualitas;
+        this.idHewan = idHewan;
+        this.statusKelayakan = statusKelayakan;
+        this.namaProduk = namaProduk;
+        this.satuan = satuan;
+    }
+    
+    
+
     public Produk() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -91,6 +130,38 @@ public class Produk {
 
     public void setIdHewan(int idHewan) {
         this.idHewan = idHewan;
+    }
+
+    public int getIdKatalog() {
+        return idKatalog;
+    }
+
+    public void setIdKatalog(int idKatalog) {
+        this.idKatalog = idKatalog;
+    }
+
+    public String getStatusKelayakan() {
+        return statusKelayakan;
+    }
+
+    public void setStatusKelayakan(String statusKelayakan) {
+        this.statusKelayakan = statusKelayakan;
+    }
+
+    public String getNamaProduk() {
+        return namaProduk;
+    }
+
+    public void setNamaProduk(String namaProduk) {
+        this.namaProduk = namaProduk;
+    }
+
+    public String getSatuan() {
+        return satuan;
+    }
+
+    public void setSatuan(String satuan) {
+        this.satuan = satuan;
     }
     
     

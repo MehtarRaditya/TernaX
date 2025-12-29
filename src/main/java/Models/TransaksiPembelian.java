@@ -12,11 +12,23 @@ public class TransaksiPembelian {
     private int id;
     private String tanggalPembelian;
     private int id_karyawan;
+    
+    private String namaKonsumsi;
+    private int kuantitas;
+    private String tipe;
 
     public TransaksiPembelian(int id, String tanggalPembelian, int id_karyawan) {
         this.id = id;
         this.tanggalPembelian = tanggalPembelian;
         this.id_karyawan = id_karyawan;
+    }
+    
+    public TransaksiPembelian(int id, String tanggalPembelian, String namaKonsumsi, String tipe, int kuantitas) {
+        this.id = id;
+        this.tanggalPembelian = tanggalPembelian;
+        this.namaKonsumsi = namaKonsumsi;
+        this.tipe = tipe;
+        this.kuantitas = kuantitas;
     }
 
     public TransaksiPembelian(String tanggalPembelian, int id_karyawan) {
@@ -26,28 +38,14 @@ public class TransaksiPembelian {
     
     
 
-    public int getId() {
-        return id;
-    }
+    // --- GETTER & SETTER TAMBAHAN (Wajib Ada) ---
+    public String getNamaKonsumsi() { return namaKonsumsi; }
+    public int getKuantitas() { return kuantitas; }
+    public String getTipe() { return tipe; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTanggalPembelian() {
-        return tanggalPembelian;
-    }
-
-    public void setTanggalPembelian(String tanggalPembelian) {
-        this.tanggalPembelian = tanggalPembelian;
-    }
-
-    public int getId_karyawan() {
-        return id_karyawan;
-    }
-
-    public void setId_karyawan(int id_karyawan) {
-        this.id_karyawan = id_karyawan;
-    }
-    
+    // ... (Getter Setter lama biarkan saja) ...
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getTanggalPembelian() { return tanggalPembelian; }
+    public int getId_karyawan() { return id_karyawan; }  
 }
