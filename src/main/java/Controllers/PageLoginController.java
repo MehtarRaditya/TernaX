@@ -114,18 +114,12 @@ public class PageLoginController implements Initializable {
             try{
                 karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
                 if(karyawan != null){
-                    URL url = null;
                     String role = karyawan.getRole();
                     Session.setLoggedInKaryawan(karyawan);
                     System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
                     System.out.println("Sekarang mencoba memuat dashboard...");
                     Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    if(karyawan.getRole().equals("Manager")){
-                        url = new File("src/main/java/Views/ManagerKaryawan.fxml").toURI().toURL();
-                    }
-                    else if(karyawan.getRole().equals("Peternak")){
-                        url = new File("src/main/java/Views/PeternakHewan.fxml").toURI().toURL();
-                    }
+                    URL url = new File("src/main/java/Views/PenjualanDashboard.fxml").toURI().toURL();
                     Parent root = FXMLLoader.load(url);
                     Scene scene = new Scene(root);
                     stage.setScene(scene);

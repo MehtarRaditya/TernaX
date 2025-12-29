@@ -20,12 +20,12 @@ import utility.Session;
  */
 public class TransaksiPembelianDAO {
     public void add(TransaksiPembelian transaksi) {
-        String sql = "INSERT INTO transaksi_pembelian (id_pembelian, tanggal_pembelian, id_karyawan) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO transaksi_pembelian (id_pembelian, id_karyawan, tanggal_pembelian) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1, transaksi.getId());
-            pstmt.setString(2, transaksi.getTanggalPembelian());
-            pstmt.setInt(3, transaksi.getId_karyawan());
+            pstmt.setInt(2, transaksi.getId_karyawan());
+            pstmt.setString(3, transaksi.getTanggalPembelian());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,5 +62,35 @@ public class TransaksiPembelianDAO {
             System.err.println("Gagal insert transaksi_pembelian: " + e.getMessage());
         }
         return -1;
+    }
+    
+    // Tambahkan method ini di class TransaksiPembelianDAO
+    public java.util.List<Models.RiwayatKonsumsi> getAllRiwayat() {
+        java.util.List<Models.RiwayatKonsumsi> list = new java.util.ArrayList<>();
+        
+        // Query JOIN 3 Tabel (Transaksi + Detail + Konsumsi)
+        String sql = "SELECT tp.id_pembelian, tp.tanggal_pembelian, k.nama_konsumsi, k.tipe, dp.kuantitas " +
+                     "FROM detail_pembelian dp " +
+                     "JOIN transaksi_pembelian tp ON dp.id_pembelian = tp.id_pembelian " +
+                     "JOIN konsumsi k ON dp.id_konsumsi = k.id " +
+                     "ORDER BY tp.tanggal_pembelian DESC, tp.id_pembelian DESC";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new Models.RiwayatKonsumsi(
+                    rs.getInt("id_pembelian"),
+                    rs.getString("tanggal_pembelian"),
+                    rs.getString("nama_konsumsi"),
+                    rs.getString("tipe"),
+                    rs.getInt("kuantitas")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

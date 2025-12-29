@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -17,47 +18,55 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: d3d3d3;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
+<AnchorPane id="AnchorPane" fx:id="peternakTampilan" prefHeight="512.0" prefWidth="1016.0" style="-fx-background-color: d3d3d3;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
+    <stylesheets>
+        <URL value="@peternakhewan.css" />
+    </stylesheets>
     <children>
         
-        <Pane layoutX="216.0" layoutY="5.0" prefHeight="50.0" prefWidth="739.0" style="-fx-background-color: white; -fx-background-radius: 50;">
+        <Pane layoutX="296.0" layoutY="5.0" prefHeight="110.0" prefWidth="720.0" style="-fx-background-color: white; -fx-background-radius: 50;">
             <children>
-                <ImageView fitHeight="60.0" fitWidth="45.0" layoutX="680.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="600.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../image/Peternak.jpg" />
                     </image>
                 </ImageView>
-            <Text layoutX="150.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="TOTAL HEWAN PETERNAKAN" wrappingWidth="438.78">
+            </children>
+        </Pane>
+
+        <Pane depthTest="DISABLE" layoutX="405.0" layoutY="125.0" prefHeight="70.0" prefWidth="500.0" styleClass="header-box">
+         <children>
+            <Text layoutX="31.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="TOTAL HEWAN PETERNAKAN" wrappingWidth="438.78">
                <font>
                   <Font name="Nirmala UI Bold" size="30.0" />
                </font>
             </Text>
-            </children>
-        </Pane>
-
-                                                            <Pane layoutX="246.0" layoutY="61.0" prefHeight="107.0" prefWidth="680.0" style="-fx-background-color: transparent;">
-         <children>
-            
-                              <Pane fx:id="Pane" layoutX="118.0" prefHeight="107.0" prefWidth="176.0" styleClass="summary-box" stylesheets="@SummaryBox.css">
-               <children>
-                  <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="SAPI" textAlignment="CENTER" wrappingWidth="175.9999999999999" />
-                  <Label fx:id="totalSapi" alignment="CENTER" layoutY="28.0" prefHeight="50.0" prefWidth="176.0" styleClass="summary-value" text="0 Ekor" />
-               </children>
-            </Pane>
-            
-                                                                  <Pane fx:id="Pane" layoutX="383.0" prefHeight="107.0" prefWidth="176.0" styleClass="summary-box" stylesheets="@SummaryBox.css">
-               <children>
-                  <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="AYAM" textAlignment="CENTER" wrappingWidth="176.0" />
-                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="29.0" prefHeight="50.0" prefWidth="176.0" styleClass="summary-value" text="0 Ekor" />
-               </children>
-            </Pane>
-            
-                                                               </children>
+         </children>
       </Pane>
 
-        <Pane layoutX="216.0" layoutY="170.0" prefHeight="365.0" prefWidth="739.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+      <Pane layoutX="320.0" layoutY="210.0" prefHeight="150.0" prefWidth="680.0" style="-fx-background-color: transparent;">
+         <children>
+            
+            <Pane layoutX="50.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="AYAM" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" styleClass="summary-value" text="0 Ekor" />
+               </children>
+            </Pane>
+            
+            <Pane layoutX="370.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+               <children>
+                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="SAPI" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalSapi" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" styleClass="summary-value" text="0 Ekor" />
+               </children>
+            </Pane>
+            
+         </children>
+      </Pane>
+
+        <Pane layoutX="310.0" layoutY="370.0" prefHeight="265.0" prefWidth="680.0" style="-fx-background-color: white; -fx-background-radius: 25;">
             <children>
-                <TableView fx:id="tvHewan" layoutX="5.0" layoutY="58.0" prefHeight="300.0" prefWidth="730.0" stylesheets="@Table.css">
+                <TableView fx:id="tvHewan" layoutX="15.0" layoutY="65.0" prefHeight="179.0" prefWidth="661.0" stylesheets="@../css/peternakhewan.css">
                     <columns>
                         <TableColumn fx:id="JenisCol" prefWidth="132.666748046875" text="Jenis" />
                         <TableColumn fx:id="BeratCol" prefWidth="67.99981689453125" text="Berat" />
@@ -73,11 +82,11 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
                 </TableView>
-                <Button fx:id="btnGrey" layoutX="496.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="40.0" prefWidth="96.0" stylesheets="@Button.css" text="Edit Hewan">
+                <Button fx:id="btnEdit" disable="true" layoutX="569.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="40.0" prefWidth="96.0" stylesheets="@../css/peternakhewan.css" text="Edit Hewan">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-                <Button fx:id="btnGreen" layoutX="602.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnTambah" prefHeight="40.0" prefWidth="123.0" stylesheets="@Button.css" text="Tambah Hewan" textAlignment="CENTER">
+                <Button fx:id="btnTambah1" layoutX="466.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnTambah" prefHeight="40.0" prefWidth="98.0" stylesheets="@../css/peternakhewan.css" text="Tambah Hewan" textAlignment="CENTER">
                     <font>
                         <Font size="11.0" />
                     </font>
@@ -85,7 +94,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-            <Button fx:id="btnWarning" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="40.0" prefWidth="115.0" stylesheets="@Button.css" text="Hapus Hewan">
+            <Button fx:id="btnpanenn" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnPanenProduk" prefHeight="35.0" prefWidth="98.0" text="Panen">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -93,23 +102,14 @@
             </children>
         </Pane>
 
-        <Pane layoutX="-3.0" prefHeight="520.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <Pane layoutX="-3.0" prefHeight="641.0" prefWidth="275.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <Button fx:id="btnNavBar" layoutY="145.0" mnemonicParsing="false" onAction="#btnHewan" prefHeight="60.0" prefWidth="200.0" stylesheets="@Button.css" text="HEWAN">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="20.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Button>
-                <ImageView fitHeight="70.0" fitWidth="113.0" layoutX="-7.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="119.0" fitWidth="191.0" layoutX="-34.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../image/Logo.png" />
                     </image>
                 </ImageView>
-                <Pane layoutY="123.0" prefHeight="5.0" prefWidth="200.0" style="-fx-background-color: gray;" />
-                <Button fx:id="btnNavBar" layoutX="1.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleActionToProdukPeternak" prefHeight="60.0" prefWidth="200.0" stylesheets="@Button.css" text="PRODUKSI">
+                <Button fx:id="btHewan" layoutX="2.0" layoutY="180.0" mnemonicParsing="false" onAction="#btnHewan" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="HEWAN">
                     <font>
                         <Font name="Nirmala UI Bold" size="20.0" />
                     </font>
@@ -117,13 +117,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
+                <Pane layoutX="-3.0" layoutY="140.0" prefHeight="11.0" prefWidth="275.0" style="-fx-background-color: gray;" />
                 
-                      <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="18.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="-1.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../image/box.jpg" />
                     </image>
                 </ImageView>
-                <Button fx:id="btnNavBar" layoutX="1.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleActionToProdukKonsumsi" prefHeight="60.0" prefWidth="200.0" stylesheets="@Button.css" text="KONSUMSI">
+                <Button fx:id="btnProduk" layoutX="2.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleActionToProdukPeternak" prefHeight="60.0" prefWidth="274.0" stylesheets="@../css/peternakhewan.css" text="PRODUKSI">
                     <font>
                         <Font name="Nirmala UI Bold" size="20.0" />
                     </font>
@@ -132,19 +133,42 @@
                </cursor>
                 </Button>
                 
-                <ImageView fitHeight="114.0" fitWidth="187.0" layoutX="7.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/pakan.jpg" />
+                    </image>
+                </ImageView>
+                <Button fx:id="btnKonsum" layoutX="2.0" layoutY="320.0" mnemonicParsing="false" onAction="#handleActionToProdukKonsumsi" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="KONSUMSI">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="20.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                
+                <ImageView fitHeight="120.0" fitWidth="200.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../image/logo%20ternax.png" />
                     </image>
                 </ImageView>
-            <Button fx:id="btnNavBar" layoutY="285.0" mnemonicParsing="false" onAction="#handleActionToPakan" prefHeight="60.0" prefWidth="200.0" stylesheets="@Button.css" text="PAKAN">
-               <font>
-                  <Font name="Nirmala UI Bold" size="20.0" />
-               </font>
+                
+                <Button fx:id="btnLogout" layoutX="1.0" layoutY="556.0" mnemonicParsing="false" onAction="#handleActionLogout" prefHeight="60.0" prefWidth="275.0" stylesheets="@../css/peternakhewan.css" text="Logout">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="20.0" />
+                    </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </Button>
+                </Button>
+                <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="17.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../image/logout.jpg" />
+                    </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ImageView>
             </children>
         </Pane>
 
@@ -219,16 +243,6 @@
             <Button fx:id="btnPanen" layoutX="17.0" layoutY="363.0" mnemonicParsing="false" onAction="#handleSubmitProduk" prefHeight="49.0" prefWidth="100.0" text="Panen" />
          </children>
       </AnchorPane>
-      <Button fx:id="btnWarning" layoutX="30.0" layoutY="477.0" mnemonicParsing="false" onAction="#btnLogout" prefHeight="39.0" prefWidth="160.0" stylesheets="@Button.css" text="LOGOUT">
-         <font>
-            <Font name="Nirmala UI Bold" size="14.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="29.0" fitWidth="35.0" layoutX="44.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../image/logout.jpg" />
-         </image>
-      </ImageView>
 
     </children>
 </AnchorPane>

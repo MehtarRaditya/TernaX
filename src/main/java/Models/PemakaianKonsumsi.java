@@ -15,6 +15,7 @@ public class PemakaianKonsumsi {
     private int idKaryawan;
     private int kuantitas;
     private String tanggal;
+    private String hewan,pakan,jumlah;
 
     public PemakaianKonsumsi(int id, int idHewan, int idKonsumsi, int idKaryawan, int kuantitas, String tanggal) {
         this.id = id;
@@ -25,6 +26,39 @@ public class PemakaianKonsumsi {
         this.tanggal = tanggal;
     }
 
+    public PemakaianKonsumsi(String tanggal, String hewan, String pakan, String jumlah) {
+        this.tanggal = tanggal;
+        this.hewan = hewan;
+        this.pakan = pakan;
+        this.jumlah = jumlah;
+    }
+
+    public String getHewan() {
+        return hewan;
+    }
+
+    public void setHewan(String hewan) {
+        this.hewan = hewan;
+    }
+
+    public String getPakan() {
+        return pakan;
+    }
+
+    public void setPakan(String pakan) {
+        this.pakan = pakan;
+    }
+
+    public String getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(String jumlah) {
+        this.jumlah = jumlah;
+    }
+
+    
+    
     public PemakaianKonsumsi() {
     }
     
