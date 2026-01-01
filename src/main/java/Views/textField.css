@@ -1,0 +1,65 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 28, 2025, 7:06:01 PM
+    Author     : mrifa
+*/
+/* Membuat input field menjadi modern (rounded & clean) */
+/* --- INPUT FIELDS SLIM VERSION --- */
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 6;      /* Sedikit lebih tajam agar proporsional dengan ukuran kecil */
+    -fx-background-radius: 6;
+    
+    /* Ukuran dikecilkan di sini */
+    -fx-padding: 5 8;          /* Atas-bawah 5px, Kiri-kanan 8px (Sebelumnya 8px total) */
+    -fx-font-size: 12px;       /* Ukuran font diturunkan (Sebelumnya 13px) */
+    
+    -fx-prompt-text-fill: #b2bec3;
+    -fx-min-height: 30px;      /* Memastikan tinggi yang konsisten dan ramping */
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-color: #91bdf3;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.2), 4, 0, 0, 0);
+}
+
+/* Menyesuaikan tinggi tombol panah pada ComboBox dan DatePicker agar tidak kebesaran */
+.combo-box .arrow-button, .date-picker .arrow-button {
+    -fx-padding: 0 8; 
+}
+/* --- TEXT FIELD & COMBO BOX RAMPING --- */
+.text-field, .combo-box {
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    
+    /* Mengatur ukuran agar lebih ramping */
+    -fx-padding: 6 12; /* Atas-Bawah 6px, Kiri-Kanan 12px */
+    -fx-pref-height: 40; /* Membatasi tinggi agar tidak terlalu bongsor */
+    
+    -fx-font-family: "Poppins";
+    -fx-font-size: 12px; /* Font lebih kecil agar terlihat rapi */
+    -fx-text-fill: #374151;
+}
+
+/* Efek saat diklik (Focus) */
+.text-field:focused, .combo-box:focused {
+    -fx-background-color: white;
+    -fx-border-color: #91bdf3;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.1), 5, 0, 0, 0);
+}
+
+/* Merapikan Label agar seimbang dengan input yang kecil */
+.label-form {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600;
+    -fx-font-size: 11px; /* Dikecilkan sedikit agar serasi */
+    -fx-text-fill: #6b7280;
+    -fx-padding: 0 0 3 2;
+}

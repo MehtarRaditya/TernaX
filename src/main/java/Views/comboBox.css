@@ -1,0 +1,76 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 28, 2025, 7:13:12 PM
+    Author     : mrifa
+*/
+/* --- COMBO BOX SLIM VERSION --- */
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 2 5;          /* Padding sangat ramping */
+    -fx-font-size: 12px;
+    -fx-min-height: 28px;      /* Sedikit lebih tipis dari TextField */
+    -fx-display-caret: false;  /* Menghilangkan garis ketik jika tidak editable */
+}
+
+/* Bagian Tombol Panah */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5 0 5;
+}
+
+/* Bentuk Panah Kecil */
+.combo-box .arrow {
+    -fx-background-color: #b2bec3; /* Abu-abu netral */
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* Bentuk panah segitiga rapi */
+}
+
+.combo-box:focused {
+    -fx-border-color: #91bdf3;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.2), 4, 0, 0, 0);
+}
+
+.combo-box:focused .arrow {
+    -fx-background-color: #91bdf3; /* Panah berubah biru saat aktif */
+}
+
+/* --- GAYA DROPDOWN (List Cell) --- */
+/* Ini adalah bagian kotak yang muncul saat ComboBox diklik */
+.combo-box-base .list-cell {
+    -fx-padding: 5 10;
+    -fx-background-color: white;
+    -fx-text-fill: #2d3436;
+}
+
+.combo-box-base .list-cell:hover {
+    -fx-background-color: #f0f7ff;
+    -fx-text-fill: #91bdf3;
+}
+
+/* Baris yang sedang dipilih di dalam list */
+.combo-box-base .list-view .list-cell:filled:selected {
+    -fx-background-color: #91bdf3;
+    -fx-text-fill: white;
+}
+/* --- COMBOBOX TRANSPARAN --- */
+.combo-box-underline {
+    -fx-background-color: transparent;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 0 0 1.5 0;
+    -fx-padding: 0;
+}
+
+.combo-box-underline .label {
+    -fx-text-fill: #2d3436;
+    -fx-font-size: 13px;
+}
+
+.combo-box-underline:focused {
+    -fx-border-color: #91bdf3;
+}

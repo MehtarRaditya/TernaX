@@ -52,62 +52,168 @@ public class PageLoginController implements Initializable {
         karyawan = null;
         karyawanDAO = new KaryawanDAO();
         btnLogin.setText("LOGIN");
-    }
-    
+    }    
 
     @FXML
-    private void handleButtonLogin(ActionEvent event) throws IOException, SQLException {
-    if (!btnLogin.getText().equals("LOGIN")) return;
-
-    try {
-        karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
-
-        if (karyawan == null) {
-            JOptionPane.showMessageDialog(null, "INVALID USERNAME/PASSWORD!!!");
-            return;
+//    private void handleButtonLogin(ActionEvent event) { // HAPUS "throws" clause
+//    if (btnLogin.getText().equals("LOGIN")) {
+//        try {
+//            // Cek login ke database
+//            karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
+//            
+//            if (karyawan != null) {
+//                System.out.println("Login berhasil untuk: " + karyawan.getAkun()); // Asumsi ada getUsername()
+//                
+//                // Muat tampilan dashboard
+//                Parent root = FXMLLoader.load(getClass().getResource("/Views/peternakHewan.fxml"));
+//                
+//                // Ganti scene
+//                Stage stage = (Stage) btnLogin.getScene().getWindow();
+//                Scene scene = new Scene(root);
+//                stage.setScene(scene);
+//                stage.show(); // TAMBAHKAN INI
+//                
+//            } else {
+//                // Tampilkan pesan error menggunakan Alert JavaFX
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Login Gagal");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Username atau Password salah!");
+//                alert.showAndWait();
+//            }
+//            
+//        } catch (IOException e) {
+//            // Tangani error jika file FXML tidak ditemukan
+//            System.err.println("Error IO: " + e.getMessage());
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Kesalahan Aplikasi");
+//            alert.setHeaderText("File Tidak Ditemukan");
+//            alert.setContentText("Tidak dapat memuat halaman dashboard.");
+//            alert.showAndWait();
+//            
+//        } catch (SQLException e) {
+//            // Tangani error dari database
+//            System.err.println("Error Database: " + e.getMessage());
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Kesalahan Database");
+//            alert.setHeaderText("Koneksi Gagal");
+//            alert.setContentText("Tidak dapat terhubung ke database.");
+//            alert.showAndWait();
+//            
+//        } catch (Exception e) {
+//            // Tangani error lainnya
+//            System.err.println("Error tak terduga: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
+//}
+    private void handleButtonLogin(ActionEvent event) throws IOException, SQLException{
+        if(btnLogin.getText().equals("LOGIN")){
+            try{
+                karyawan = karyawanDAO.checkLogin(txtUser.getText(), txtPass.getText());
+                if(karyawan != null){
+                    String role = karyawan.getRole();
+                    Session.setLoggedInKaryawan(karyawan);
+                    System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
+                    System.out.println("Sekarang mencoba memuat dashboard...");
+                    Stage stage = (Stage) btnLogin.getScene().getWindow();
+                    URL url = new File("src/main/java/Views/PenjualanDashboard.fxml").toURI().toURL();
+                    Parent root = FXMLLoader.load(url);
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                }else{
+                    JOptionPane.showMessageDialog(null, "INVALID USERNAME/PASSWORD!!!");
+                }
+            }catch(HeadlessException | IOException e){
+                e.printStackTrace();
+            }
         }
-
-        // Simpan session
-        Session.setLoggedInKaryawan(karyawan);
-
-        // Ambil role dari DB
-        String role = karyawan.getRole();
-        String r = (role == null) ? "" : role.trim().toUpperCase();
-
-        System.out.println("LOGIN BERHASIL! Objek karyawan: " + karyawan);
-        System.out.println("Role dari DB: " + role);
-        System.out.println("Sekarang mencoba memuat dashboard...");
-
-        Stage stage = (Stage) btnLogin.getScene().getWindow();
-        Parent root;
-
-        // ===== PINDAH SCENE PAKAI IF ELSE =====
-        if (r.equals("PETERNAK") || r.contains("PETERNAK")) {
-            URL url = new File("src/main/java/Views/peternakKonsumsi.fxml").toURI().toURL();
-            root = FXMLLoader.load(url);
-
-        } else if (r.equals("MANAGER") || r.contains("MANAGER")) {
-            URL url = new File("src/main/java/Views/managerDashboard.fxml").toURI().toURL();
-            root = FXMLLoader.load(url);
-
-        } else if (r.equals("LOGISTIK") || r.contains("LOGISTIK")) {
-            URL url = new File("src/main/java/Views/LogistikDashboard.fxml").toURI().toURL();
-            root = FXMLLoader.load(url);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Role tidak dikenali: " + role);
-            return;
-        }
-        // ====================================
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-    } catch (HeadlessException | IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-    }
+        
+//    }
+//    private void handleButtonLoggin(ActionEvent event) throws IOException {
+//    System.out.println("=== BUTTON DIKLIK ===");
+//    
+//    try {
+//        String akun = txtUser.getText();
+//        String pass = txtPass.getText();
+//        
+//        System.out.println("Username: " + akun);
+//        System.out.println("Password: " + pass);
+//        
+//        if(akun.isEmpty() || pass.isEmpty()){
+//            System.out.println("Username atau password kosong!");
+//            JOptionPane.showMessageDialog(null, "Username dan Password tidak boleh kosong!");
+//            return;
+//        }
+//        
+//        System.out.println("Mengecek login ke database...");
+//        Karyawan loggedInKaryawan = karyawanDAO.checkLogin(akun, pass);
+//        
+//        if (loggedInKaryawan != null) {
+//            System.out.println("LOGIN BERHASIL!");
+//            System.out.println("Nama Karyawan: " + loggedInKaryawan.getName());
+//            
+//            System.out.println("Mencoba load Dashboard.fxml...");
+//            
+//            Stage stage = (Stage) btnLogin.getScene().getWindow();
+//            System.out.println("Stage didapat: " + stage);
+//            
+//            URL url = new File("src/main/java/view/Dashboard.fxml").toURI().toURL();
+//            System.out.println("URL Dashboard: " + url);
+//            
+//            Parent root = FXMLLoader.load(url);
+//            System.out.println("Root berhasil di-load!");
+//            
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//            
+//            System.out.println("=== SCENE BERHASIL DIGANTI ===");
+//            
+//        } else {
+//            System.out.println("LOGIN GAGAL! Username/password salah");
+//            JOptionPane.showMessageDialog(null, "INVALID USERNAME/PASSWORD!!!");
+//        }
+//        
+//    } catch (SQLException e) {
+//        System.out.println("ERROR DATABASE: " + e.getMessage());
+//        e.printStackTrace();
+//    } catch (IOException e) {
+//        System.out.println("ERROR LOAD FXML: " + e.getMessage());
+//        e.printStackTrace();
+//    } catch (Exception e) {
+//        System.out.println("ERROR LAINNYA: " + e.getMessage());
+//        e.printStackTrace();
+//    }
 }
-
+    /*private void handleButtonLoggin(ActionEvent event) throws IOException, SQLException {
+        String akun = txtUser.getText();
+        String pass = txtPass.getText();
+        if(akun.isEmpty() || pass.isEmpty()){
+            System.out.println("Errorr...");
+            return;
+        }
+        Karyawan loggedInKaryawan = karyawanDAO.checkLogin(akun, pass);
+        if(loggedInKaryawan != null){
+            try{
+                //FXMLLoader loader = new FXMLLoader(getClass().getResource("src/main/java/view/Dashboard.fxml"));
+                URL url = new File("src/main/java/view/Dashboard.fxml").toURI().toURL();
+                Parent root = FXMLLoader.load(url);
+                
+                //DashboardController dashboardController = loader.getController();
+                //dashboardController.setKaryawanData(loggedInKaryawan);
+                
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                
+            }catch (IOException e) {
+                e.printStackTrace();
+        }
+        }
+    }*/
+    
 }

@@ -1,91 +1,184 @@
-/* ===============================
-   TABLE VIEW UTAMA
-   =============================== */
+/* Menghilangkan background default tabel */
 .table-view {
-    -fx-background-color: white;
-    -fx-border-color: #cfcfcf;
-    -fx-border-radius: 15;
-    -fx-background-radius: 15;
-    -fx-padding: 5;
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+    -fx-padding: 10;
 }
 
-/* ===============================
-   HEADER TABLE
-   =============================== */
+/* Mengatur Header Tabel (Name, File Item, dll) */
 .table-view .column-header-background {
-    -fx-background-color: #96c8a2;
-    -fx-background-radius: 15 15 0 0;
+    -fx-background-color: transparent;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-border-color: transparent transparent #7fb18b transparent;
+    -fx-size: 40;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #1f3d2b;
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
+    -fx-text-fill: #95a5a6; /* Warna abu-abu header */
     -fx-alignment: CENTER;
+    -fx-font-weight: bold;
 }
 
-/* ===============================
-   ROW & CELL
-   =============================== */
+/* Mengatur Baris (Rows) */
 .table-row-cell {
     -fx-background-color: white;
-    -fx-border-color: transparent transparent #eeeeee transparent;
-    -fx-cell-size: 36px;
+    -fx-background-insets: 5; /* Memberi jarak antar baris */
+    -fx-background-radius: 10; /* Membuat sudut membulat */
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
 }
 
-.table-row-cell:odd {
-    -fx-background-color: #f7fdf9;
-}
-
-/* Hover row */
+/* Efek Interaktif saat Mouse di atas Baris */
 .table-row-cell:hover {
-    -fx-background-color: #e2f2e8;
+    -fx-background-color: #f0f7ff; /* Biru sangat muda seperti di gambar */
+    -fx-cursor: hand;
 }
 
-/* Selected row */
+/* Gaya saat Baris dipilih (Selected) */
 .table-row-cell:selected {
-    -fx-background-color: #6fb98f;
+    -fx-background-color: #e3f2fd;
+    -fx-background-insets: 5;
 }
 
-.table-row-cell:selected .text {
+/* Menghilangkan garis vertikal antar kolom */
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 10;
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 13px;
+}
+/* --- TABLE DUA (Background Solid & Modern) --- */
+.table-dua {
+    -fx-background-color: #ffffff; /* Mengubah background menjadi putih solid */
+    -fx-background-radius: 15;      /* Membuat sudut tabel membulat */
+    -fx-border-color: #dfe6e9;     /* Garis tepi luar tabel agar lebih jelas */
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 15, 0, 0, 5);
+}
+
+/* Mengatur Header agar memiliki warna background sedikit berbeda */
+.table-dua .column-header-background {
+    -fx-background-color: #f8f9fa; /* Abu-abu sangat muda untuk area header */
+    -fx-background-radius: 15 15 0 0;
+}
+
+.table-dua .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 0 0 1 0;
+    -fx-size: 45;
+}
+
+.table-dua .column-header .label {
+    -fx-text-fill: #636e72;
+    -fx-font-weight: bold;
+}
+
+/* Mengatur Baris (Row) */
+.table-dua .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 2; /* Jarak antar baris lebih kecil agar terlihat rapat namun tetap rounded */
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+}
+
+/* Interaksi: Hover pada Baris */
+.table-dua .table-row-cell:hover {
+    -fx-background-color: #f0f7ff; /* Warna highlight saat mouse di atas */
+    -fx-cursor: hand;
+}
+
+/* Interaksi: Saat Baris Dipilih */
+.table-dua .table-row-cell:selected {
+    -fx-background-color: #91bdf3; /* Baris yang dipilih jadi biru favorit Anda */
+    -fx-background-radius: 5;
+}
+
+.table-dua .table-row-cell:selected .text {
+    -fx-fill: white; /* Mengubah warna teks menjadi putih saat baris dipilih */
+}
+
+/* Menghilangkan garis grid di dalam tabel agar bersih */
+.table-dua .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 10;
+}
+
+/* Menghilangkan scrollbar background agar bersih */
+.table-dua .scroll-bar:vertical,
+.table-dua .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+/* --- TABLE VIEW 3 (PREMIUM FLOATING STYLE) --- */
+.table-view3 {
+    -fx-background-color: transparent; /* Membuat background utama transparan agar menyatu */
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-border-color: #f1f2f6;
+    -fx-border-width: 1.5;
+    -fx-padding: 15;
+    
+    /* Bayangan lebih lembut dan lebih luas */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 25, 0, 0, 15);
+}
+
+/* Header Bergaya Kapsul */
+.table-view3 .column-header-background {
+    -fx-background-color: #f8faff; 
+    -fx-background-radius: 15 15 0 0;
+    -fx-padding: 5 0 10 0;
+}
+
+.table-view3 .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 10;
+    -fx-border-width: 0; /* Menghilangkan garis antar kolom header */
+}
+
+.table-view3 .column-header .label {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 700; /* Lebih tebal untuk kontras */
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 12px;
+}
+
+/* Baris dengan Spasi (Row Style) */
+.table-view3 .table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 5; /* Membuat baris seperti kartu terpisah */
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 400;
+}
+
+/* Interaksi Hover (Sedikit Bergerak Keatas) */
+.table-view3 .table-row-cell:hover {
+    -fx-background-color: #f1f8ff;
+    -fx-cursor: hand;
+}
+
+/* Warna Saat Dipilih (Biru #91bdf3 dengan teks putih) */
+.table-view3 .table-row-cell:selected {
+    -fx-background-color: #91bdf3;
+    -fx-text-fill: white;
+}
+
+.table-view3 .table-row-cell:selected .text {
     -fx-fill: white;
 }
 
-/* ===============================
-   CELL TEXT
-   =============================== */
-.table-cell {
-    -fx-text-fill: #333333;
-    -fx-font-size: 12px;
-    -fx-alignment: CENTER;
-}
-
-/* ===============================
-   SCROLLBAR
-   =============================== */
-.table-view .scroll-bar:vertical {
+/* Scrollbar Slim & Minimalis */
+.table-view3 .virtual-flow .scroll-bar:vertical {
     -fx-background-color: transparent;
+    -fx-pref-width: 6;
 }
 
-.table-view .scroll-bar:vertical .thumb {
-    -fx-background-color: #96c8a2;
+.table-view3 .virtual-flow .scroll-bar:vertical .thumb {
+    -fx-background-color: #dfe6e9;
     -fx-background-radius: 10;
-}
-
-.table-view .scroll-bar:horizontal .thumb {
-    -fx-background-color: #96c8a2;
-    -fx-background-radius: 10;
-}
-
-/* ===============================
-   PLACEHOLDER (DATA KOSONG)
-   =============================== */
-.table-view .placeholder .label {
-    -fx-text-fill: #999999;
-    -fx-font-size: 14px;
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -13,60 +14,99 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="peternakTampilan" prefHeight="512.0" prefWidth="1016.0" style="-fx-background-color: d3d3d3;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
-    <stylesheets>
-        <URL value="@peternakhewan.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" fx:id="peternakTampilan" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
     <children>
-        
-        <Pane layoutX="296.0" layoutY="5.0" prefHeight="110.0" prefWidth="720.0" style="-fx-background-color: white; -fx-background-radius: 50;">
-            <children>
-                <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="600.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/Peternak.jpg" />
-                    </image>
-                </ImageView>
-            </children>
-        </Pane>
-
-        <Pane depthTest="DISABLE" layoutX="405.0" layoutY="125.0" prefHeight="70.0" prefWidth="500.0" styleClass="header-box">
+      <Pane layoutX="775.0" layoutY="15.0" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: white; -fx-background-radius: 50;">
          <children>
-            <Text layoutX="31.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header-text" text="TOTAL HEWAN PETERNAKAN" wrappingWidth="438.78">
-               <font>
-                  <Font name="Nirmala UI Bold" size="30.0" />
-               </font>
-            </Text>
+            <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Desain%20tanpa%20judul%204.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="PETERNAK" />
          </children>
       </Pane>
+      <HBox layoutX="275.0" layoutY="15.0" prefHeight="37.0" prefWidth="428.0" style="-fx-background-color: white; -fx-background-radius: 13;">
+         <children>
+                <Button fx:id="btHewan" mnemonicParsing="false" onAction="#btnHewan" prefHeight="43.0" prefWidth="105.0" text="Hewan">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="7.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <styleClass>
+                  <String fx:value="nav-button-2" />
+                  <String fx:value="nav-button-2-activ" />
+               </styleClass>
+                </Button>
+                <Button fx:id="btnProduk" mnemonicParsing="false" onAction="#handleActionToProdukPeternak" prefHeight="37.0" prefWidth="109.0" styleClass="nav-button-2" text="Produksi">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="20.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                <Button fx:id="btnKonsum" mnemonicParsing="false" onAction="#handleActionToProdukKonsumsi" prefHeight="37.0" prefWidth="134.0" styleClass="nav-button-2" text="Konsumsi">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="20.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                
+                <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#handleActionLogout" prefHeight="38.0" prefWidth="104.0" styleClass="nav-button-2" text="Logout">
+                    <font>
+                        <Font name="Nirmala UI Bold" size="20.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+         </children>
+      </HBox>
 
-      <Pane layoutX="320.0" layoutY="210.0" prefHeight="150.0" prefWidth="680.0" style="-fx-background-color: transparent;">
+      <Pane layoutX="152.0" layoutY="73.0" prefHeight="134.0" prefWidth="686.0" style="-fx-background-color: transparent;">
          <children>
             
-            <Pane layoutX="50.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+            <Pane layoutX="50.0" layoutY="12.0" prefHeight="110.0" prefWidth="259.0" styleClass="pane-biru">
                <children>
-                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="AYAM" textAlignment="CENTER" wrappingWidth="259.0" />
-                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" styleClass="summary-value" text="0 Ekor" />
+                  <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pane-value-font" text="Ayam" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="60.0" prefHeight="50.0" prefWidth="259.0" styleClass="pane-header-font" text="0 Ekor" />
+                  <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="17.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/R.gif" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             
-            <Pane layoutX="370.0" layoutY="10.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
+            <Pane layoutX="370.0" layoutY="13.0" prefHeight="110.0" prefWidth="259.0" styleClass="pane-hijau">
                <children>
-                  <Text layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="summary-label" text="SAPI" textAlignment="CENTER" wrappingWidth="259.0" />
-                  <Label fx:id="totalSapi" alignment="CENTER" layoutY="55.0" prefHeight="50.0" prefWidth="259.0" styleClass="summary-value" text="0 Ekor" />
+                  <Text layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pane-value-font" text="Sapi" textAlignment="CENTER" wrappingWidth="259.0" />
+                  <Label fx:id="totalSapi" alignment="CENTER" layoutY="60.0" prefHeight="50.0" prefWidth="259.0" styleClass="pane-header-font" text="0 Ekor" />
+                  <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="9.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/cow-sapi-menghilang.gif" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             
          </children>
       </Pane>
 
-        <Pane layoutX="310.0" layoutY="370.0" prefHeight="265.0" prefWidth="680.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+        <Pane layoutX="62.0" layoutY="205.0" prefHeight="321.0" prefWidth="841.0" style="-fx-background-color: white; -fx-background-radius: 25;">
             <children>
-                <TableView fx:id="tvHewan" layoutX="15.0" layoutY="65.0" prefHeight="179.0" prefWidth="661.0" stylesheets="@../css/peternakhewan.css">
+                <TableView fx:id="tvHewan" layoutX="15.0" layoutY="65.0" prefHeight="244.0" prefWidth="812.0" styleClass="table-view3">
                     <columns>
                         <TableColumn fx:id="JenisCol" prefWidth="132.666748046875" text="Jenis" />
                         <TableColumn fx:id="BeratCol" prefWidth="67.99981689453125" text="Berat" />
@@ -82,11 +122,11 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
                 </TableView>
-                <Button fx:id="btnEdit" disable="true" layoutX="569.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="40.0" prefWidth="96.0" stylesheets="@../css/peternakhewan.css" text="Edit Hewan">
+                <Button fx:id="btnEdit" disable="true" layoutX="708.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="40.0" prefWidth="96.0" styleClass="btn-back" text="Edit Hewan">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-                <Button fx:id="btnTambah1" layoutX="466.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnTambah" prefHeight="40.0" prefWidth="98.0" stylesheets="@../css/peternakhewan.css" text="Tambah Hewan" textAlignment="CENTER">
+                <Button fx:id="btnTambah1" layoutX="600.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnTambah" prefHeight="40.0" prefWidth="98.0" styleClass="btn-add" text="Tambah Hewan" textAlignment="CENTER">
                     <font>
                         <Font size="11.0" />
                     </font>
@@ -94,7 +134,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-            <Button fx:id="btnpanenn" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnPanenProduk" prefHeight="35.0" prefWidth="98.0" text="Panen">
+            <Button fx:id="btnpanenn" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnPanenProduk" prefHeight="35.0" prefWidth="98.0" styleClass="btn-submit" text="Panen">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -102,129 +142,59 @@
             </children>
         </Pane>
 
-        <Pane layoutX="-3.0" prefHeight="641.0" prefWidth="275.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <AnchorPane fx:id="displayAddHewan" layoutX="195.0" layoutY="34.0" prefHeight="488.0" prefWidth="609.0" style="-fx-background-color: white; -fx-background-radius: 30; -fx-border-width: 2px; -fx-border-radius: 30; -fx-border-color: black;" visible="false">
             <children>
-                <ImageView fitHeight="119.0" fitWidth="191.0" layoutX="-34.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/Logo.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btHewan" layoutX="2.0" layoutY="180.0" mnemonicParsing="false" onAction="#btnHewan" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="HEWAN">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="20.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Button>
-                <Pane layoutX="-3.0" layoutY="140.0" prefHeight="11.0" prefWidth="275.0" style="-fx-background-color: gray;" />
-                
-                <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="-1.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/box.jpg" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnProduk" layoutX="2.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleActionToProdukPeternak" prefHeight="60.0" prefWidth="274.0" stylesheets="@../css/peternakhewan.css" text="PRODUKSI">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="20.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Button>
-                
-                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/pakan.jpg" />
-                    </image>
-                </ImageView>
-                <Button fx:id="btnKonsum" layoutX="2.0" layoutY="320.0" mnemonicParsing="false" onAction="#handleActionToProdukKonsumsi" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="KONSUMSI">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="20.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Button>
-                
-                <ImageView fitHeight="120.0" fitWidth="200.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/logo%20ternax.png" />
-                    </image>
-                </ImageView>
-                
-                <Button fx:id="btnLogout" layoutX="1.0" layoutY="556.0" mnemonicParsing="false" onAction="#handleActionLogout" prefHeight="60.0" prefWidth="275.0" stylesheets="@../css/peternakhewan.css" text="Logout">
-                    <font>
-                        <Font name="Nirmala UI Bold" size="20.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Button>
-                <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="17.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../image/logout.jpg" />
-                    </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </ImageView>
-            </children>
-        </Pane>
-
-        <AnchorPane fx:id="displayAddHewan" layoutX="350.0" layoutY="50.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-width: 2px; -fx-border-radius: 50; -fx-border-color: black;" visible="false">
-            <children>
-                <VBox layoutX="23.0" layoutY="30.0" prefHeight="450.0" prefWidth="550.0">
+                <VBox layoutX="23.0" layoutY="20.0" prefHeight="398.0" prefWidth="550.0">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Jenis">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-hrmate" text="Jenis">
                             <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <ChoiceBox fx:id="chcJenis" prefHeight="30.0" prefWidth="328.0" />
+                        <ChoiceBox fx:id="chcJenis" prefHeight="30.0" prefWidth="328.0" styleClass="text-field" />
                         
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Berat">
                              <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <TextArea fx:id="txtBerat" prefHeight="30.0" prefWidth="550.0" />
+                        <TextArea fx:id="txtBerat" prefHeight="63.0" prefWidth="550.0" styleClass="text-field" />
                         
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Usia">
                              <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <TextArea fx:id="txtUsia" prefHeight="30.0" prefWidth="550.0" />
+                        <TextArea fx:id="txtUsia" prefHeight="30.0" prefWidth="550.0" styleClass="text-field" />
                         
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kelamin">
                              <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <ChoiceBox fx:id="chcKelamin" prefHeight="21.0" prefWidth="123.0" />
+                        <ChoiceBox fx:id="chcKelamin" prefHeight="21.0" prefWidth="123.0" styleClass="text-field" />
                         
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kondisi">
                              <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <TextArea fx:id="txtKondisi" prefHeight="30.0" prefWidth="550.0" />
+                        <TextArea fx:id="txtKondisi" prefHeight="30.0" prefWidth="550.0" styleClass="text-field" />
                         
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Penyakit">
                              <font><Font name="Nirmala UI Bold" size="18.0" /></font>
                         </Text>
-                        <TextArea fx:id="txtPenyakit" prefHeight="50.0" prefWidth="550.0" stylesheets="@../css/peternakhewan.css" />
+                        <TextArea fx:id="txtPenyakit" prefHeight="43.0" prefWidth="550.0" styleClass="text-field" />
                     </children>
                 </VBox>
-                <Button fx:id="btnSimpanTambah" layoutX="37.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleActionTambahHewan" prefHeight="37.0" prefWidth="96.0" stylesheets="@../css/peternakhewan.css" text="Tambah">
+                <Button fx:id="btnSimpanTambah" layoutX="35.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleActionTambahHewan" prefHeight="37.0" prefWidth="96.0" styleClass="btn-add" text="Tambah">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-                <Button fx:id="btnUpdate" layoutX="33.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleActionEdit" prefHeight="37.0" prefWidth="97.0" stylesheets="@../css/peternakhewan.css" text="Update" />
-                <Button fx:id="btnKembali" layoutX="465.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleBackAddHewan" prefHeight="37.0" prefWidth="104.0" stylesheets="@../css/peternakhewan.css" text="Kembali" />
+                <Button fx:id="btnUpdate" layoutX="140.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleActionEdit" prefHeight="37.0" prefWidth="97.0" styleClass="btn-submit" text="Update" />
+                <Button fx:id="btnKembali" layoutX="468.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleBackAddHewan" prefHeight="37.0" prefWidth="104.0" styleClass="btn-back" text="Kembali" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="displayPanenProduk" layoutX="360.0" layoutY="115.0" prefHeight="459.0" prefWidth="607.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-width: 2px; -fx-border-radius: 50; -fx-border-color: black;" visible="false">
+      <AnchorPane fx:id="displayPanenProduk" layoutX="219.0" layoutY="32.0" prefHeight="332.0" prefWidth="542.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-width: 2px; -fx-border-radius: 50; -fx-border-color: black;" visible="false">
          <children>
-            <VBox layoutX="23.0" layoutY="30.0" prefHeight="321.0" prefWidth="502.0">
+            <VBox layoutX="23.0" layoutY="30.0" prefHeight="244.0" prefWidth="503.0" style="-fx-spacing: 5;">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kuantitas">
                      <font>
                         <Font name="Nirmala UI Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="txtKuantitas" prefHeight="47.0" prefWidth="547.0" />
+                  <TextField fx:id="txtKuantitas" prefHeight="47.0" prefWidth="547.0" styleClass="text-field" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="tanggal" wrappingWidth="79.336669921875">
                      <font>
                         <Font name="Nirmala UI Bold" size="18.0" />
@@ -236,13 +206,27 @@
                         <Font name="Nirmala UI Bold" size="18.0" />
                      </font>
                   </Text>
-                  <ChoiceBox fx:id="chcTipe" prefHeight="21.0" prefWidth="123.0" />
+                  <ChoiceBox fx:id="chcTipe" prefHeight="21.0" prefWidth="173.0" styleClass="text-field" />
                </children>
             </VBox>
-            <Button fx:id="btnKembaliProduk" layoutX="464.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleBackPanen" prefHeight="49.0" prefWidth="100.0" text="Kembali" />
-            <Button fx:id="btnPanen" layoutX="17.0" layoutY="363.0" mnemonicParsing="false" onAction="#handleSubmitProduk" prefHeight="49.0" prefWidth="100.0" text="Panen" />
+            <Button fx:id="btnKembaliProduk" layoutX="414.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleBackPanen" prefHeight="36.0" prefWidth="98.0" styleClass="btn-back" text="Kembali" />
+            <Button fx:id="btnPanen" layoutX="40.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleSubmitProduk" prefHeight="37.0" prefWidth="100.0" styleClass="btn-add" text="Panen" />
          </children>
       </AnchorPane>
+      <ImageView fitHeight="60.0" fitWidth="63.0" layoutX="13.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Desain%20tanpa%20judul%20(3).png" />
+         </image>
+      </ImageView>
+      <Text layoutX="77.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="TERNAX" />
 
     </children>
+   <stylesheets>
+      <URL value="@Button.css" />
+      <URL value="@font.css" />
+      <URL value="@pane.css" />
+      <URL value="@Table.css" />
+      <URL value="@textField.css" />
+      <URL value="@tanggal.css" />
+   </stylesheets>
 </AnchorPane>

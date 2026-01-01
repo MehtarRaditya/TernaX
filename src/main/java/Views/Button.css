@@ -1,117 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 /* Button Berwarna Hijau*/
-#btnGreen {
-    -fx-background-color: linear-gradient(to bottom right, #4CAF50, #2E7D32);
-    -fx-text-fill: #ffffff;        /* teks putih */
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-font-family: "Nirmala UI";
-
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-
-    -fx-padding: 6 14 6 14;
-    -fx-cursor: hand;
-    -fx-graphic-text-gap: 8;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
-}
-
-#btnGreen:hover {
-    -fx-background-color: linear-gradient(to bottom right, #66BB6A, #388E3C);
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
-}
-
 /*Button Berwarna Abu*/
-#btnGrey {
-    -fx-background-color: linear-gradient(to bottom right, #e0e0e0, #bfbfbf);
-    -fx-text-fill: #000000;        /* teks hitam */
-    -fx-font-size: 12px;           /* ukuran kecil */
-    -fx-font-weight: bold;
-    -fx-font-family: "Nirmala UI";
-
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-
-    -fx-padding: 6 14 6 14;        /* kecil dan proporsional */
+/* --- TOMBOL LOGOUT / WARNING (MERAH) --- */
+.btnWarning {
+    -fx-background-color: transparent; 
+    -fx-background-radius: 15;
+    -fx-text-fill: #e74c3c; /* Merah cerah namun lembut */
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+    -fx-padding: 8 20;
     -fx-cursor: hand;
-    -fx-graphic-text-gap: 8;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.20), 6, 0.25, 0, 1);
+    -fx-transition: all 0.2s ease-in-out;
 }
 
-#btnGrey:hover {
-    -fx-background-color: linear-gradient(to bottom right, #f2f2f2, #c9c9c9);
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
+/* 1. Efek Hover (Saat disentuh kursor) */
+.btnWarning:hover {
+    /* Latar belakang merah transparan tipis */
+    -fx-background-color: rgba(231, 76, 60, 0.1); 
+    -fx-text-fill: #c0392b;
 }
 
-/*Button Berwarna Merah*/
-#btnWarning {
-    -fx-background-color: linear-gradient(to bottom right, #F44336, #C62828);
-    -fx-text-fill: #ffffff;        /* teks putih */
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-font-family: "Nirmala UI";
-
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-
-    -fx-padding: 6 14 6 14;
-    -fx-cursor: hand;
-    -fx-graphic-text-gap: 8;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
+/* 2. Efek Clicked / Pressed (Saat diklik) */
+.btnWarning:pressed {
+    /* Berubah menjadi merah tua solid */
+    -fx-background-color: #c0392b; 
+    -fx-text-fill: white;
+    
+    /* Efek visual tombol tertekan */
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
 }
-#btnWarning:hover {
-    -fx-background-color: linear-gradient(to bottom right, #EF5350, #D32F2F);
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
-}
-#btnWarning:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #C62828, #B71C1C);
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
-    -fx-effect: none;
-}
-
 /*Button Berwarna Biru*/
-#btnBlue {
-    -fx-background-color: linear-gradient(to bottom right, #2196F3, #1565C0);
-    -fx-text-fill: #ffffff;        /* teks putih */
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-font-family: "Nirmala UI";
-
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-
-    -fx-padding: 6 14 6 14;
-    -fx-cursor: hand;
-    -fx-graphic-text-gap: 8;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 1);
-}
-
-#btnBlue:hover {
-    -fx-background-color: linear-gradient(to bottom right, #42A5F5, #1976D2);
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 8, 0.35, 0, 1);
-}
-
-#btnBlue:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #1565C0, #0D47A1);
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
-    -fx-effect: none;
-}
 
 
-/*Button Navigation Bar*/
+/*Button Navigation Bar
 #btnNavBar {
     -fx-background-color: #00000000;
     -fx-text-fill: #16213e;
@@ -127,4 +50,278 @@
     -fx-background-color: rgba(128, 128, 128, 0.60);
     -fx-scale-x: 0.97;
     -fx-scale-y: 0.97;
+}*/
+/*==========================================*/
+/* Gaya Umum Navigasi */
+.nav-button {
+    -fx-background-color: transparent; /* Transparan */
+    -fx-text-fill: #7f8c8d;            /* Warna default abu-abu */
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 10 15;
+    -fx-background-radius: 5px;
+}
+
+/* Interaksi: Saat Mouse di Atas (Hover) */
+.nav-button:hover {
+    -fx-text-fill: #ff7675;            /* Berubah jadi oranye muda saat disentuh */
+    -fx-background-color: rgba(255, 118, 117, 0.05); /* Sedikit highlight */
+}
+
+/* Interaksi: Saat Tombol Ditekan (Pressed) */
+.nav-button:pressed {
+    -fx-scale-x: 0.95;                 /* Efek sedikit mengecil */
+    -fx-scale-y: 0.95;
+}
+
+/* State Aktif (Tombol yang terpilih/sedang dibuka) */
+.nav-active {
+    -fx-text-fill: #ff7675;            /* Warna Oranye sesuai gambar */
+    -fx-background-color: transparent;
+}
+.button-custom-blue {
+    /* Menggunakan warna utama #91bdf3 */
+    -fx-background-color: #91bdf3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", system-ui;
+    
+    /* Membuat bentuk sedikit membulat agar modern */
+    -fx-background-radius: 8; 
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    
+    /* Bayangan lembut dengan tone warna yang sama */
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.4), 10, 0, 0, 4);
+}
+
+/* Interaksi: Saat Mouse di Atas (Hover) */
+.button-custom-blue:hover {
+    /* Warna menjadi sedikit lebih terang saat disentuh */
+    -fx-background-color: #a8cefb; 
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.6), 15, 0, 0, 6);
+}
+
+/* Interaksi: Saat Ditekan (Pressed) */
+.button-custom-blue:pressed {
+    /* Warna menjadi sedikit lebih gelap saat diklik */
+    -fx-background-color: #7eb1ef;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.2), 5, 0, 0, 2);
+}
+/* --- 1. Tombol SUBMIT (#91bdf3) --- */
+.btn-submit {
+    -fx-background-color: #91bdf3;
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.4), 10, 0, 0, 4);
+}
+.btn-submit:hover { -fx-background-color: #a8cefb; }
+.btn-submit:pressed {
+    -fx-background-color: #7eb1ef; /* Lebih gelap */
+    -fx-scale-x: 0.92;             /* Mengecil saat ditekan */
+    -fx-scale-y: 0.92;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* --- 2. Tombol TAMBAH (Hijau) --- */
+.btn-add {
+    -fx-background-color: #2ecc71;
+    -fx-effect: dropshadow(three-pass-box, rgba(46, 204, 113, 0.4), 10, 0, 0, 4);
+}
+.btn-add:hover { -fx-background-color: #58d68d; }
+.btn-add:pressed {
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 0.92;
+    -fx-scale-y: 0.92;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* --- 3. Tombol HAPUS (Merah) --- */
+.btn-delete {
+    -fx-background-color: #e74c3c;
+    -fx-effect: dropshadow(three-pass-box, rgba(231, 76, 60, 0.4), 10, 0, 0, 4);
+}
+.btn-delete:hover { -fx-background-color: #ec7063; }
+.btn-delete:pressed {
+    -fx-background-color: #c0392b;
+    -fx-scale-x: 0.92;
+    -fx-scale-y: 0.92;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* --- 4. Tombol KEMBALI (Abu-abu) --- */
+.btn-back {
+    -fx-background-color: #95a5a6;
+    -fx-effect: dropshadow(three-pass-box, rgba(149, 165, 166, 0.4), 10, 0, 0, 4);
+}
+.btn-back:hover { -fx-background-color: #bdc3c7; }
+.btn-back:pressed {
+    -fx-background-color: #7f8c8d;
+    -fx-scale-x: 0.92;
+    -fx-scale-y: 0.92;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}   
+/* --- RADIO BUTTON MODERN --- */
+
+/* --- MODERN RADIO BUTTON CUSTOM --- */
+.radio-button {
+    -fx-text-fill: #2d3436;
+    -fx-font-size: 8px;
+    -fx-font-family: "Poppins";
+    -fx-cursor: hand;
+    -fx-padding: 5;
+}
+
+/* 1. Lingkaran Luar: Transparan saat normal */
+.radio-button .radio {
+    -fx-background-color: transparent; /* Transparan */
+    -fx-border-color: #dfe6e9; /* Garis abu-abu tipis */
+    -fx-border-width: 2;
+    -fx-border-radius: 50; /* Bulat sempurna */
+    -fx-background-radius: 50;
+    -fx-padding: 4; 
+}
+
+/* 2. Saat Hover: Garis berubah jadi biru */
+.radio-button:hover .radio {
+    -fx-border-color: #91bdf3;
+}
+
+/* 3. Saat Terpilih (Selected): Lingkaran menjadi Biru Solid */
+.radio-button:selected .radio {
+    -fx-background-color: #91bdf3; /* Isi Biru */
+    -fx-border-color: #91bdf3;
+}
+
+/* 4. Titik Tengah (Dot): Saat terpilih menjadi putih agar kontras dengan background biru */
+.radio-button:selected .dot {
+    -fx-background-color: white; /* Titik di tengah jadi putih */
+    -fx-background-radius: 50;
+    -fx-padding: 3;
+}
+
+/* Menghilangkan dot default jika tidak terpilih */
+.radio-button .dot {
+    -fx-background-color: transparent;
+}
+/* Efek Halus saat Ditekan (Pressed) */
+.radio-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Label Teks di samping Radio Button */
+.radio-button .label {
+    -fx-padding: 0 0 0 5;
+    -fx-text-fill: #636e72;
+}
+
+/* --- NAV-BUTTON 2 (ULTRALIGHT DENGAN EFEK KLIK GELAP) --- */
+.nav-button-2 {
+    -fx-font-family: "Poppins ExtraLight", "Segoe UI Light", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 100;
+    -fx-text-fill: #636e72; 
+    
+    -fx-background-color: transparent;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+
+/* 1. Efek Hover (Biru Muda Transparan) */
+.nav-button-2:hover {
+    -fx-background-color: rgba(145, 189, 243, 0.1);
+    -fx-text-fill: #91bdf3;
+}
+
+/* 2. Efek Aktif / Terpilih (Biru #91bdf3) */
+.nav-button-2:selected {
+    -fx-background-color: #91bdf3;
+    -fx-text-fill: white;
+    -fx-font-weight: 400; 
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.2), 10, 0, 0, 4);
+}
+
+/* 3. Efek Saat Diklik (Lebih Gelap & Mengecil) */
+.nav-button-2:pressed {
+    /* Biru yang lebih gelap agar terasa ada tekanan */
+    -fx-background-color: #79a6d8; 
+    -fx-text-fill: white;
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+.nav-button-2-activ {
+    -fx-font-family: "Poppins ExtraLight", "Segoe UI Light", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 100;
+    -fx-text-fill: #636e72; 
+    
+    -fx-background-color: #79a6d8; 
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+.button-pojok {
+    -fx-background-color: #6c5ce7;
+    -fx-background-radius: 12;
+    -fx-text-fill: white;
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    
+    /* Menambahkan ikon */
+    -fx-graphic: url("..\image\Profil Manager.png"); 
+    
+    /* Mengatur posisi ikon ke kanan */
+    -fx-content-display: RIGHT; 
+    
+    /* Trik agar ikon di pojok: Gunakan gap yang sangat besar */
+    -fx-graphic-text-gap: 50; 
+    
+    -fx-cursor: hand;
+}
+/* --- TOMBOL NAVIGASI DEFAULT (TRANSPARAN) --- */
+.nav2-button {
+    -fx-background-color: transparent; 
+    -fx-background-radius: 15;
+    -fx-text-fill: #7f8c8d; /* Abu-abu saat tidak aktif */
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+/* 2. Efek Click/Pressed (Saat diklik kursor) */
+.nav2-button:pressed {
+    /* Warna biru yang lebih tua dan pekat */
+    -fx-background-color: #2980b9; 
+    -fx-text-fill: white;
+    /* Memberikan efek tombol seolah-olah tertekan ke dalam */
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Efek Hover (Saat disentuh kursor) */
+.nav2-button:hover {
+    -fx-background-color: rgba(145, 189, 243, 0.15); /* Biru sangat transparan */
+    -fx-text-fill: #4a90e2;
+}
+
+/* --- TOMBOL NAVIGASI AKTIF (BERWARNA BIRU) --- */
+.nav2-button-active {
+    -fx-background-color: #91bdf3; /* Biru langit sesuai tema */
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    /* Memberikan sedikit efek cahaya biru di bawah tombol aktif */
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.5), 8, 0, 0, 4);
 }

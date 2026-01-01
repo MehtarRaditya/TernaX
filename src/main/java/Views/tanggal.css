@@ -1,0 +1,75 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 28, 2025, 7:04:01 PM
+    Author     : mrifa
+*/
+/* --- DATE PICKER MODERN --- */
+
+/* 1. Kotak Input Tanggal */
+.date-picker {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 1.5;
+    -fx-padding: 2;
+}
+
+.date-picker:focused {
+    -fx-border-color: #91bdf3; /* Warna biru Anda */
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.3), 8, 0, 0, 0);
+}
+
+/* 2. Tombol Ikon Kalender di Sebelah Kanan */
+.date-picker > .arrow-button {
+    -fx-background-color: #91bdf3;
+    -fx-background-radius: 0 6 6 0; /* Membulat hanya di sisi kanan */
+    -fx-cursor: hand;
+}
+
+.date-picker > .arrow-button:hover {
+    -fx-background-color: #a8cefb;
+}
+
+/* Mengubah warna ikon kalender menjadi putih */
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: white;
+}
+
+/* 3. Popup Kalender (Saat diklik) */
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #dfe6e9;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* Header Kalender (Bulan dan Tahun) */
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 10 10 0 0;
+}
+
+/* Warna Hari yang Dipilih */
+.date-picker-popup > .calendar-grid > .day-cell:selected,
+.date-picker-popup > .calendar-grid > .day-cell:selected:hover {
+    -fx-background-color: #91bdf3;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+}
+
+/* Warna Hari Ini */
+.date-picker-popup > .calendar-grid > .today {
+    -fx-text-fill: #91bdf3;
+    -fx-font-weight: bold;
+}
+
+/* Hover pada sel tanggal */
+.date-picker-popup > .calendar-grid > .day-cell:hover {
+    -fx-background-color: #f0f7ff;
+    -fx-text-fill: #91bdf3;
+}

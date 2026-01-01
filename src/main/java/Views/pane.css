@@ -1,0 +1,149 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 28, 2025, 11:07:30 PM
+    Author     : mrifa
+*/
+/* --- PANE BIRU MUDA (Active Shipments style) --- */
+.pane-biru {
+    -fx-background-color: #e1f5fe; /* Biru pastel sangat muda */
+    -fx-background-radius: 20;      /* Sudut sangat membulat sesuai gambar */
+    -fx-padding: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.5); /* Border putih tipis transparan agar terlihat clean */
+    -fx-border-radius: 20;
+    -fx-border-width: 5;
+}
+
+/* --- PANE HIJAU MUDA (Completed style) --- */
+.pane-hijau {
+    -fx-background-color: #e8f5e9; /* Hijau pastel sangat muda */
+    -fx-background-radius: 20;
+    -fx-padding: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-radius: 20;
+    -fx-border-width: 5;
+}
+
+/* Penataan Label di dalam Pane agar mirip gambar */
+.pane-label-title {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+    -fx-text-fill: #576574;
+}
+
+.pane-label-value {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+}
+/* --- CONTAINER FORM (PANE UTAMA) --- */
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-padding: 40;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 30, 0, 0, 15);
+}
+/* 3. Pane Kuning/Oranye Muda (Misal: Untuk Data Pakan/Produksi) */
+.pane-kuning-pastel {
+    -fx-background-color: #fff9c4; /* Kuning pastel lembut */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.6);
+    -fx-border-width: 5;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.03), 10, 0, 0, 5);
+}
+.pane-merah-pastel {
+    /* Merah muda pastel yang lembut, tidak menusuk mata */
+    -fx-background-color: #ffebee; 
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.7); /* Border putih transparan agar clean */
+    -fx-border-width: 5;
+    -fx-padding: 15;
+    
+    /* Bayangan halus */
+    -fx-effect: dropshadow(three-pass-box, rgba(231, 76, 60, 0.05), 15, 0, 0, 8);
+}
+/* --- INTERAKSI PANE: MENGANGKAT & DARK-TRANSPARENT --- */
+
+.pane-interaktif {
+    /* Kecepatan transisi agar gerakan naik & perubahan warna terlihat smooth */
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-cursor: hand;
+}
+
+.pane-interaktif:hover {
+    /* 1. Efek ke atas sedikit (mengangkat) */
+    -fx-translate-y: -10; 
+
+    /* 2. Warna menjadi lebih gelap tapi tetap transparan */
+    /* r,g,b, 0.2 adalah tingkat kegelapan transparansinya */
+    -fx-background-color: rgba(0, 0, 0, 0.15); 
+    
+    /* 3. Menambah bayangan agar efek 'terangkat' lebih terasa */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 15);
+}
+
+/* Efek saat dilepas agar kembali ke posisi semula dengan halus */
+.pane-interaktif:exit {
+    -fx-translate-y: 0;
+    -fx-effect: none;
+}
+/* --- BASE STYLE UNTUK SEMUA PANE --- */
+.pane-custom {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 15;
+    -fx-cursor: hand;
+    /* Transisi halus untuk semua perubahan */
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+
+/* --- VARIASI WARNA BERDASARKAN GAMBAR --- */
+
+/* 1. Biru Ungu (Vibrant Blue) */
+.pane-vibrant-blue {
+    -fx-background-color: #6c62d9;
+}
+
+/* 2. Merah Muda / Coral (Vibrant Red) */
+.pane-vibrant-red {
+    -fx-background-color: #ff7675;
+}
+
+/* 3. Biru Cerah (Sky Blue) */
+.pane-vibrant-sky {
+    -fx-background-color: #0984e3;
+}
+
+/* 4. Oranye / Kuning Tua (Amber) */
+.pane-vibrant-orange {
+    -fx-background-color: #fab1a0;
+}
+
+/* --- INTERAKSI SAAT DISENTUH (HOVER) --- */
+/* Efek: Naik ke atas (-10px) dan warna menjadi gelap transparan */
+
+.pane-custom:hover {
+    -fx-translate-y: -10;
+    /* Menggunakan lapisan hitam transparan di atas warna asli */
+    -fx-background-color: rgba(0, 0, 0, 0.2); 
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 20, 0, 0, 10);
+}
+
+/* Khusus untuk teks di dalam pane agar tetap terbaca saat hover */
+.pane-custom:hover .label {
+    -fx-text-fill: white;
+}
+/* --- CONTAINER NAVIGASI RAMPING --- */
+.nav2-container {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 4;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}

@@ -1,0 +1,71 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 28, 2025, 2:52:49 PM
+    Author     : mrifa
+*/
+.label-hrmate {
+    -fx-font-family: "Montserrat"; /* ganti dengan font yang sudah diinstall di komputer */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold; /* bisa diganti normal jika tidak ingin tebal */
+    -fx-text-fill: #000000; /* ganti sesuai warna yang diinginkan */
+}
+.text-header {
+    -fx-font-family: "Essoignes", "Times New Roman", serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+    /* Memberikan sedikit jarak antar huruf agar terlihat premium */
+    -fx-letter-spacing: 1px; 
+}
+.root {
+    /* Mengatur font global */
+    -fx-font-family: "Poppins";
+}
+
+/* Khusus untuk teks angka di dalam Pane agar terlihat menonjol */
+.pane-value-font {
+    -fx-font-family: "Poppins SemiBold";
+    -fx-font-size: 24px;
+    -fx-text-fill: #2d3436;
+}
+
+/* Khusus untuk label header di dalam Pane */
+.pane-header-font {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-letter-spacing: 1px; /* Memberikan sedikit jarak antar huruf */
+}
+.label-analytics {
+    -fx-font-family: "Inter", "Roboto", "Segoe UI", "Arial";
+    -fx-font-size: 20px;
+    -fx-font-weight: 600; /* semi-bold, mirip di gambar */
+    -fx-text-fill: #1f2937; /* abu gelap seperti UI modern */
+}
+/* --- LABEL INFO PRODUKSI (Gaya Baru) --- */
+.label-info-produksi {
+    /* Menggunakan font modern agar terlihat premium */
+    -fx-font-family: "Plus Jakarta Sans", "Poppins", sans-serif;
+    -fx-font-size: 15px; 
+    -fx-font-weight: 800; /* Dibuat Extra Bold agar menonjol */
+    -fx-text-fill: #2d3436;
+    
+    /* Mengatur teks agar rapi saat turun ke bawah (Wrap) */
+    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER;
+    -fx-line-spacing: -1px;
+    
+    /* Huruf besar semua (Uppercase) agar terlihat seperti Header */    
+    -fx-text-transform: uppercase;
+    -fx-letter-spacing: 0.5px;
+}
+.font-pane-white {
+    -fx-font-family: "Poppins";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-letter-spacing: 1px;
+    -fx-text-fill: white; /* Memberikan warna putih pada teks */
+}

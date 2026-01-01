@@ -1,0 +1,55 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 29, 2025, 4:01:27 PM
+    Author     : mrifa
+*/
+/* --- SPINNER BORDERLESS MINIMALIST --- */
+.spinner-underline {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent; /* Menghilangkan semua garis */
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-pref-height: 30; /* Dibuat lebih ramping */
+}
+
+/* Mengatur area teks di dalam Spinner */
+.spinner-underline .number-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 2 0;
+    -fx-font-family: "Poppins";
+    -fx-font-size: 13px;
+    -fx-text-fill: #2d3436;
+    -fx-alignment: CENTER_LEFT; /* Menjaga teks tetap rapi di kiri */
+}
+
+/* Menghilangkan background tombol panah */
+.spinner-underline .increment-arrow-button,
+.spinner-underline .decrement-arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-cursor: hand;
+    -fx-padding: 0 5; /* Memberi sedikit ruang klik */
+}
+
+/* Mengatur warna dan ukuran panah agar elegan */
+.spinner-underline .increment-arrow-button .increment-arrow,
+.spinner-underline .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: #91bdf3; /* Biru tema Anda */
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* Membuat bentuk panah lebih modern */
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+}
+
+/* Efek saat Spinner aktif (hanya sedikit perubahan warna teks agar tahu sedang dipilih) */
+.spinner-underline:focused .number-field {
+    -fx-text-fill: #91bdf3;
+}
+
+/* Menghilangkan border biru default JavaFX saat focus */
+.spinner-underline:focused {
+    -fx-background-color: transparent;
+}

@@ -1,140 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="648.0" prefWidth="1016.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakPanenController">
-    <stylesheets>
-        <URL value="@peternakpanen.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakPanenController">
    <children>
-      
-      <Pane layoutX="7.0" layoutY="10.0" prefHeight="630.0" prefWidth="275.0" style="-fx-background-color: white; -fx-background-radius: 25;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <ImageView fitHeight="119.0" fitWidth="148.0" layoutX="-34.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/Logo.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btHewan" layoutX="2.0" layoutY="180.0" mnemonicParsing="false" onAction="#btnHewan" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="HEWAN">
-               <font>
-                  <Font name="Nirmala UI Bold" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Pane layoutX="-3.0" layoutY="140.0" prefHeight="11.0" prefWidth="275.0" style="-fx-background-color: gray;" />
-            <ImageView fitHeight="53.0" fitWidth="80.0" layoutX="-1.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/box.jpg" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnProduk" layoutX="2.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnProduk" prefHeight="60.0" prefWidth="274.0" stylesheets="@../css/peternakhewan.css" text="PRODUKSI">
-               <font>
-                  <Font name="Nirmala UI Bold" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/pakan.jpg" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnKonsum" layoutX="2.0" layoutY="320.0" mnemonicParsing="false" onAction="#btnKonsum" prefHeight="60.0" prefWidth="273.0" stylesheets="@../css/peternakhewan.css" text="KONSUMSI">
-               <font>
-                  <Font name="Nirmala UI Bold" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="120.0" fitWidth="200.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/logo%20ternax.png" />
-               </image>
-            </ImageView>
-            
-            <Button fx:id="btnLogout" layoutX="7.0" layoutY="555.0" mnemonicParsing="false" onAction="#btnLogout" prefHeight="60.0" prefWidth="260.0" stylesheets="@../css/peternakhewan.css" text="Logout">
-               <font>
-                  <Font name="Nirmala UI Bold" size="20.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="17.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/logout.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
 
-      <Pane layoutX="296.0" layoutY="5.0" prefHeight="110.0" prefWidth="720.0" style="-fx-background-color: white; -fx-background-radius: 50;">
-         <children>
-            <ImageView fitHeight="97.0" fitWidth="104.0" layoutX="600.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/Peternak.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-
-      <Pane layoutX="350.0" layoutY="137.0" prefHeight="292.0" prefWidth="583.0" style="-fx-background-color: transparent; -fx-background-radius: 25;">
-         <children>
-            <Pane layoutX="11.0" layoutY="8.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
-               <children>
-                  <Text fx:id="totalDagingSapi" layoutX="60.0" layoutY="101.0" styleClass="summary-value" wrappingWidth="138.0" />
-                  <Text layoutX="-15.0" layoutY="26.0" styleClass="summary-label" text="Total Daging sapi" textAlignment="CENTER" wrappingWidth="253.0" />
-                  <Label fx:id="totalDaging" layoutX="18.0" layoutY="60.0" prefHeight="43.0" prefWidth="202.0" text="Angka" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <effect>
-                  <Bloom />
-               </effect>
-            </Pane>
-            <Pane layoutX="295.0" layoutY="9.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
-               <children>
-                  <Text fx:id="" layoutX="65.0" layoutY="99.0" styleClass="summary-value" wrappingWidth="138.0" />
-                  <Text layoutX="4.0" layoutY="28.0" styleClass="summary-label" text="Total Daging ayam" textAlignment="CENTER" wrappingWidth="220.0" />
-                  <Label fx:id="totalDagingAyam" layoutX="75.0" layoutY="58.0" text="Angka" />
-               </children>
-            </Pane>
-            <Pane layoutX="294.0" layoutY="151.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
-               <children>
-                  <Text fx:id="totalTelur" layoutX="69.0" layoutY="99.0" styleClass="summary-value" wrappingWidth="138.0" />
-                  <Text layoutX="15.0" layoutY="31.0" styleClass="summary-label" text="Total Telur " wrappingWidth="129.5" />
-                  <Label fx:id="totaltelur" layoutX="86.0" layoutY="56.0" text="Angka" />
-               </children>
-            </Pane>
-            <Pane layoutX="12.0" layoutY="149.0" prefHeight="129.0" prefWidth="259.0" styleClass="summary-box">
-               <children>
-                  <Text layoutX="60.0" layoutY="101.0" styleClass="summary-value" wrappingWidth="138.0" />
-                  <Text layoutX="-15.0" layoutY="26.0" styleClass="summary-label" text="Total Susu" textAlignment="CENTER" wrappingWidth="253.0" />
-                  <Label fx:id="totalSusu" layoutX="68.0" layoutY="65.0" text="Angka" />
-               </children>
-            </Pane>
-         </children>
-      </Pane>
-
-      <TableView fx:id="tvProduk" layoutX="304.0" layoutY="425.3333333333333" prefHeight="201.0" prefWidth="684.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="304.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="425.0">
+      <TableView fx:id="tvProduk" layoutX="67.61739354730337" layoutY="231.23479027904975" prefHeight="287.0" prefWidth="841.0" styleClass="table-view3" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="231.0">
         
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -148,5 +33,143 @@
             <TableColumn fx:id="kuantitasColProduk" text="kuantitas" />
         </columns>
       </TableView>
+      <ImageView fitHeight="60.0" fitWidth="63.0" layoutX="23.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Desain%20tanpa%20judul%20(3).png" />
+         </image>
+      </ImageView>
+      <Text layoutX="87.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="TERNAX" />
+      <HBox layoutX="285.0" layoutY="25.0" prefHeight="37.0" prefWidth="428.0" style="-fx-background-color: white; -fx-background-radius: 13;">
+         <children>
+            <Button fx:id="btHewan" mnemonicParsing="false" onAction="#btnHewan" prefHeight="43.0" prefWidth="105.0" styleClass="nav-button-2" text="Hewan">
+               <font>
+                  <Font name="Nirmala UI Bold" size="7.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnProduk" mnemonicParsing="false" onAction="#handleActionToProdukPeternak" prefHeight="37.0" prefWidth="109.0" text="Produksi">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <styleClass>
+                  <String fx:value="nav-button-2" />
+                  <String fx:value="nav-button-2-activ" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnKonsum" mnemonicParsing="false" onAction="#handleActionToProdukKonsumsi" prefHeight="37.0" prefWidth="134.0" styleClass="nav-button-2" text="Konsumsi">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#handleActionLogout" prefHeight="38.0" prefWidth="104.0" styleClass="nav-button-2" text="Logout">
+               <font>
+                  <Font name="Nirmala UI Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <Pane layoutX="785.0" layoutY="25.0" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: white; -fx-background-radius: 50;">
+         <children>
+            <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Desain%20tanpa%20judul%204.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="PETERNAK" />
+         </children>
+      </Pane>
+      <Pane layoutX="71.0" layoutY="83.0" prefHeight="134.0" prefWidth="841.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox layoutY="4.0" prefHeight="123.0" prefWidth="841.0" style="-fx-spacing: 35;">
+               <children>
+                  <Pane prefHeight="124.0" prefWidth="183.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" layoutX="3.0" layoutY="57.0" prefHeight="60.0" prefWidth="146.0">
+                           <children>
+                              <Text styleClass="label-info-produksi" text="Total Daging sapi" textAlignment="CENTER" wrappingWidth="144.4782257080078" />
+                              <Label fx:id="totalDaging" alignment="CENTER" prefHeight="31.0" prefWidth="68.0" text="Angka" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <styleClass>
+                        <String fx:value="pane-hijau" />
+                        <String fx:value="pane-interaktif" />
+                     </styleClass>
+                  </Pane>
+                  <Pane prefHeight="124.0" prefWidth="183.0" styleClass="pane-biru">
+                     <children>
+                        <VBox layoutX="16.0" layoutY="61.0" prefHeight="53.0" prefWidth="146.0">
+                           <children>
+                              <Text styleClass="label-info-produksi" text="Total Daging ayam" textAlignment="CENTER" wrappingWidth="138.19137573242188" />
+                              <Label fx:id="totalDagingAyam" prefHeight="32.0" prefWidth="38.0" text="Angka" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="124.0" prefWidth="183.0" styleClass="pane-kuning-pastel">
+                     <children>
+                        <VBox layoutX="16.0" layoutY="61.0" prefHeight="49.0" prefWidth="146.0">
+                           <children>
+                              <Text styleClass="label-info-produksi" text="Total Susu" textAlignment="CENTER" wrappingWidth="76.86082458496094" />
+                              <Label fx:id="totalSusu" prefHeight="33.0" prefWidth="45.0" text="Angka" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="124.0" prefWidth="183.0" styleClass="pane-merah-pastel">
+                     <children>
+                        <HBox layoutX="-644.0" layoutY="9.0" prefHeight="49.0" prefWidth="814.0" style="-fx-spacing: 170;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/pngtree-beef-meat-cartoon-raw-fresh-png-image_6412076.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="48.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/7b2e3a483335cc61406e1262b37ccb12.jpg" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="48.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/pngtree-animated-drink-box-milk-png-image_4545054.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="48.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/telur.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <VBox layoutX="19.0" layoutY="60.0" prefHeight="54.0" prefWidth="146.0">
+                           <children>
+                              <Text styleClass="label-info-produksi" text="Total Telur " wrappingWidth="81.08257293701172" />
+                              <Label fx:id="totaltelur" prefHeight="26.0" prefWidth="38.0" text="Angka" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
    </children>
+   <stylesheets>
+      <URL value="@Button.css" />
+      <URL value="@font.css" />
+      <URL value="@pane.css" />
+      <URL value="@Table.css" />
+   </stylesheets>
 </AnchorPane>
