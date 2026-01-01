@@ -6,21 +6,18 @@ package Controllers;
 
 import DataAccessObject.DetailPembelianDAO;
 import DataAccessObject.KonsumsiDAO;
-import DataAccessObject.TransaksiPembelianDAO;
+import DataAccessObject.PembelianDAO;
 import Models.DetailPembelian;
 import Models.DetailPembelianItem;
 import Models.Konsumsi;
-import Models.TransaksiPembelian;
+import Models.Pembelian;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,7 +47,7 @@ public class LogistikDashboardController implements Initializable {
 
     // --- DAO & DATA ---
     private final KonsumsiDAO konsumsiDAO = new KonsumsiDAO();
-    private final TransaksiPembelianDAO transaksiPembelianDAO = new TransaksiPembelianDAO();
+    private final PembelianDAO pembelianDAO = new PembelianDAO();
     private final DetailPembelianDAO detailPembelianDAO = new DetailPembelianDAO();
     
     private ObservableList<DetailPembelianItem> keranjang = FXCollections.observableArrayList();
@@ -332,8 +329,8 @@ public class LogistikDashboardController implements Initializable {
             // 1. Insert Header Transaksi
             String tanggal = dtPickPembelian.getValue().toString();
             // Asumsi: ID Karyawan diambil dari Session di DAO atau pass 0 jika DAO handle session
-            TransaksiPembelian transaksi = new TransaksiPembelian(tanggal, 0); 
-            int idPembelianBaru = transaksiPembelianDAO.insertAndGetId(transaksi);
+            Pembelian transaksi = new Pembelian(tanggal, 0);
+            int idPembelianBaru = pembelianDAO.insertAndGetId(transaksi);
 
             if (idPembelianBaru != -1) {
                 // 2. Insert Detail & Update Stok

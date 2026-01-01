@@ -5,7 +5,7 @@
 package DataAccessObject;
 
 import Models.Karyawan;
-import Models.TransaksiPembelian;
+import Models.Pembelian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,33 +18,33 @@ import utility.Session;
  *
  * @author Muham
  */
-public class TransaksiPembelianDAO {
-    public void add(TransaksiPembelian transaksi) {
-        String sql = "INSERT INTO transaksi_pembelian (id_pembelian, id_karyawan, tanggal_pembelian) VALUES (?, ?, ?)";
+public class PembelianDAO {
+    public void add(Pembelian pembelian) {
+        String sql = "INSERT INTO pembelian (id_pembelian, id_karyawan, tanggal_pembelian) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, transaksi.getId());
-            pstmt.setInt(2, transaksi.getId_karyawan());
-            pstmt.setString(3, transaksi.getTanggalPembelian());
+            pstmt.setInt(1, pembelian.getId());
+            pstmt.setInt(2, pembelian.getId_karyawan());
+            pstmt.setString(3, pembelian.getTanggalPembelian());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
-    public int insertAndGetId(TransaksiPembelian transaksi) {
+    public int insertAndGetId(Pembelian pembelian) {
         Karyawan karyawan = Session.getLoggedInKaryawan();
         if (karyawan == null) {
-            System.err.println("Gagal simpan transaksi: belum ada karyawan login.");
+            System.err.println("Gagal simpan pembelian: belum ada karyawan login.");
             return -1;
         }
 
-        String sql = "INSERT INTO transaksi_pembelian (tanggal_pembelian, id_karyawan) VALUES (?, ?)";
+        String sql = "INSERT INTO pembelian (tanggal_pembelian, id_karyawan) VALUES (?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, transaksi.getTanggalPembelian());
+            pstmt.setString(1, pembelian.getTanggalPembelian());
             pstmt.setInt(2, Integer.parseInt(karyawan.getId())); // kamu pakai getId() String
 
             int affected = pstmt.executeUpdate();
@@ -53,13 +53,13 @@ public class TransaksiPembelianDAO {
             try (ResultSet rs = pstmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int idPembelian = rs.getInt(1);
-                    transaksi.setId(idPembelian);
+                    pembelian.setId(idPembelian);
                     return idPembelian;
                 }
             }
 
         } catch (SQLException e) {
-            System.err.println("Gagal insert transaksi_pembelian: " + e.getMessage());
+            System.err.println("Gagal insert pembelian: " + e.getMessage());
         }
         return -1;
     }
@@ -71,7 +71,7 @@ public class TransaksiPembelianDAO {
         // Query JOIN 3 Tabel (Transaksi + Detail + Konsumsi)
         String sql = "SELECT tp.id_pembelian, tp.tanggal_pembelian, k.nama_konsumsi, k.tipe, dp.kuantitas " +
                      "FROM detail_pembelian dp " +
-                     "JOIN transaksi_pembelian tp ON dp.id_pembelian = tp.id_pembelian " +
+                     "JOIN pembelian tp ON dp.id_pembelian = tp.id_pembelian " +
                      "JOIN konsumsi k ON dp.id_konsumsi = k.id " +
                      "ORDER BY tp.tanggal_pembelian DESC, tp.id_pembelian DESC";
 

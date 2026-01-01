@@ -2,13 +2,13 @@ package Controllers;
 
 import DataAccessObject.DetailPembelianDAO;
 import DataAccessObject.KonsumsiDAO;
-import DataAccessObject.TransaksiPembelianDAO;
+import DataAccessObject.PembelianDAO;
 import Models.DetailPembelian;
 import Models.DetailPembelianItem;
 import Models.Konsumsi;
 import Models.RiwayatKonsumsi;
-import Models.TransaksiPembelian;
-import java.io.IOException;
+import Models.Pembelian;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,11 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,13 +30,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class LogistikKonsumsiController implements Initializable {
 
     // --- DAO & DATA ---
     private final KonsumsiDAO konsumsiDAO = new KonsumsiDAO();
-    private final TransaksiPembelianDAO transaksiPembelianDAO = new TransaksiPembelianDAO();
+    private final PembelianDAO pembelianDAO = new PembelianDAO();
     private final DetailPembelianDAO detailPembelianDAO = new DetailPembelianDAO();
     
     private ObservableList<DetailPembelianItem> keranjang = FXCollections.observableArrayList();
@@ -129,7 +124,7 @@ public class LogistikKonsumsiController implements Initializable {
     
     private void refreshTabelRiwayat() {
         ObservableList<RiwayatKonsumsi> dataRiwayat = FXCollections.observableArrayList(
-            transaksiPembelianDAO.getAllRiwayat()
+            pembelianDAO.getAllRiwayat()
         );
         tvDetailTransaksi.setItems(dataRiwayat);
     }
@@ -280,9 +275,9 @@ public class LogistikKonsumsiController implements Initializable {
         try {
             String tanggal = dtPickPembelian.getValue().toString();
             // Asumsi 0 atau session ID karyawan
-            TransaksiPembelian transaksi = new TransaksiPembelian(tanggal, 0); 
+            Pembelian transaksi = new Pembelian(tanggal, 0);
             
-            int idBaru = transaksiPembelianDAO.insertAndGetId(transaksi);
+            int idBaru = pembelianDAO.insertAndGetId(transaksi);
 
             if (idBaru != -1) {
                 for (DetailPembelianItem item : keranjang) {

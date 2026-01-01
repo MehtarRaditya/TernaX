@@ -8,7 +8,7 @@ package Models;
  *
  * @author Muham
  */
-public class TransaksiPembelian {
+public class Pembelian {
     private int id;
     private String tanggalPembelian;
     private int id_karyawan;
@@ -17,13 +17,13 @@ public class TransaksiPembelian {
     private int kuantitas;
     private String tipe;
 
-    public TransaksiPembelian(int id, String tanggalPembelian, int id_karyawan) {
+    public Pembelian(int id, String tanggalPembelian, int id_karyawan) {
         this.id = id;
         this.tanggalPembelian = tanggalPembelian;
         this.id_karyawan = id_karyawan;
     }
     
-    public TransaksiPembelian(int id, String tanggalPembelian, String namaKonsumsi, String tipe, int kuantitas) {
+    public Pembelian(int id, String tanggalPembelian, String namaKonsumsi, String tipe, int kuantitas) {
         this.id = id;
         this.tanggalPembelian = tanggalPembelian;
         this.namaKonsumsi = namaKonsumsi;
@@ -31,7 +31,7 @@ public class TransaksiPembelian {
         this.kuantitas = kuantitas;
     }
 
-    public TransaksiPembelian(String tanggalPembelian, int id_karyawan) {
+    public Pembelian(String tanggalPembelian, int id_karyawan) {
         this.tanggalPembelian = tanggalPembelian;
         this.id_karyawan = id_karyawan;
     }
