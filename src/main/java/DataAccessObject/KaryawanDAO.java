@@ -70,94 +70,99 @@ public class KaryawanDAO {
         return jumlah;
     }
 
-    public void addKaryawan(Karyawan karyawan) throws SQLException {
-        String sql = "INSERT INTO karyawan (id, nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?,?)";
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-            if (conn == null){
-                return;
-            }
+    // 2. ADD (Tambah)
+    public boolean addKaryawan(Karyawan k) {
+        // PERBAIKAN: Tambahkan kolom 'id' lagi ke dalam SQL
+        String sql = "INSERT INTO karyawan (id, nama, akun, password, role, gaji, tanggal_rekrut) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, karyawan.getId());
-            pstmt.setString(2, karyawan.getName());
-            pstmt.setString(3, karyawan.getAkun());
-            pstmt.setString(4, karyawan.getPassword());
-            pstmt.setString(5, karyawan.getRole());
-            pstmt.setInt(6, karyawan.getGaji());
-            pstmt.setString(7, karyawan.getTanggalDirekrut());
-            pstmt.executeUpdate();
-        }
-        catch (SQLException e) {
+            // Masukkan ID di urutan pertama
+            ps.setString(1, k.getId()); 
+            
+            // Geser data lainnya ke urutan berikutnya
+            ps.setString(2, k.getName());
+            ps.setString(3, k.getAkun());
+            ps.setString(4, k.getPassword());
+            ps.setString(5, k.getRole());
+            ps.setInt(6, k.getGaji());
+            ps.setString(7, k.getTanggalDirekrut());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
     
+    // 1. GET ALL
     public List<Karyawan> getAll() {
-    List<Karyawan> list = new ArrayList<>();
+        List<Karyawan> list = new ArrayList<>();
+        // Pastikan nama kolom database sesuai (misal: tanggal_rekrut di DB)
+        String sql = "SELECT * FROM karyawan"; 
 
-    String sql = "SELECT * FROM karyawan";  
-    // atau kalau mau strict: kondisi = 'Alive'
-    // String sql = "SELECT * FROM hewan WHERE kondisi = 'Alive'";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-
-        while (rs.next()) {
-            Karyawan k = new Karyawan();
-            k.setId(rs.getString("id"));
-            k.setName(rs.getString("nama"));
-            k.setAkun(rs.getString("akun"));
-            k.setPassword(rs.getString("password"));
-            k.setRole(rs.getString("role"));
-            k.setGaji(rs.getInt("gaji"));
-            k.setTanggalDirekrut(rs.getString("tanggal_rekrut"));
-            // tambahkan field lain sesuai class Hewan kamu
-
-            list.add(k);
+            while (rs.next()) {
+                Karyawan k = new Karyawan();
+                k.setId(String.valueOf(rs.getInt("id")));
+                k.setName(rs.getString("nama"));
+                k.setAkun(rs.getString("akun"));         // Sesuai Model
+                k.setPassword(rs.getString("password"));
+                k.setRole(rs.getString("role"));
+                k.setGaji(rs.getInt("gaji"));            // Sesuai Model (int)
+                k.setTanggalDirekrut(rs.getString("tanggal_rekrut")); // Sesuai Model
+                
+                list.add(k);
+            }
+        } catch (SQLException e) {
+            System.err.println("Gagal load karyawan: " + e.getMessage());
         }
-
-    } catch (SQLException e) {
-        System.err.println("Gagal mengambil karyawan: " + e.getMessage());
+        return list;
     }
 
-    return list;
-}
+    public boolean updateKaryawan(Karyawan k) {
+        String sql = "UPDATE karyawan SET nama=?, akun=?, password=?, role=?, gaji=?, tanggal_rekrut=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-    public void update(Karyawan k) {
-                String sql = "UPDATE karyawan SET nama = ?, akun = ?,password = ?, role = ?, gaji = ? WHERE id = ?";
-                try (Connection conn = DatabaseConnection.getConnection();
-                     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ps.setString(1, k.getName());
+            ps.setString(2, k.getAkun());
+            ps.setString(3, k.getPassword());
+            ps.setString(4, k.getRole());
+            ps.setDouble(5, k.getGaji());
+            ps.setString(6, k.getTanggalDirekrut());
+            ps.setInt(7, Integer.parseInt(k.getId()));
 
-                    pstmt.setString(1, k.getName());
-                    pstmt.setString(2, k.getAkun());
-                    pstmt.setString(3, k.getPassword());
-                    pstmt.setString(4, k.getRole());
-                    pstmt.setInt(5,k.getGaji());
-                    pstmt.setString(6,k.getId());
-
-                    pstmt.executeUpdate();
-
-                    int rows = pstmt.executeUpdate();
-                System.out.println("Rows updated: " + rows + " | id = " + k.getId());
-
-                } catch (SQLException e) {
-                    System.err.println("Gagal mengupdate karyawan: " + e.getMessage());
-                }
-            }
-
-    public void delete(String id) {
-            String sql = "DELETE FROM karyawan WHERE id = ?";
-            try (Connection conn = DatabaseConnection.getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-                pstmt.setString(1, id);
-                pstmt.executeUpdate();
-
-            } catch (SQLException e) {
-                System.err.println("Gagal menghapus Karyawan: " + e.getMessage());
-            }
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
+    }
+
+    public boolean deleteKaryawan(String id) {
+        String sql = "DELETE FROM karyawan WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(id)); // Asumsi ID di DB tipe Integer
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public int countKaryawan() {
+        try (Connection conn = DatabaseConnection.getConnection();
+             ResultSet rs = conn.createStatement().executeQuery("SELECT COUNT(*) FROM karyawan")) {
+            if(rs.next()) return rs.getInt(1);
+        } catch (Exception e) {}
+        return 0;
+    }
 
 
     }

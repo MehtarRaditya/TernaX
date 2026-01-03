@@ -44,13 +44,9 @@ public class PeternakPanenController implements Initializable {
     @FXML
     private Button btnLogout;
     @FXML
-    private Text totalDagingSapi;
-    @FXML
     private Label totalDaging;
     @FXML
     private Label totalDagingAyam;
-    @FXML
-    private Text totalTelur;
     @FXML
     private Label totaltelur;
     @FXML
@@ -128,20 +124,25 @@ public class PeternakPanenController implements Initializable {
     }
 
     private void loadDataFromDatabaseProduk() {
-        // Ambil data yang sudah di-JOIN (ada namaProduk & satuan)
-        List<Produk> list = produkDAO.getAll(); 
+        // 1. Ambil User Login
+        Models.Karyawan userLogin = utility.Session.getLoggedInKaryawan();
+        if (userLogin == null) return;
+
+        // 2. [PERUBAHAN] Panggil method getAllRiwayatByPeternak()
+        // Jadi yang tampil di tabel cuma hasil panen dari hewan milik dia sendiri
+        List<Produk> list = produkDAO.getAllRiwayatByPeternak(userLogin.getId());
+        
         dataProduk = FXCollections.observableArrayList(list);
         tvProduk.setItems(dataProduk);
 
-        // --- LOGIKA PERHITUNGAN TOTAL ---
+        // --- LOGIKA PERHITUNGAN TOTAL (Hanya Menghitung Data Milik Sendiri) ---
         double hitungDagingSapi = 0;
         double hitungDagingAyam = 0;
         double hitungTelur = 0;
         double hitungSusu = 0;
 
         for (Produk p : list) {
-            // Ambil Nama Produk (Contoh: "Daging Sapi Premium", "Telur Ayam")
-            String nama = p.getNamaProduk().toLowerCase(); 
+            String nama = p.getNamaProduk().toLowerCase();
             double qty = p.getKuantitas();
 
             if (nama.contains("sapi")) {
@@ -166,6 +167,7 @@ public class PeternakPanenController implements Initializable {
         if(totaltelur != null) totaltelur.setText((int)hitungTelur + " Butir");
         if(totalSusu != null) totalSusu.setText(String.format("%.1f Liter", hitungSusu));
     }
+    
     @FXML
     private void btnHewan(ActionEvent event) {
         try {
@@ -193,13 +195,17 @@ public class PeternakPanenController implements Initializable {
         }
     }
 
-    @FXML
     private void btnProduk(ActionEvent event) {
         loadDataFromDatabaseProduk();
     }
 
     @FXML
-    private void btnKonsum(ActionEvent event) {
+    private void handleActionToProdukPeternak(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void handleActionToProdukKonsumsi(ActionEvent event) {
         try {
             // 1. Ambil Stage (Layar) dari tombol btnProduk
             javafx.stage.Stage stage = (javafx.stage.Stage) btnKonsum.getScene().getWindow();
@@ -223,22 +229,33 @@ public class PeternakPanenController implements Initializable {
             System.out.println("Gagal pindah ke halaman Produk/Panen!");
             e.printStackTrace();
         }
+        
     }
 
     @FXML
-    private void btnLogout(ActionEvent event) {
-    }
-    
-    private void pindahScene(ActionEvent event, String fxmlPath) {
+    private void handleActionLogout(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.centerOnScreen();
+            // 1. Ambil Stage (Layar) dari tombol btnProduk
+            javafx.stage.Stage stage = (javafx.stage.Stage) btnLogout.getScene().getWindow();
+            
+            // 2. Cari file FXML tujuan
+            java.io.File file = new java.io.File("src/main/java/Views/Login.fxml");
+            
+            // 3. Ubah jadi URL
+            java.net.URL url = file.toURI().toURL();
+            
+            // 4. Load FXML
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
+            
+            // 5. Pasang Scene Baru
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen(); 
             stage.show();
+            
         } catch (Exception e) {
+            System.out.println("Gagal pindah ke halaman Produk/Panen!");
             e.printStackTrace();
-            System.out.println("Gagal pindah ke: " + fxmlPath);
         }
     }
     

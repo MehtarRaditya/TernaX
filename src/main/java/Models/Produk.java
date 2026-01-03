@@ -12,6 +12,8 @@ public class Produk {
     
     private String namaProduk; 
     private String satuan;
+    
+    private Karyawan idKaryawan;
 
     public Produk(int id, String tanggalDiperoleh, String tipe, double kuantitas, String kualitas, int idHewan) {
         this.id = id;
@@ -163,10 +165,19 @@ public class Produk {
     public void setSatuan(String satuan) {
         this.satuan = satuan;
     }
-    
-    
-    
-    
-    
 
+    public Karyawan getIdKaryawan() {
+        return idKaryawan;
+    }
+
+    public void setIdKaryawan(Karyawan idKaryawan) {
+        this.idKaryawan = idKaryawan;
+    }
+    
+    public String getNamaPemeriksa() {
+        if (idKaryawan != null) {
+            return idKaryawan.getName(); // Mengambil nama dari Model Karyawan
+        }
+        return "-"; // Kalau kosong/null, tampilkan strip
+    }
 }

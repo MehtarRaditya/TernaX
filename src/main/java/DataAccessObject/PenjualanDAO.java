@@ -2,7 +2,9 @@ package DataAccessObject;
 
 
 import Models.KeranjangItem;
+import Models.Penjualan;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import utility.DatabaseConnection;
 import utility.Session;
@@ -10,7 +12,7 @@ import utility.Session;
 public class PenjualanDAO {
 
     // Method Transaksi: Simpan Struk, Simpan Detail, & Potong Stok
-    public boolean simpanTransaksi(List<KeranjangItem> keranjang, double total, double bayar, double kembalian) {
+    public boolean simpanTransaksi(List<KeranjangItem> keranjang, double total, double bayar, double kembalian, String tanggal) {
         Connection conn = null;
         PreparedStatement psJual = null;
         PreparedStatement psDetail = null;
@@ -26,12 +28,17 @@ public class PenjualanDAO {
             // -------------------------------------------------
             // LANGKAH A: Simpan ke Tabel 'penjualan' (Header)
             // -------------------------------------------------
-            String sqlJual = "INSERT INTO penjualan (total_harga, uang_dibayar, kembalian, id_karyawan) VALUES (?, ?, ?, ?)";
+            String sqlJual = "INSERT INTO penjualan (total_harga, uang_dibayar, kembalian, id_karyawan, tanggal) VALUES (?, ?, ?, ?, ?)";
+            
             psJual = conn.prepareStatement(sqlJual, Statement.RETURN_GENERATED_KEYS);
             psJual.setDouble(1, total);
             psJual.setDouble(2, bayar);
             psJual.setDouble(3, kembalian);
             psJual.setString(4, Session.getLoggedInKaryawan().getId());
+            
+            // Masukkan tanggal yang dikirim dari Controller
+            psJual.setString(5, tanggal); 
+
             psJual.executeUpdate();
 
             // Ambil ID Transaksi yang baru dibuat (Misal: Struk #101)
@@ -90,5 +97,63 @@ public class PenjualanDAO {
             try { if (psUpdateStok != null) psUpdateStok.close(); } catch (Exception e) {}
             try { if (conn != null) { conn.setAutoCommit(true); conn.close(); } } catch (Exception e) {}
         }
+    }
+    
+    // Method untuk mengambil Riwayat Penjualan (Data Gabungan untuk Tabel)
+    public List<Penjualan> getAll() { 
+        List<Penjualan> list = new ArrayList<>();
+
+        // REVISI SQL SESUAI STRUKTUR DATABASE KAMU:
+        // 1. Ganti 'p.tanggal_transaksi' -> 'p.tanggal'
+        // 2. Hapus 'prod.kategori' (karena tidak ada) -> Ganti jadi 'prod.satuan' biar ada isinya
+        String sql = "SELECT p.id, p.tanggal, " +
+                     "dp.kuantitas, dp.harga_deal, dp.subtotal, " +
+                     "prod.nama_produk, prod.satuan " + 
+                     "FROM penjualan p " +
+                     "JOIN detail_penjualan dp ON p.id = dp.id_penjualan " +
+                     "JOIN detail_produk prod ON dp.id_katalog = prod.id " +
+                     "ORDER BY p.tanggal DESC"; // Urutkan dari yang terbaru
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Penjualan jual = new Penjualan();
+
+                // 1. ID Penjualan
+                jual.setId(rs.getInt("id"));
+                
+                // 2. Tanggal (Perbaikan nama kolom)
+                if (rs.getTimestamp("tanggal") != null) {
+                    jual.setTanggalTransaksi(rs.getTimestamp("tanggal").toString());
+                }
+
+                // 3. Nama Produk
+                jual.setNamaProduk(rs.getString("nama_produk"));
+
+                // 4. Kategori (SOLUSI CERDAS: Kita isi pakai 'Satuan' karena kolom Kategori tidak ada)
+                // Jadi nanti di tabel munculnya: "Kg", "Liter", "Ekor", dll.
+                jual.setKategori(rs.getString("satuan")); 
+
+                // 5. Kuantitas (Ubah ke Double sesuai permintaanmu sebelumnya)
+                // Meskipun di DB mungkin int, kita cast ke double biar masuk ke Model Penjualan
+                jual.setKuantitas((int) (double) rs.getInt("kuantitas"));
+
+                // 6. Harga Deal
+                jual.setHargaSatuan(rs.getDouble("harga_deal"));
+
+                // 7. Subtotal
+                jual.setTotalHarga(rs.getDouble("subtotal"));
+
+                list.add(jual);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Gagal load data penjualan: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

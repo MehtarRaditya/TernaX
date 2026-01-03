@@ -183,7 +183,7 @@ public class ManagerDashboardController implements Initializable {
         Karyawan selectedKaryawan = tvKaryawan.getSelectionModel().getSelectedItem();
         if (selectedKaryawan != null) {
             // Hapus dari database via DAO
-            karyawanDAO.delete(selectedKaryawan.getId());
+            karyawanDAO.deleteKaryawan(selectedKaryawan.getId());
             
             // Refresh TableView
             loadDataFromDatabase();
@@ -206,7 +206,7 @@ public class ManagerDashboardController implements Initializable {
             // NIP tidak perlu diubah karena primary key
             
             // Update di database via DAO
-            karyawanDAO.update(selectedKaryawan);
+            karyawanDAO.updateKaryawan(selectedKaryawan);
             
             // Refresh TableView
             loadDataFromDatabase();

@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #e6e8ea;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LogistikKonsumsiController">
+<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #e6e8ea;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LogistikKonsumsiController">
     <children>
       <Pane layoutX="28.0" layoutY="79.0" prefHeight="146.0" prefWidth="898.0" style="-fx-background-color: #91bdf3; -fx-background-radius: 20;">
          <children>

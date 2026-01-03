@@ -81,5 +81,7 @@ public class Karyawan {
         this.password = password;
     }
 
-    
+    public void setIdKaryawan(int id) {
+        this.id = String.valueOf(id);
+    }
 }

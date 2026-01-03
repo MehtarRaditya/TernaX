@@ -129,7 +129,8 @@ public class LogistikQCController implements Initializable {
     }
 
     // --- NAVIGASI ---
-    @FXML private void handleToKonsum(ActionEvent event) { 
+    @FXML 
+    private void handleToKonsum(ActionEvent event) { 
     try {
             
             javafx.stage.Stage stage = (javafx.stage.Stage) btnKonsum.getScene().getWindow();
@@ -168,9 +169,13 @@ public class LogistikQCController implements Initializable {
     @FXML private void handleToSimpanStatus(ActionEvent event) { handleButtonSimpan(event); }
 
     @FXML
-    private void handleToLogout(ActionEvent event) {
+    private void handleToQC(ActionEvent event) {
+    }
+
+    @FXML
+    private void handeToLogout(ActionEvent event) {
         try {
-            
+            // 1. Ambil Stage (Layar) dari tombol btnProduk
             javafx.stage.Stage stage = (javafx.stage.Stage) btnLogout.getScene().getWindow();
             
             // 2. Cari file FXML tujuan
@@ -189,7 +194,7 @@ public class LogistikQCController implements Initializable {
             stage.show();
             
         } catch (Exception e) {
-            System.out.println("Gagal Pindah ke Tampilan QC Logistik!");
+            System.out.println("Gagal Logout!");
             e.printStackTrace();
         }
     }

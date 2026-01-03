@@ -147,3 +147,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding: 4;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
 }
+/* --- BASE PANE UNTUK PRODUK --- */
+.pane-produk {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 15;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+    /* Memberikan efek bayangan lembut agar terlihat timbul */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+}
+
+/* --- 1. PANE LAYAK (HIJAU) --- */
+.pane-layak {
+    /* Hijau Mint yang Segar */
+    -fx-background-color: #55efc4; 
+}
+
+/* --- 2. PANE TIDAK LAYAK (MERAH) --- */
+.pane-tidak-layak {
+    /* Merah Salmon/Coral agar tidak terlalu sakit di mata */
+    -fx-background-color: #ff7675; 
+}
+
+/* --- INTERAKSI SAAT DISENTUH (HOVER) --- */
+/* Menggabungkan efek naik ke atas dan menjadi gelap transparan */
+.pane-layak:hover, .pane-tidak-layak:hover {
+    -fx-translate-y: -10;
+    /* Layer gelap transparan agar warna asli tetap terlihat namun lebih dalam */
+    -fx-background-color: rgba(0, 0, 0, 0.15); 
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 20, 0, 0, 10);
+}
+
+/* Menjaga agar teks Label di dalamnya tetap putih saat hover */
+.pane-layak:hover .label, .pane-tidak-layak:hover .label {
+    -fx-text-fill: white;
+}

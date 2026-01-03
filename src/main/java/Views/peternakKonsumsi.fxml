@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakKonsumsiController">
+<AnchorPane id="AnchorPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakKonsumsiController">
    <children>
       <ImageView fitHeight="60.0" fitWidth="63.0" layoutX="29.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -79,7 +80,7 @@
       </Pane>
       <Pane layoutX="59.0" layoutY="106.0" prefHeight="412.0" prefWidth="636.0" styleClass="pane-hijau">
          <children>
-            <TableView fx:id="tvHewan" layoutX="8.0" layoutY="33.0" prefHeight="363.0" prefWidth="619.0" styleClass="table-view3">
+            <TableView fx:id="tvHewan" layoutX="8.0" layoutY="42.0" prefHeight="354.0" prefWidth="619.0" styleClass="table-view3">
               <columns>
                 <TableColumn fx:id="colIdHewan" prefWidth="89.3333740234375" text="id_hewan" />
                 <TableColumn fx:id="colNamaHewan" prefWidth="199.333251953125" text="Nama_hewan" />
@@ -148,6 +149,33 @@
             </Button>
          </children>
       </Pane>
+      <AnchorPane layoutX="82.0" layoutY="105.0" prefHeight="50.0" prefWidth="60.0">
+         <children>
+            <Button fx:id="btnNotifikasi" layoutY="10.0" mnemonicParsing="false" onAction="#handleKlikNotifikasi" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 1);" styleClass="btnNotifikasi" text="🔔">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            
+            <Label fx:id="lblJumlahNotif" alignment="CENTER" layoutX="35.0" layoutY="0.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: #2e7d32; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);" text="0" visible="false" />
+         </children>
+      </AnchorPane>
+
+      <VBox fx:id="panelNotifikasi" layoutX="128.0" layoutY="114.0" prefHeight="296.0" prefWidth="321.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5); -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 10;">
+         <children>
+            <Label text="📋 Riwayat Pemberian Pakan" textFill="#2e7d32">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            
+            <Pane prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: #eee;" />
+            
+            <ListView fx:id="listPesanNotif" prefHeight="220.0" prefWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-focus-color: transparent;" />
+            
+            <Button mnemonicParsing="false" onAction="#handleKlikNotifikasi" prefWidth="280.0" style="-fx-background-color: #f5f5f5; -fx-text-fill: #555; -fx-cursor: hand; -fx-background-radius: 5;" styleClass="btn-back" text="Tutup" />
+         </children>
+      </VBox>
    </children>
    <stylesheets>
       <URL value="@Button.css" />

@@ -7,6 +7,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -20,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="peternakTampilan" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
+<AnchorPane id="AnchorPane" fx:id="peternakTampilan" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #d2dae5;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PeternakHewanController">
     <children>
       <Pane layoutX="775.0" layoutY="15.0" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: white; -fx-background-radius: 50;">
          <children>
@@ -74,13 +76,16 @@
          </children>
       </HBox>
 
-      <Pane layoutX="152.0" layoutY="73.0" prefHeight="134.0" prefWidth="686.0" style="-fx-background-color: transparent;">
+      <Pane layoutX="71.0" layoutY="73.0" prefHeight="134.0" prefWidth="767.0" style="-fx-background-color: transparent;">
          <children>
             
-            <Pane layoutX="50.0" layoutY="12.0" prefHeight="110.0" prefWidth="259.0" styleClass="pane-biru">
+            <Pane layoutX="6.0" layoutY="12.0" prefHeight="110.0" prefWidth="246.0" styleClass="pane-biru">
                <children>
                   <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pane-value-font" text="Ayam" textAlignment="CENTER" wrappingWidth="259.0" />
-                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="60.0" prefHeight="50.0" prefWidth="259.0" styleClass="pane-header-font" text="0 Ekor" />
+                  <Label fx:id="totalAyam" alignment="CENTER" layoutY="65.0" prefHeight="45.0" prefWidth="259.0" styleClass="pane-header-font" text="0 Ekor">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Label>
                   <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="17.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/R.gif" />
@@ -89,7 +94,7 @@
                </children>
             </Pane>
             
-            <Pane layoutX="370.0" layoutY="13.0" prefHeight="110.0" prefWidth="259.0" styleClass="pane-hijau">
+            <Pane layoutX="262.0" layoutY="13.0" prefHeight="110.0" prefWidth="246.0" styleClass="pane-hijau">
                <children>
                   <Text layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="pane-value-font" text="Sapi" textAlignment="CENTER" wrappingWidth="259.0" />
                   <Label fx:id="totalSapi" alignment="CENTER" layoutY="60.0" prefHeight="50.0" prefWidth="259.0" styleClass="pane-header-font" text="0 Ekor" />
@@ -98,6 +103,30 @@
                         <Image url="@../image/cow-sapi-menghilang.gif" />
                      </image>
                   </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutX="515.0" layoutY="13.0" prefHeight="57.0" prefWidth="246.0" styleClass="pane-biru">
+               <children>
+                  <Text fill="#e92c2c" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Hewan Sakit" textAlignment="CENTER" wrappingWidth="142.55548095703125">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="totalHewanSakit" alignment="CENTER" layoutX="14.0" layoutY="29.0" prefHeight="20.0" prefWidth="60.0" styleClass="pane-header-font" text="0 Ekor">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="515.0" layoutY="73.0" prefHeight="52.0" prefWidth="246.0" styleClass="pane-hijau">
+               <children>
+                  <Text fill="#45c537" layoutX="12.0" layoutY="22.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Hewan Sehat" textAlignment="CENTER" wrappingWidth="143.3333129882813">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="totalHewanSehat" alignment="CENTER" layoutX="17.0" layoutY="22.0" prefHeight="34.0" prefWidth="55.0" styleClass="pane-header-font" text="0 Ekor" />
                </children>
             </Pane>
             
@@ -219,6 +248,28 @@
          </image>
       </ImageView>
       <Text layoutX="77.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="TERNAX" />
+      <AnchorPane layoutX="840.0" layoutY="73.0" prefHeight="50.0" prefWidth="60.0">
+         <children>
+            <Button fx:id="btnNotifikasi" layoutY="12.0" mnemonicParsing="false" onAction="#handleKlikNotifikasi" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-cursor: hand;" styleClass="btnNotifikasi" text="🔔">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Label fx:id="lblJumlahNotif" alignment="CENTER" layoutX="35.0" layoutY="0.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: red; -fx-background-radius: 20; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12px;" text="3" visible="false" />
+         </children>
+      </AnchorPane>
+      <VBox fx:id="panelNotifikasi" layoutX="584.0" layoutY="126.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="305.0" prefWidth="320.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5); -fx-padding: 10;" visible="false">
+         <children>
+            <Label text="⚠️ Peringatan Kesehatan" textFill="#d32f2f">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <ListView fx:id="listPesanNotif" prefHeight="240.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+            <Button mnemonicParsing="false" onAction="#handleKlikNotifikasi" prefWidth="300.0" style="-fx-background-color: #eee; -fx-text-fill: #555; -fx-cursor: hand;" styleClass="btn-back" text="Tutup" />
+         </children>
+      </VBox>
 
     </children>
    <stylesheets>

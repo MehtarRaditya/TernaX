@@ -42,6 +42,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.util.Duration;
 
 
@@ -129,6 +130,18 @@ public class PeternakHewanController implements Initializable {
     private AnchorPane displayPanenProduk;
     
     private List<KatalogProduk> listMasterKatalog;
+    @FXML
+    private Label totalHewanSakit;
+    @FXML
+    private Button btnNotifikasi;
+    @FXML
+    private Label lblJumlahNotif;
+    @FXML
+    private VBox panelNotifikasi;
+    @FXML
+    private ListView<String> listPesanNotif;
+    @FXML
+    private Label totalHewanSehat;
 
     /**
      * Initializes the controller class.
@@ -240,23 +253,46 @@ public class PeternakHewanController implements Initializable {
         // Load data dari database saat aplikasi dimulai
         loadDataFromDatabase();
     }
+        
+        // 1. Sembunyikan panel notif saat awal buka (biar rapi)
+        if (panelNotifikasi != null) {
+            panelNotifikasi.setVisible(false);
+        }
+
+        // 2. Load Data Tabel
+        loadDataFromDatabase();
+        
+        // 3. Cek Notifikasi (BARU)
+        cekNotifikasi();
     }
 
     private void loadDataFromDatabase() {
-        // 1. Ambil SEMUA data dari database (termasuk yang mati)
-        List<Hewan> allData = hewanDAO.getAll();
+        // 1. [BARU] Ambil User yang sedang Login
+        Models.Karyawan userLogin = utility.Session.getLoggedInKaryawan();
         
-        // 2. FILTER: Ambil hanya yang MASIH HIDUP (Kondisi != "Mati")
-        // Ini akan mencakup status: "Alive", "Sehat", "Sakit", dll.
-        List<Hewan> hewanHidup = allData.stream()
-                .filter(h -> h.getKondisi() != null && !h.getKondisi().equalsIgnoreCase("Mati"))
+        // Safety Check: Kalau gak ada yang login, stop biar gak error
+        if (userLogin == null) {
+            System.out.println("Error: Tidak ada user login!");
+            return;
+        }
+
+        // 2. [PERUBAHAN UTAMA] Panggil method getByPeternak()
+        // Jangan pakai hewanDAO.getAll() lagi!
+        // Kita kirim ID User yang login ke DAO untuk difilter
+        List<Hewan> myData = hewanDAO.getByPeternak(userLogin.getId());
+        
+        // 3. FILTER: Ambil hanya yang MASIH HIDUP (Logic lama tetap dipakai)
+        List<Hewan> hewanHidup = myData.stream()
+                .filter(h -> h.getKondisi() != null && 
+                            !h.getKondisi().equalsIgnoreCase("Mati") && 
+                            !h.getKondisi().equalsIgnoreCase("Death"))
                 .collect(Collectors.toList());
                 
-        // 3. Masukkan data yang sudah difilter ke Tabel
+        // 4. Masukkan data yang sudah difilter ke Tabel
         dataHewan = FXCollections.observableArrayList(hewanHidup);
         tvHewan.setItems(dataHewan);
         
-        // 4. Hitung TOTAL untuk LABEL (Pakai list 'hewanHidup', BUKAN 'allData')
+        // 5. Hitung TOTAL Statistik (Sama seperti kodemu sebelumnya)
         
         // Hitung Ayam Hidup
         long countAyam = hewanHidup.stream()
@@ -268,9 +304,22 @@ public class PeternakHewanController implements Initializable {
                 .filter(h -> h.getJenis().equalsIgnoreCase("Sapi"))
                 .count();
 
-        // 5. Update Text Label (Null Safety check biar gak error)
-        if(totalAyam != null) totalAyam.setText(String.valueOf(countAyam));
-        if(totalSapi != null) totalSapi.setText(String.valueOf(countSapi));
+        // Hitung SAKIT 
+        long countSakit = hewanHidup.stream()
+                .filter(h -> {
+                    String p = h.getPenyakit();
+                    return p != null && !p.trim().isEmpty() && !p.equals("-") && !p.equalsIgnoreCase("Sehat");
+                })
+                .count();
+
+        // Hitung SEHAT
+        long countSehat = hewanHidup.size() - countSakit;
+
+        // 6. Update Text Label
+        if(totalAyam != null) totalAyam.setText(countAyam + " Ekor");
+        if(totalSapi != null) totalSapi.setText(countSapi + " Ekor");
+        if(totalHewanSehat != null) totalHewanSehat.setText(countSehat + " Ekor");
+        if(totalHewanSakit != null) totalHewanSakit.setText(countSakit + " Ekor");
         
     }
 
@@ -515,6 +564,25 @@ public class PeternakHewanController implements Initializable {
                 tvHewan.setDisable(false); 
             }
         }
+        
+        // ... validasi input ...
+
+        try {
+             // 1. UPDATE DATA KE DATABASE DULU (WAJIB)
+             hewanDAO.update(selected); 
+             
+             // 2. Refresh Tabel
+             loadDataFromDatabase(); 
+             
+             // 3. BARU CEK NOTIFIKASI
+             // Kalau ini ditaruh sebelum update, dia masih baca data lama!
+             cekNotifikasi();        
+             
+             showFancyAlert("SUCCESS","Sukses", "Data Berhasil Diupdate!");
+             
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
     }
 
     @FXML
@@ -705,7 +773,6 @@ public class PeternakHewanController implements Initializable {
             minBerat = 0.05 + (usia * 0.1);
             maxBerat = 0.5 + (usia * 1.5);
             
-            // Cap Maksimal Ayam Broiler misal 5-6kg
             if (maxBerat > 6) maxBerat = 6;
         }
 
@@ -722,17 +789,14 @@ public class PeternakHewanController implements Initializable {
     private void updatePromptBerat() {
         String usiaStr = txtUsia.getText();
         String jenis = chcJenis.getValue();
-
         // Kalau usia kosong atau jenis belum pilih, reset prompt
         if (usiaStr.isEmpty() || !usiaStr.matches("\\d+") || jenis == null) {
             txtBerat.setPromptText("Masukkan Berat (Kg)");
             return;
         }
-
         int usia = Integer.parseInt(usiaStr);
         double minBerat = 0;
         double maxBerat = 0;
-
         // --- RUMUS LOGIKA (Sama dengan validasi) ---
         if (jenis.equalsIgnoreCase("Sapi")) {
             // Rumus Sapi
@@ -745,9 +809,7 @@ public class PeternakHewanController implements Initializable {
             maxBerat = 0.5 + (usia * 1.5);
             if (maxBerat > 6) maxBerat = 6;
         }
-
         // --- UBAH PROMPT TEXT ---
-        // Contoh hasil: "Rentang Wajar: 40.0 - 160.0 kg"
         txtBerat.setPromptText("Wajar: " + String.format("%.1f", minBerat) + " - " + String.format("%.1f", maxBerat) + " kg");
     }
 
@@ -828,7 +890,48 @@ public class PeternakHewanController implements Initializable {
 
     stage.showAndWait();
 }
+
+    @FXML
+    private void handleKlikNotifikasi(ActionEvent event) {
+        // Toggle: Kalau muncul jadi hilang, kalau hilang jadi muncul
+        boolean isVisible = panelNotifikasi.isVisible();
+        panelNotifikasi.setVisible(!isVisible);
+        
+        // Kalau panel dibuka, refresh datanya biar update
+        if (!isVisible) {
+            cekNotifikasi();
+        }
+    }
     
-    
+    private void cekNotifikasi() {
+        // 1. Ambil User Login
+        Models.Karyawan userLogin = utility.Session.getLoggedInKaryawan();
+        if (userLogin == null) return;
+
+        // 2. [PERBAIKAN] Panggil getHewanSakit dengan ID User
+        // Jadi yang diambil cuma hewan sakit punya dia sendiri
+        List<Hewan> hewanSakit = hewanDAO.getHewanSakit(userLogin.getId());
+        
+        int jumlah = hewanSakit.size();
+
+        // 3. Update UI (Logika di bawah ini sama persis kayak sebelumnya)
+        if (jumlah > 0) {
+            lblJumlahNotif.setVisible(true);
+            lblJumlahNotif.setText(String.valueOf(jumlah));
+            
+            ObservableList<String> items = FXCollections.observableArrayList();
+            for (Hewan h : hewanSakit) {
+                String pesan = "⚠️ " + h.getJenis() + " (ID: " + h.getId() + ")\n" +
+                               "     Penyakit: " + h.getPenyakit() + "\n" +
+                               "     SARAN: Segera beri obat/vitamin!";
+                items.add(pesan);
+            }
+            listPesanNotif.setItems(items);
+            
+        } else {
+            lblJumlahNotif.setVisible(false);
+            listPesanNotif.setItems(FXCollections.observableArrayList("Semua hewan Anda sehat! ✅"));
+        }
+    }
     
 }

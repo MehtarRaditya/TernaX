@@ -15,6 +15,7 @@ public class PemakaianKonsumsi {
     private int idKaryawan;
     private int kuantitas;
     private String tanggal;
+    private String namaKonsumsi;
     private String hewan,pakan,jumlah;
 
     public PemakaianKonsumsi(int id, int idHewan, int idKonsumsi, int idKaryawan, int kuantitas, String tanggal) {
@@ -111,5 +112,7 @@ public class PemakaianKonsumsi {
         this.tanggal = tanggal;
     }
     
-    
+    // Getter Setter Nama Konsumsi
+    public String getNamaKonsumsi() { return namaKonsumsi; }
+    public void setNamaKonsumsi(String namaKonsumsi) { this.namaKonsumsi = namaKonsumsi; }
 }

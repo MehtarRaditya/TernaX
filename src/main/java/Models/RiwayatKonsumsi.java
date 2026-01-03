@@ -14,6 +14,7 @@ public class RiwayatKonsumsi {
     private String namaKonsumsi; // Dari tabel konsumsi
     private String tipe;         // Dari tabel konsumsi
     private int kuantitas;       // Dari tabel detail_pembelian
+    private String namaKaryawan;
 
     public RiwayatKonsumsi(int idPembelian, String tanggal, String namaKonsumsi, String tipe, int kuantitas) {
         this.idPembelian = idPembelian;
@@ -29,4 +30,11 @@ public class RiwayatKonsumsi {
     public String getNamaKonsumsi() { return namaKonsumsi; }
     public String getTipe() { return tipe; }
     public int getKuantitas() { return kuantitas; }
+    public String getNamaKaryawan() {return namaKaryawan;}
+
+    public void setNamaKaryawan(String namaKaryawan) {
+        this.namaKaryawan = namaKaryawan;
+    }
+    
+    
 }

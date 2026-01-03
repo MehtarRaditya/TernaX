@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="tampilanTabKaryawan" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #eff0f4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagerKaryawanController">
+<AnchorPane id="AnchorPane" fx:id="tampilanTabKaryawan" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #eff0f4;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagerKaryawanController">
    <children>
       <Pane layoutX="-13.0" layoutY="-1.0" prefHeight="540.0" prefWidth="189.0" style="-fx-background-color: white; -fx-border-color: grey;">
          <children>
@@ -35,7 +35,12 @@
                         <String fx:value="nav2-button-active" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="btnNavBar" mnemonicParsing="false" onAction="#btnTernak" prefHeight="52.0" prefWidth="140.0" style="-fx-graphic: \\src\main\java\image;" styleClass="nav2-button" text="PETERNAKAN">
+                  <Button fx:id="btnNavBar" layoutX="10.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleToPeternakanManager" prefHeight="51.0" prefWidth="140.0" style="-fx-graphic: \\src\main\java\image;" styleClass="nav2-button" text="PETERNAKAN">
+                     <font>
+                        <Font name="Nirmala UI Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNavbar" layoutX="10.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleToDashboardManager" prefHeight="51.0" prefWidth="140.0" style="-fx-graphic: \\src\main\java\image;" styleClass="nav2-button" text="DASHBOARD">
                      <font>
                         <Font name="Nirmala UI Bold" size="14.0" />
                      </font>
@@ -51,7 +56,7 @@
       </Pane>
       <Pane layoutX="176.0" prefHeight="63.0" prefWidth="784.0" style="-fx-background-color: white;">
          <children>
-            <Text layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="HALLO MANAGER" />
+            <Text fx:id="Hallo_Manager" layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-header" text="HALLO MANAGER" />
          </children>
       </Pane>
       <Pane layoutX="790.0" layoutY="12.0" prefHeight="38.0" prefWidth="163.0" style="-fx-background-color: white; -fx-background-radius: 50;">
@@ -165,14 +170,13 @@
          <children>
             <TableView fx:id="tableKaryawan" layoutX="27.0" layoutY="48.0" prefHeight="283.0" prefWidth="730.0">
                <columns>
-                  <TableColumn prefWidth="44.66668701171875" text="ID" />
-                  <TableColumn prefWidth="117.33328247070312" text="Nama" />
-                  <TableColumn prefWidth="103.33334350585938" text="Akun" />
-                  <TableColumn prefWidth="106.66668701171875" text="Pasword" />
-                  <TableColumn prefWidth="98.0" text="Role" />
-                  <TableColumn prefWidth="97.33331298828125" text="Gaji" />
-                  <TableColumn prefWidth="116.66668701171875" text="Tanggal Rekrut" />
-                  <TableColumn prefWidth="152.66668701171875" text="Tanggal Nonaktif" />
+                  <TableColumn fx:id="colID" prefWidth="79.33329772949219" text="ID" />
+                  <TableColumn fx:id="colNama" prefWidth="86.66668701171875" text="Nama" />
+                  <TableColumn fx:id="colAkun" prefWidth="103.33334350585938" text="Akun" />
+                  <TableColumn fx:id="colPassword" prefWidth="106.66668701171875" text="Pasword" />
+                  <TableColumn fx:id="colRole" prefWidth="98.0" text="Role" />
+                  <TableColumn fx:id="colGaji" prefWidth="97.33331298828125" text="Gaji" />
+                  <TableColumn fx:id="colTanggalRekrut" prefWidth="116.66668701171875" text="Tanggal Rekrut" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -182,9 +186,9 @@
                   <String fx:value="tab" />
                </styleClass>
             </TableView>
-            <Button fx:id="btnWarning" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="29.0" prefWidth="78.0" styleClass="btn-delete" text="Delete" textAlignment="CENTER" />
-            <Button fx:id="btnGrey" layoutX="592.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="29.0" prefWidth="72.0" styleClass="btn-submit" text="Edit" />
-            <Button fx:id="btnGreen" layoutX="670.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnTambah" prefHeight="29.0" prefWidth="78.0" styleClass="btn-add" text="Tambah" textAlignment="CENTER" />
+            <Button fx:id="btnWarning" layoutX="27.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleActionDeleteKaryawan" prefHeight="29.0" prefWidth="78.0" styleClass="btn-delete" text="Delete" textAlignment="CENTER" />
+            <Button fx:id="btnGrey" layoutX="592.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleActionEditKaryawan" prefHeight="29.0" prefWidth="72.0" styleClass="btn-submit" text="Edit" />
+            <Button fx:id="btnGreen" layoutX="670.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleActionTambahKaryawan" prefHeight="29.0" prefWidth="78.0" styleClass="btn-add" text="Tambah" textAlignment="CENTER" />
          </children>
       </Pane>
       <AnchorPane fx:id="editDataKaryawan" layoutX="302.0" layoutY="30.0" maxHeight="480.0" maxWidth="360.0" minHeight="480.0" minWidth="360.0" prefHeight="480.0" prefWidth="360.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-width: 2px; -fx-border-radius: 50; -fx-border-color: black;" visible="false">
@@ -196,47 +200,41 @@
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtNama1" maxHeight="63.0" minHeight="30.0" prefHeight="30.0" prefWidth="331.0" styleClass="text-header" />
+                  <TextArea fx:id="txtNamaEdit" maxHeight="63.0" minHeight="30.0" prefHeight="30.0" prefWidth="331.0" styleClass="text-header" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Akun" wrappingWidth="72.0">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtAkun1" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
+                  <TextArea fx:id="txtAkunEdit" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtPassword1" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
+                  <TextArea fx:id="txtPasswordEdit" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <ChoiceBox fx:id="kelaminHewan1" minHeight="26.0" prefHeight="26.0" prefWidth="124.0" styleClass="combo-box-underline" />
+                  <ChoiceBox fx:id="kelaminHewanEdit" minHeight="26.0" prefHeight="26.0" prefWidth="124.0" styleClass="combo-box-underline" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gaji" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtGaji1" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
+                  <TextArea fx:id="txtGajiEdit" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" styleClass="text-header" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal_Rekrut" wrappingWidth="233.73907470703125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <DatePicker maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
-                  <Text layoutX="10.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal Nonaktif" wrappingWidth="233.73907470703125">
-                     <font>
-                        <Font name="Nirmala UI Bold" size="16.0" />
-                     </font>
-                  </Text>
-                  <DatePicker maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
+                  <DatePicker fx:id="tanggalRekrutEdit" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" />
                </children>
             </VBox>
-            <Button fx:id="btnBlue" layoutX="250.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnSave" prefHeight="30.0" prefWidth="96.0" styleClass="btn-submit" text="Simpan" />
-            <Button fx:id="btnWarning" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="30.0" prefWidth="85.0" styleClass="btn-back" text="Tutup" />
+            <Button fx:id="btnSimpanEdit" layoutX="250.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnSaveEdit" prefHeight="30.0" prefWidth="96.0" styleClass="btn-submit" text="Simpan" />
+            <Button fx:id="btnTutupEdit" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnCloseEdit" prefHeight="30.0" prefWidth="85.0" styleClass="btn-back" text="Tutup" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="inputDataKaryawan" layoutX="336.0" layoutY="30.0" maxHeight="480.0" maxWidth="360.0" minHeight="480.0" minWidth="360.0" prefHeight="480.0" prefWidth="360.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-width: 2px; -fx-border-radius: 50; -fx-border-color: black;" visible="false">
@@ -248,41 +246,41 @@
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtNama" prefHeight="0.0" prefWidth="331.0" styleClass="text-field" />
+                  <TextArea fx:id="txtNamaAdd" prefHeight="0.0" prefWidth="331.0" styleClass="text-field" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Akun" wrappingWidth="72.0">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtAkun" prefHeight="37.0" prefWidth="563.0" styleClass="text-field" />
+                  <TextArea fx:id="txtAkunAdd" prefHeight="37.0" prefWidth="563.0" styleClass="text-field" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtPassword" prefHeight="0.0" prefWidth="331.0" styleClass="text-field" />
+                  <TextArea fx:id="txtPasswordAdd" prefHeight="0.0" prefWidth="331.0" styleClass="text-field" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <ChoiceBox fx:id="kelaminHewan" prefHeight="21.0" prefWidth="123.0" />
+                  <ChoiceBox fx:id="roleAdd" prefHeight="21.0" prefWidth="123.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gaji" wrappingWidth="103.51300048828125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <TextArea fx:id="txtGaji" prefHeight="40.0" prefWidth="215.0" styleClass="text-field" />
+                  <TextArea fx:id="txtGajiAdd" prefHeight="40.0" prefWidth="215.0" styleClass="text-field" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tanggal_Rekrut" wrappingWidth="233.73907470703125">
                      <font>
                         <Font name="Nirmala UI Bold" size="16.0" />
                      </font>
                   </Text>
-                  <DatePicker prefHeight="36.0" prefWidth="173.0" />
+                  <DatePicker fx:id="dateTglRekrutAdd" prefHeight="36.0" prefWidth="173.0" />
                </children>
             </VBox>
-            <Button fx:id="btnGreen" layoutX="250.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnKirim" prefHeight="30.0" prefWidth="96.0" styleClass="btn-submit" text="Kirim" />
-            <Button fx:id="btnWarning" layoutX="14.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="30.0" prefWidth="96.0" styleClass="btn-back" text="Tutup" />
+            <Button fx:id="btnKirimAdd" layoutX="250.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnKirimAdd" prefHeight="30.0" prefWidth="96.0" styleClass="btn-submit" text="Kirim" />
+            <Button fx:id="btnTutupAdd" layoutX="14.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnCloseAdd" prefHeight="30.0" prefWidth="96.0" styleClass="btn-back" text="Tutup" />
          </children>
       </AnchorPane>
    </children>

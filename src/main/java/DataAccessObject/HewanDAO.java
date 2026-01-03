@@ -198,5 +198,127 @@ public class HewanDAO {
         return jenis;
     }
 
+    // [METHOD BARU YANG SUDAH DIPERBAIKI]
+    public List<Hewan> getHewanSakit(String idPemilik) {
+        List<Hewan> list = new ArrayList<>();
+        
+        // PERBAIKAN: Tambahkan "AND pemilik = ?" di ujung query
+        String sql = "SELECT * FROM hewan WHERE " +
+                     "(LOWER(kondisi) LIKE '%sakit%' " + 
+                     "OR (penyakit IS NOT NULL AND LOWER(penyakit) NOT IN ('sehat', '-', '', ' '))) " +
+                     "AND LOWER(kondisi) NOT IN ('mati', 'death', 'dead') " +
+                     "AND pemilik = ?"; // <--- FILTER PEMILIK
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idPemilik); // Masukkan ID User yang login
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Hewan(
+                        rs.getInt("id"),
+                        rs.getString("jenis"),
+                        rs.getString("kelamin"),
+                        rs.getDouble("berat"),
+                        rs.getInt("usia_bulan"), 
+                        rs.getString("kondisi"),
+                        rs.getString("pemilik"), 
+                        rs.getString("penyakit")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error ambil hewan sakit: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
     
+    // =================================================================
+    // KHUSUS MANAGER: AMBIL SEMUA HEWAN (Tanpa Filter Pemilik)
+    // =================================================================
+    public List<Hewan> getAllForManager() {
+    List<Hewan> list = new ArrayList<>();
+
+    // --- PERBAIKAN PENTING DI SINI (SQL JOIN) ---
+    // Kita gabungkan tabel 'hewan' (h) dengan 'karyawan' (k)
+    // Supaya bisa dapat namanya, bukan cuma ID-nya.
+    
+    // PERHATIKAN: Ganti 'h.id_peternak' sesuai nama kolom asing di tabel hewanmu (bisa id_karyawan, user_id, dll)
+    String sql = "SELECT h.*, k.nama AS nama_peternak_asli " + 
+                 "FROM hewan h " +
+                 "LEFT JOIN karyawan k ON h.pemilik = k.id " + 
+                 "WHERE h.kondisi NOT IN ('Mati', 'Death')";
+
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            Hewan h = new Hewan();
+            
+            // Set Data Hewan Standard
+            h.setId(rs.getInt("id"));
+            h.setJenis(rs.getString("jenis"));
+            h.setBerat(rs.getDouble("berat"));
+            h.setUsia(rs.getInt("usia_bulan")); 
+            h.setKelamin(rs.getString("kelamin"));
+            h.setKondisi(rs.getString("kondisi"));
+            h.setPenyakit(rs.getString("penyakit"));
+            
+            // --- AMBIL HASIL JOIN ---
+            // Ambil dari alias 'nama_peternak_asli' yang kita buat di SQL atas
+            String nama = rs.getString("nama_peternak_asli");
+            
+            // Cek jika null (misal karyawannya sudah dihapus)
+            if (nama == null) {
+                h.setPemilik("Tidak Diketahui");
+            } else {
+                h.setPemilik(nama); 
+            }
+
+            list.add(h);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Manager Error - Gagal JOIN hewan & pemilik: " + e.getMessage());
+        e.printStackTrace(); // Biar kelihatan detail errornya kalau ada
+    }
+
+    return list;
+}
+    
+    // Method baru: Ambil hewan KHUSUS milik ID tertentu
+    public List<Hewan> getByPeternak(String idPeternak) {
+        List<Hewan> list = new ArrayList<>();
+        
+        // Filter WHERE pemilik = ?
+        // Pastikan kolom di DB namanya 'pemilik' (bukan id_karyawan)
+        String sql = "SELECT * FROM hewan WHERE pemilik = ? AND kondisi <> 'Death'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, idPeternak); // Masukkan ID Peternak yang login
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Hewan h = new Hewan();
+                    h.setId(rs.getInt("id"));
+                    h.setJenis(rs.getString("jenis"));
+                    h.setBerat(rs.getDouble("berat"));
+                    h.setUsia(rs.getInt("usia_bulan")); // Sesuai DB kamu
+                    h.setKelamin(rs.getString("kelamin"));
+                    h.setPemilik(rs.getString("pemilik"));
+                    h.setKondisi(rs.getString("kondisi"));
+                    h.setPenyakit(rs.getString("penyakit"));
+                    list.add(h);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

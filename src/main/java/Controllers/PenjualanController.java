@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -72,6 +73,8 @@ public class PenjualanController implements Initializable {
     private Spinner<Integer> spQtyInput;
     @FXML
     private Label lbNamaKasir;
+    @FXML
+    private DatePicker dateTglTransaksi;
 
     /**
      * Initializes the controller class.
@@ -119,10 +122,31 @@ public class PenjualanController implements Initializable {
         } else {
             lbNamaKasir.setText("Kasir"); // Default jika null (misal testing tanpa login)
         }
+        
+        // 1. Set Default Value ke Hari Ini
+        java.time.LocalDate hariIni = java.time.LocalDate.now();
+        dateTglTransaksi.setValue(hariIni);
+
+        // 2. Atur Batasan Kalender (DayCellFactory)
+        dateTglTransaksi.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
+            @Override
+            public void updateItem(java.time.LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+
+                // Cek apakah tanggal tersebut (item) berada di Bulan & Tahun yang sama dengan hari ini?
+                boolean isBulanBeda = item.getMonth() != hariIni.getMonth();
+                boolean isTahunBeda = item.getYear() != hariIni.getYear();
+
+                // Jika beda bulan ATAU beda tahun, matikan (disable)
+                if (isBulanBeda || isTahunBeda) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;"); // Opsional: Beri warna merah muda biar kelihatan disable
+                }
+            }
+        });
     
     }    
 
-    // Method untuk mengambil data dari Database ke Tabel Kiri
     private void loadDataKatalog() {
         // PENTING: Panggil method yang baru kita buat tadi
         listKatalog = FXCollections.observableArrayList(produkDAO.getProdukSiapJual());
@@ -133,6 +157,12 @@ public class PenjualanController implements Initializable {
 
     @FXML
     private void handleTambahKeKeranjang(ActionEvent event) {
+        if (dateTglTransaksi.getValue() == null) {
+            showAlert("Warning", "Mohon pilih tanggal transaksi terlebih dahulu!");
+            return;
+        }
+        // ---------------------------------------
+        
         // 1. Cek ada barang yang dipilih gak?
         KatalogProduk selected = tvKatalog.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -172,7 +202,6 @@ public class PenjualanController implements Initializable {
                     break;
                 }
             }
-
             // 5. Kalau belum ada, buat item baru
             if (!isExist) {
                 KeranjangItem itemBaru = new KeranjangItem(
@@ -181,16 +210,13 @@ public class PenjualanController implements Initializable {
                     selected.getHarga(), 
                     qtyBeli
                 );
-                // Hitung subtotal awal manual jika di constructor tidak ada
-                // itemBaru.setSubtotal(qtyBeli * selected.getHarga()); 
-                
                 listKeranjang.add(itemBaru);
             }
 
             // 6. Refresh Tampilan & Hitung Ulang
             tvKeranjang.refresh(); 
             hitungTotalBelanja();
-            
+            dateTglTransaksi.setDisable(true);
             // Reset Spinner ke 1 setelah tambah
             spQtyInput.getValueFactory().setValue(1);
 
@@ -202,18 +228,23 @@ public class PenjualanController implements Initializable {
 
     @FXML
     private void handleHapusItem(ActionEvent event) {
-        // Ambil item yang dipilih di tabel kanan
         KeranjangItem selected = tvKeranjang.getSelectionModel().getSelectedItem();
         
         if (selected != null) {
             listKeranjang.remove(selected);
-            hitungTotalBelanja(); // Hitung ulang total setelah dihapus
+            hitungTotalBelanja(); 
+            
+            // --- [BARU] Cek Jika Keranjang Jadi Kosong ---
+            if (listKeranjang.isEmpty()) {
+                dateTglTransaksi.setDisable(false); // Boleh ganti tanggal lagi
+            }
+            // ---------------------------------------------
+            
         } else {
             showAlert("Info", "Pilih barang di keranjang yang mau dihapus.");
         }
     }
 
-    // Method Helper: Menjumlahkan Subtotal semua barang di keranjang
     private void hitungTotalBelanja() {
         totalBelanja = 0;
         for (KeranjangItem item : listKeranjang) {
@@ -250,8 +281,24 @@ public class PenjualanController implements Initializable {
             // 4. Hitung Kembalian
             double kembalian = uangDibayar - totalBelanja;
 
-            // 5. PROSES SIMPAN KE DATABASE (Panggil DAO)
-            boolean sukses = penjualanDAO.simpanTransaksi(listKeranjang, totalBelanja, uangDibayar, kembalian);
+           // 1. Ambil Tanggal dari DatePicker
+            java.time.LocalDate dateDipilih = dateTglTransaksi.getValue();
+            
+            if (dateDipilih == null) {
+                showAlert("Error", "Pilih tanggal transaksi dulu!");
+                return;
+            }
+
+            // 2. Ambil Jam Sekarang (Biar transaksinya gak jam 00:00:00)
+            java.time.LocalTime jamSekarang = java.time.LocalTime.now();
+
+            // 3. Gabungkan jadi format String Timestamp MySQL (yyyy-MM-dd HH:mm:ss)
+            java.time.LocalDateTime waktuLengkap = java.time.LocalDateTime.of(dateDipilih, jamSekarang);
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String tanggalSQL = waktuLengkap.format(formatter);
+
+            // 4. KIRIM 'tanggalSQL' KE DAO
+            boolean sukses = penjualanDAO.simpanTransaksi(listKeranjang, totalBelanja, uangDibayar, kembalian, tanggalSQL);
 
             if (sukses) {
                 showAlert("SUKSES", "Transaksi Berhasil!\nKembalian: Rp " + String.format("%,.0f", kembalian));
@@ -260,6 +307,9 @@ public class PenjualanController implements Initializable {
                 listKeranjang.clear();
                 hitungTotalBelanja();
                 txtUangBayar.clear();
+                
+                dateTglTransaksi.setDisable(false);
+                dateTglTransaksi.setValue(java.time.LocalDate.now());
                 
                 // Reload Katalog (supaya stok berkurang update di layar)
                 loadDataKatalog(); 

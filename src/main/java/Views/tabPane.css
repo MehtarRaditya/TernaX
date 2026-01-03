@@ -1,0 +1,68 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 2, 2026, 7:47:08 PM
+    Author     : mrifa
+*/
+/* --- CONTAINER UTAMA TABPANE --- */
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+/* --- AREA HEADER (Tempat Tab Berada) --- */
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 10 0; /* Memberi jarak antara tab dan isi konten */
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent; /* Menghilangkan background abu-abu bawaan */
+}
+
+/* --- STYLE TAB DEFAULT (TIDAK AKTIF) --- */
+.tab {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 8 20 8 20;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #7f8c8d; /* Abu-abu saat tidak aktif */
+    -fx-font-family: "Poppins";
+    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+}
+
+/* --- SAAT TAB DISENTUH (HOVER) --- */
+.tab:hover {
+    -fx-background-color: rgba(145, 189, 243, 0.1); /* Biru transparan tipis */
+}
+
+/* --- SAAT TAB AKTIF (SELECTED) --- */
+.tab:selected {
+    -fx-background-color: #91bdf3; /* Biru tema Anda */
+    -fx-background-radius: 10 10 0 0;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: white; /* Teks jadi putih saat aktif */
+}
+
+/* --- KONTEN DI DALAM TAB --- */
+.tab-pane .tab-content-area {
+    -fx-background-color: white;
+    -fx-background-radius: 0 0 15 15;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 0 15 15;
+    -fx-padding: 20;
+}
+
+/* Menghilangkan garis biru kecil (focus) saat tab diklik */
+.tab:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

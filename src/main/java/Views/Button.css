@@ -31,10 +31,10 @@
     -fx-scale-x: 0.95;
     -fx-scale-y: 0.95;
 }
-/*Button Berwarna Biru*/
+/*Button Berwarna Biru
 
 
-/*Button Navigation Bar
+Button Navigation Bar
 #btnNavBar {
     -fx-background-color: #00000000;
     -fx-text-fill: #16213e;
@@ -50,9 +50,9 @@
     -fx-background-color: rgba(128, 128, 128, 0.60);
     -fx-scale-x: 0.97;
     -fx-scale-y: 0.97;
-}*/
-/*==========================================*/
-/* Gaya Umum Navigasi */
+}
+==========================================
+ Gaya Umum Navigasi */
 .nav-button {
     -fx-background-color: transparent; /* Transparan */
     -fx-text-fill: #7f8c8d;            /* Warna default abu-abu */
@@ -324,4 +324,52 @@
     -fx-font-weight: 700;
     /* Memberikan sedikit efek cahaya biru di bawah tombol aktif */
     -fx-effect: dropshadow(three-pass-box, rgba(145, 189, 243, 0.5), 8, 0, 0, 4);
+}
+
+/* =========================================
+   TOMBOL NOTIFIKASI (.btnNotifikasi)
+   ========================================= */
+
+.btnNotifikasi {
+    -fx-background-color: white;      /* Latar belakang putih */
+    -fx-background-radius: 50%;       /* Membuat tombol bulat sempurna */
+    -fx-border-radius: 50%;           /* Border ikut bulat */
+    -fx-border-color: #e0e0e0;        /* Garis pinggir abu tipis */
+    -fx-border-width: 1;
+
+    /* Ukuran Tetap agar Bulat Sempurna */
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+
+    -fx-alignment: CENTER;            /* Ikon di tengah */
+    -fx-cursor: hand;                 /* Kursor tangan */
+    -fx-padding: 0;                   /* Hapus padding bawaan */
+    
+    /* Bayangan halus agar timbul */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Efek Hover (Saat mouse di atasnya) */
+.btnNotifikasi:hover {
+    -fx-background-color: #f0fdf4;    /* Hijau sangat muda (sesuai tema) */
+    -fx-border-color: #27ae60;        /* Border berubah hijau */
+    -fx-scale-x: 1.05;                /* Sedikit membesar */
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(39, 174, 96, 0.2), 8, 0, 0, 3);
+}
+
+/* Efek Pressed (Saat diklik) */
+.btnNotifikasi:pressed {
+    -fx-background-color: #e8f5e9;
+    -fx-scale-x: 0.95;                /* Efek mengecil (kena tekan) */
+    -fx-scale-y: 0.95;
+    -fx-effect: none;                 /* Hilangkan bayangan agar terlihat "masuk" */
+}
+
+/* Opsional: Jika ada ImageView di dalamnya, pastikan pas di tengah */
+.btnNotifikasi .image-view {
+    -fx-fit-width: 24px;
+    -fx-fit-height: 24px;
 }

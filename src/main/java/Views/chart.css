@@ -1,0 +1,298 @@
+/* =================================================================
+   1. PENGATURAN UMUM SEMUA CHART
+   ================================================================= */
+.chart {
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+}
+
+.chart-content {
+    -fx-padding: 10px;
+}
+
+/* Menghilangkan latar belakang abu-abu default chart */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* Mengatur Garis Grid (Grid Lines) */
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent; /* Hilangkan garis vertikal biar bersih */
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #f0f0f0;     /* Garis horizontal tipis */
+    -fx-stroke-dash-array: 4 4;
+}
+
+/* Mengatur Tulisan Sumbu X dan Y (Axis) */
+.axis {
+    -fx-tick-label-fill: #666666;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 10px;
+    -fx-tick-length: 3;
+}
+
+.axis-label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* =================================================================
+   2. LINE CHART - PRODUKSI PANEN (Hijau)
+   ID: #lineChartPanen
+   ================================================================= */
+#lineChartPanen .default-color0.chart-series-line {
+    -fx-stroke: #2ecc71; /* Garis Hijau Cerah */
+    -fx-stroke-width: 2.5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(46, 204, 113, 0.3), 5, 0, 0, 3);
+}
+
+#lineChartPanen .default-color0.chart-line-symbol {
+    -fx-background-color: #27ae60, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 10px;
+    -fx-padding: 4px; /* Ukuran titik */
+}
+
+#lineChartPanen .chart-line-symbol:hover {
+    -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+    -fx-cursor: hand;
+}
+
+/* =================================================================
+   3. AREA CHART - OMZET PENJUALAN (Biru)
+   ID: #areaChartPenjualan
+   ================================================================= */
+/* Warna isian area (Fill) - Transparan */
+#areaChartPenjualan .default-color0.chart-series-area-fill {
+    -fx-fill: rgba(41, 128, 185, 0.2); 
+}
+
+/* Warna garis batas area (Stroke) */
+#areaChartPenjualan .default-color0.chart-series-area-line {
+    -fx-stroke: #2980b9;
+    -fx-stroke-width: 2px;
+}
+
+/* Simbol Titik */
+#areaChartPenjualan .default-color0.chart-area-symbol {
+    -fx-background-color: #2980b9, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 3px;
+}
+
+/* =================================================================
+   4. BAR CHART - STOK GUDANG (Gradasi Hijau-Tosca)
+   ID: #barChartPakan
+   ================================================================= */
+#barChartPakan .default-color0.chart-bar {
+    -fx-background-color: linear-gradient(to top, #11998e, #38ef7d);
+    -fx-background-radius: 5 5 0 0; /* Lengkung atas saja */
+    -fx-border-color: transparent;
+}
+
+/* Efek Hover Batang */
+#barChartPakan .chart-bar:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 0);
+    -fx-scale-y: 1.03;
+    -fx-cursor: hand;
+}
+
+/* =================================================================
+   5. PIE CHART - WABAH PENYAKIT (Merah/Warning)
+   ID: #pieChartKesehatan
+   ================================================================= */
+#pieChartKesehatan {
+    -fx-padding: 0;
+}
+
+/* Warna Slice (Potongan Kue) */
+#pieChartKesehatan .default-color0.chart-pie { -fx-pie-color: #e74c3c; } /* Merah (Sakit Berat) */
+#pieChartKesehatan .default-color1.chart-pie { -fx-pie-color: #f39c12; } /* Kuning (Gejala) */
+#pieChartKesehatan .default-color2.chart-pie { -fx-pie-color: #2ecc71; } /* Hijau (Sehat) */
+#pieChartKesehatan .default-color3.chart-pie { -fx-pie-color: #34495e; } /* Lainnya */
+
+/* Menghilangkan border putih di antara slice */
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Label pada Pie Chart */
+.chart-pie-label {
+    -fx-fill: #555;
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+}
+
+/* Legenda (Keterangan) */
+.chart-legend {
+    -fx-background-color: transparent;
+}
+.chart-legend-item {
+    -fx-text-fill: #555;
+    -fx-font-size: 10px;
+}
+
+/* =================================================================
+   1. PENGATURAN UMUM (AXIS & GRID)
+   ================================================================= */
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.chart-content {
+    -fx-padding: 10px;
+}
+
+/* Background Plot Transparan */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* Garis Grid Horizontal (Putus-putus halus) */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e0e0e0;
+    -fx-stroke-dash-array: 5 5;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent; /* Hilangkan vertikal biar bersih */
+}
+
+/* Tulisan Sumbu X dan Y */
+.axis {
+    -fx-tick-label-fill: #555;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 11px;
+    -fx-tick-length: 5;
+}
+.axis-label {
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Legenda (Keterangan) */
+.chart-legend {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+}
+.chart-legend-item {
+    -fx-text-fill: #444;
+    -fx-font-weight: bold;
+}
+
+/* =================================================================
+   2. LINE CHART (PRODUKSI) - EFEK NEON HIJAU
+   ID: #lineChartPanen
+   ================================================================= */
+/* Garis Grafik */
+#lineChartPanen .default-color0.chart-series-line {
+    -fx-stroke: #00c853; /* Hijau Listrik */
+    -fx-stroke-width: 3px;
+    /* Efek Bersinar (Glow) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 200, 83, 0.6), 10, 0.4, 0, 0);
+}
+
+/* Titik Data */
+#lineChartPanen .default-color0.chart-line-symbol {
+    -fx-background-color: #00c853, white;
+    -fx-background-insets: 0, 2.5;
+    -fx-background-radius: 20px;
+    -fx-padding: 6px; /* Titik lebih besar */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+/* Efek Hover pada Titik */
+#lineChartPanen .chart-line-symbol:hover {
+    -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+    -fx-background-color: #b9f6ca, #00c853;
+    -fx-cursor: hand;
+}
+
+/* =================================================================
+   3. AREA CHART (OMZET) - GRADASI BIRU MODERN
+   ID: #areaChartPenjualan
+   ================================================================= */
+/* Warna Isian Area (Gradasi dari atas ke bawah) */
+#areaChartPenjualan .default-color0.chart-series-area-fill {
+    -fx-fill: linear-gradient(to bottom, rgba(41, 182, 246, 0.7), rgba(41, 182, 246, 0.1));
+}
+
+/* Garis Batas Area */
+#areaChartPenjualan .default-color0.chart-series-area-line {
+    -fx-stroke: #0288d1;
+    -fx-stroke-width: 2.5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(2, 136, 209, 0.4), 8, 0, 0, 0);
+}
+
+/* Titik Data */
+#areaChartPenjualan .default-color0.chart-area-symbol {
+    -fx-background-color: #0277bd, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 50%;
+    -fx-padding: 4px;
+}
+
+/* =================================================================
+   4. BAR CHART (STOK) - EFEK 3D & GRADASI
+   ID: #barChartPakan
+   ================================================================= */
+/* Batang Grafik dengan Gradasi Mencolok */
+#barChartPakan .default-color0.chart-bar {
+    /* Gradasi dari Tosca Gelap ke Terang */
+    -fx-background-color: linear-gradient(to top, #00897b, #4db6ac);
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0;
+    /* Bayangan agar terlihat timbul/pop-out */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);
+}
+
+/* Efek Hover (Batang Menyala saat disentuh) */
+#barChartPakan .chart-bar:hover {
+    -fx-background-color: linear-gradient(to top, #00695c, #80cbc4);
+    -fx-effect: dropshadow(three-pass-box, rgba(77, 182, 172, 0.6), 10, 0, 0, 0);
+    -fx-cursor: hand;
+    -fx-scale-y: 1.05; /* Sedikit memanjang ke atas */
+}
+
+/* =================================================================
+   5. PIE CHART (WABAH) - WARNA KONTRAS & EFEK IRISAN
+   ID: #pieChartKesehatan
+   ================================================================= */
+#pieChartKesehatan {
+    -fx-padding: 0;
+}
+
+/* Mengatur Warna Irisan Pie agar lebih "Rame" */
+#pieChartKesehatan .default-color0.chart-pie { -fx-pie-color: #ff1744; } /* Merah Terang (Bahaya) */
+#pieChartKesehatan .default-color1.chart-pie { -fx-pie-color: #ff9100; } /* Oranye (Waspada) */
+#pieChartKesehatan .default-color2.chart-pie { -fx-pie-color: #00e676; } /* Hijau (Aman) */
+#pieChartKesehatan .default-color3.chart-pie { -fx-pie-color: #651fff; } /* Ungu (Lainnya) */
+
+/* Garis Batas antar Irisan */
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+/* Efek Hover pada Irisan (Membesar) */
+.chart-pie:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+/* Label Pie Chart */
+.chart-pie-label {
+    -fx-fill: #333;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}

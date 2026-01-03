@@ -8,7 +8,7 @@ import Models.DetailPembelianItem;
 import Models.Konsumsi;
 import Models.RiwayatKonsumsi;
 import Models.Pembelian;
-
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +18,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,6 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class LogistikKonsumsiController implements Initializable {
 
@@ -41,111 +46,113 @@ public class LogistikKonsumsiController implements Initializable {
     private ObservableList<DetailPembelianItem> keranjang = FXCollections.observableArrayList();
     private List<Konsumsi> allKonsumsi;
 
+    // --- FXML UI COMPONENTS ---
     @FXML private Button btnLogout;
+    @FXML private Button btnKonsum;
+    @FXML private Button btnQC;
     
-    @FXML private TableView<DetailPembelianItem> tableHewan; // Tabel Keranjang
+    // TABEL KERANJANG
+    @FXML private TableView<DetailPembelianItem> tableHewan; 
     @FXML private TableColumn<DetailPembelianItem, String> colNamaKonsum;
     @FXML private TableColumn<DetailPembelianItem, String> colTipe;
     @FXML private TableColumn<DetailPembelianItem, Integer> colKuantitas;
 
+    // TOMBOL MENU
     @FXML private Button btnTambah; // Tombol Tambah ke Keranjang
     @FXML private Button btnTambahKonsumsi; // Tombol Buka Panel
     
-    @FXML private Pane sceneNambahKonsumsi; // Panel Form Input
+    // PANEL INPUT PEMBELIAN
+    @FXML private Pane sceneNambahKonsumsi; 
     @FXML private DatePicker dtPickPembelian;
-    @FXML private ComboBox<String> ChbKonsumsi; // ComboBox TIPE
-    @FXML private ComboBox<Konsumsi> chbNamaKonsum; // ComboBox NAMA
+    @FXML private ComboBox<String> ChbKonsumsi; // TIPE
+    @FXML private ComboBox<Konsumsi> chbNamaKonsum; // NAMA
     @FXML private TextField txtKuantitas;
-    @FXML
-    private Button btnKembali;
-    @FXML
-    private Button btnDelete;
-    @FXML
-    private Button btnSubmit;
-    @FXML
-    private Button btnQC;
-    @FXML
-    private TableColumn<RiwayatKonsumsi, Integer> col_idPebelian;
-    @FXML
-    private TableColumn<RiwayatKonsumsi, String> colTanggal;
-    @FXML
-    private Label totalPakanAyam;
-    @FXML
-    private Label totalPakanSapi;
-    @FXML
-    private Label totalObat;
-    @FXML
-    private Label totalVitamin;
-    @FXML
-    private Button btnKonsum;
-    @FXML
-    private TableView<RiwayatKonsumsi> tvDetailTransaksi;
-    @FXML
-    private TableColumn<RiwayatKonsumsi, String> colNamaKonsum2;
-    @FXML
-    private TableColumn<RiwayatKonsumsi, Integer> colQty;
+    @FXML private Button btnKembali;
+    @FXML private Button btnDelete;
+    @FXML private Button btnSubmit;
+    
+    // TABEL RIWAYAT
+    @FXML private TableView<RiwayatKonsumsi> tvDetailTransaksi;
+    @FXML private TableColumn<RiwayatKonsumsi, Integer> col_idPebelian;
+    @FXML private TableColumn<RiwayatKonsumsi, String> colTanggal;
+    @FXML private TableColumn<RiwayatKonsumsi, String> colNamaKonsum2;
+    @FXML private TableColumn<RiwayatKonsumsi, Integer> colQty;
+
+    // LABEL STATISTIK
+    @FXML private Label totalPakanAyam;
+    @FXML private Label totalPakanSapi;
+    @FXML private Label totalObat;
+    @FXML private Label totalVitamin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("=== MEMULAI INITIALIZE ===");
+        System.out.println("=== MEMULAI INITIALIZE LOGISTIK KONSUMSI ===");
         
-        // ... (Kode initialize panel input kamu yang lama) ...
+        // 1. Sembunyikan panel input di awal
         if (sceneNambahKonsumsi != null) sceneNambahKonsumsi.setVisible(false);
+        
+        // 2. Load Data Master & Statistik
         loadDataKonsumsi();
         hitungTotalStok();
         
-        // Setup Tabel Keranjang (Input)
+        // 3. Setup Tabel Keranjang (Input)
         if (colNamaKonsum != null) colNamaKonsum.setCellValueFactory(new PropertyValueFactory<>("namaKonsumsi"));
         if (colTipe != null) colTipe.setCellValueFactory(new PropertyValueFactory<>("tipe"));
         if (colKuantitas != null) colKuantitas.setCellValueFactory(new PropertyValueFactory<>("kuantitas"));
         if (tableHewan != null) tableHewan.setItems(keranjang);
 
-        // ... (Listener ComboBox dll) ...
-        
-        // --- [BARU] SETUP TABEL RIWAYAT TRANSAKSI ---
+        // 4. Setup Tabel Riwayat
         setupTabelRiwayat();
+        
+        // 5. Setup Listener ComboBox Tipe (PENTING AGAR NAMA MUNCUL)
+        if (ChbKonsumsi != null) {
+            ChbKonsumsi.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+                filterNamaByTipe(newVal);
+            });
+        }
+        
+        // 6. Setup Tampilan ComboBox Nama (Agar muncul nama, bukan ID memori)
+        if (chbNamaKonsum != null) {
+            setKonsumsiComboBoxDisplay(chbNamaKonsum);
+        }
     }
     
-    private void setupTabelRiwayat() {
-        if (tvDetailTransaksi == null) {
-            System.err.println("WARNING: fx:id 'tvDetailTransaksi' belum dilink di SceneBuilder!");
-            return;
-        }
+    // --- SETUP & LOAD DATA ---
 
-        // 1. Setup Kolom (Menggunakan PropertyValueFactory sesuai nama variabel di Model RiwayatKonsumsi)
+    private void setupTabelRiwayat() {
+        if (tvDetailTransaksi == null) return;
+
+        // Setup Kolom
         if (col_idPebelian != null) col_idPebelian.setCellValueFactory(new PropertyValueFactory<>("idPembelian"));
         if (colTanggal != null) colTanggal.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
         if (colNamaKonsum2 != null) colNamaKonsum2.setCellValueFactory(new PropertyValueFactory<>("namaKonsumsi"));
         if (colQty != null) colQty.setCellValueFactory(new PropertyValueFactory<>("kuantitas"));
 
-        // 2. Load Data dari Database
+        // Load Data
         refreshTabelRiwayat();
     }
     
     private void refreshTabelRiwayat() {
-        ObservableList<RiwayatKonsumsi> dataRiwayat = FXCollections.observableArrayList(
-            pembelianDAO.getAllRiwayat()
-        );
-        tvDetailTransaksi.setItems(dataRiwayat);
+        if (tvDetailTransaksi != null) {
+            ObservableList<RiwayatKonsumsi> dataRiwayat = FXCollections.observableArrayList(
+                pembelianDAO.getAllRiwayat()
+            );
+            tvDetailTransaksi.setItems(dataRiwayat);
+        }
     }
-    
 
     private void loadDataKonsumsi() {
         allKonsumsi = konsumsiDAO.getAll();
         
-        // DEBUG: Cek apakah data masuk?
         if (allKonsumsi == null || allKonsumsi.isEmpty()) {
-            System.out.println("ERROR: Database Konsumsi KOSONG atau Gagal Query!");
-            showAlert("Error Data", "Data Tipe Pakan tidak ditemukan di Database.");
+            System.out.println("ERROR: Data Konsumsi Kosong.");
             return;
         }
-
-        System.out.println("Sukses Load Data: " + allKonsumsi.size() + " items.");
 
         // Ambil Tipe Unik untuk ComboBox
         ObservableList<String> tipeList = FXCollections.observableArrayList(
                 allKonsumsi.stream()
-                        .map(Konsumsi::getTipe) // Pastikan method getTipe() ada di Model Konsumsi
+                        .map(Konsumsi::getTipe)
                         .filter(t -> t != null && !t.isBlank())
                         .distinct()
                         .collect(Collectors.toList())
@@ -153,7 +160,6 @@ public class LogistikKonsumsiController implements Initializable {
         
         if (ChbKonsumsi != null) {
             ChbKonsumsi.setItems(tipeList);
-            System.out.println("Isi ComboBox Tipe: " + tipeList);
         }
     }
 
@@ -177,15 +183,34 @@ public class LogistikKonsumsiController implements Initializable {
             chbNamaKonsum.getSelectionModel().selectFirst();
         }
     }
+    
+    private void hitungTotalStok() {
+        if (allKonsumsi == null) return;
 
-    // --- TOMBOL-TOMBOL ---
+        // Helper function kecil untuk sum
+        updateLabelStok(totalPakanAyam, "Pakan Ayam");
+        updateLabelStok(totalPakanSapi, "Pakan Sapi");
+        updateLabelStok(totalVitamin, "Vitamin");
+        updateLabelStok(totalObat, "Obat");
+    }
+    
+    private void updateLabelStok(Label lbl, String tipe) {
+        if (lbl != null) {
+            int sum = allKonsumsi.stream()
+                    .filter(k -> tipe.equalsIgnoreCase(k.getTipe()))
+                    .mapToInt(Konsumsi::getStok)
+                    .sum();
+            lbl.setText(String.valueOf(sum));
+        }
+    }
+
+    // --- ACTION HANDLERS ---
 
     @FXML
     private void btnTambahKonsumsi(ActionEvent event) {
         // Buka Panel Input
         if (sceneNambahKonsumsi != null) {
             sceneNambahKonsumsi.setVisible(true);
-            // Reset Form
             txtKuantitas.clear();
             if (ChbKonsumsi != null) ChbKonsumsi.getSelectionModel().clearSelection();
         }
@@ -193,13 +218,12 @@ public class LogistikKonsumsiController implements Initializable {
 
     @FXML
     private void handleButtonTambah(ActionEvent event) {
-        // --- [BARU] 1. Cek Tanggal Dulu Sebelum Tambah Item ---
+        // 1. Validasi
         if (dtPickPembelian.getValue() == null) {
             showAlert("Warning", "Pilih Tanggal Pembelian terlebih dahulu!");
             return;
         }
 
-        // 1. Validasi Input Lainnya
         String tipe = (ChbKonsumsi != null) ? ChbKonsumsi.getValue() : null;
         Konsumsi selected = (chbNamaKonsum != null) ? chbNamaKonsum.getValue() : null;
 
@@ -220,7 +244,7 @@ public class LogistikKonsumsiController implements Initializable {
                 return;
             }
 
-            // 2. Masukkan ke Keranjang
+            // 2. Masukkan ke Keranjang (Cek duplikasi)
             boolean exists = false;
             for (DetailPembelianItem item : keranjang) {
                 if (item.getIdKonsumsi() == selected.getId()) {
@@ -234,19 +258,17 @@ public class LogistikKonsumsiController implements Initializable {
                 keranjang.add(new DetailPembelianItem(selected, qty));
             }
 
-            // 3. Refresh Tabel
+            // 3. Refresh UI
             tableHewan.refresh();
             txtKuantitas.clear();
-            
-            // --- [BARU] 2. Kunci Tanggal agar tidak bisa diubah ---
-            dtPickPembelian.setDisable(true); 
+            dtPickPembelian.setDisable(true); // Kunci tanggal
 
         } catch (NumberFormatException e) {
             showAlert("Error", "Kuantitas harus berupa angka bulat!");
         }
     }
     
-    // Mapping tombol Tambah di FXML ke logic di atas
+    @FXML
     private void btnTambah(ActionEvent event) {
         handleButtonTambah(event);
     }
@@ -256,6 +278,10 @@ public class LogistikKonsumsiController implements Initializable {
         DetailPembelianItem selected = tableHewan.getSelectionModel().getSelectedItem();
         if (selected != null) {
             keranjang.remove(selected);
+            // Jika keranjang kosong, buka kunci tanggal
+            if (keranjang.isEmpty()) {
+                dtPickPembelian.setDisable(false);
+            }
         } else {
             showAlert("Info", "Pilih item yang mau dihapus");
         }
@@ -274,32 +300,37 @@ public class LogistikKonsumsiController implements Initializable {
 
         try {
             String tanggal = dtPickPembelian.getValue().toString();
-            // Asumsi 0 atau session ID karyawan
+            // Simpan Transaksi Header
             Pembelian transaksi = new Pembelian(tanggal, 0);
-            
             int idBaru = pembelianDAO.insertAndGetId(transaksi);
 
             if (idBaru != -1) {
+                // Simpan Detail & Update Stok
                 for (DetailPembelianItem item : keranjang) {
                     DetailPembelian detail = new DetailPembelian(idBaru, item.getIdKonsumsi(), item.getKuantitas());
                     detailPembelianDAO.insert(detail);
+                    
+                    // Update DB
                     konsumsiDAO.UpdateStok(item.getIdKonsumsi(), item.getKuantitas());
+                    
+                    // Update Local List (agar statistik langsung update)
                     for(Konsumsi k : allKonsumsi) {
                          if(k.getId() == item.getIdKonsumsi()) {
                              k.setStok(k.getStok() + item.getKuantitas());
                              break;
                          }
-                     }
+                    }
                 }
 
                 showAlert("Sukses", "Transaksi Berhasil Disimpan!");
-                // Reset Form Input
+                
+                // Reset UI
                 keranjang.clear();
                 sceneNambahKonsumsi.setVisible(false);
                 dtPickPembelian.setDisable(false);
                 dtPickPembelian.setValue(null);
 
-                // [BARU] REFRESH TABEL RIWAYAT
+                // Refresh Data Tampilan
                 refreshTabelRiwayat();
                 hitungTotalStok();
             }
@@ -311,14 +342,43 @@ public class LogistikKonsumsiController implements Initializable {
 
     @FXML
     private void handleBtnKembali(ActionEvent event) {
-        // Tombol Batal/Tutup Form
         if (sceneNambahKonsumsi != null) {
             sceneNambahKonsumsi.setVisible(false);
         }
         txtKuantitas.clear();
+        // Jangan clear keranjang disini agar user bisa lanjut nanti
     }
 
-    // --- HELPER ---
+    // --- NAVIGASI ---
+
+    @FXML
+    private void handleToQC(ActionEvent event) {
+        movePage(event, "LogistikQC.fxml");
+    }
+
+    @FXML
+    private void handeToLogout(ActionEvent event) {
+        movePage(event, "Login.fxml");
+    }
+    
+    private void movePage(ActionEvent event, String fxmlFile) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            File file = new File("src/main/java/Views/" + fxmlFile);
+            URL url = file.toURI().toURL();
+            Parent root = FXMLLoader.load(url);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Gagal pindah ke " + fxmlFile);
+            e.printStackTrace();
+        }
+    }
+
+    // --- HELPER METHODS ---
+
     private void setKonsumsiComboBoxDisplay(ComboBox<Konsumsi> combo) {
         combo.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -343,93 +403,4 @@ public class LogistikKonsumsiController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-    @FXML
-    private void handleToQC(ActionEvent event) {
-        try {
-            
-            javafx.stage.Stage stage = (javafx.stage.Stage) btnQC.getScene().getWindow();
-            
-            // 2. Cari file FXML tujuan
-            java.io.File file = new java.io.File("src/main/java/Views/LogistikQC.fxml");
-            
-            // 3. Ubah jadi URL
-            java.net.URL url = file.toURI().toURL();
-            
-            // 4. Load FXML
-            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
-            
-            // 5. Pasang Scene Baru
-            javafx.scene.Scene scene = new javafx.scene.Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen(); 
-            stage.show();
-            
-        } catch (Exception e) {
-            System.out.println("Gagal Pindah ke Tampilan QC Logistik!");
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handeToLogout(ActionEvent event) {
-        try {
-            // 1. Ambil Stage (Layar) dari tombol btnProduk
-            javafx.stage.Stage stage = (javafx.stage.Stage) btnLogout.getScene().getWindow();
-            
-            // 2. Cari file FXML tujuan
-            java.io.File file = new java.io.File("src/main/java/Views/Login.fxml");
-            
-            // 3. Ubah jadi URL
-            java.net.URL url = file.toURI().toURL();
-            
-            // 4. Load FXML
-            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
-            
-            // 5. Pasang Scene Baru
-            javafx.scene.Scene scene = new javafx.scene.Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen(); 
-            stage.show();
-            
-        } catch (Exception e) {
-            System.out.println("Gagal Logout!");
-            e.printStackTrace();
-        }
-    }
-    
-    // Method baru untuk menghitung total stok per kategori
-    private void hitungTotalStok() {
-        if (allKonsumsi == null) return;
-
-        // 1. Hitung Pakan Ayam
-        int sumPakanAyam = allKonsumsi.stream()
-                .filter(k -> "Pakan Ayam".equalsIgnoreCase(k.getTipe()))
-                .mapToInt(Konsumsi::getStok)
-                .sum();
-        if (totalPakanAyam != null) totalPakanAyam.setText(String.valueOf(sumPakanAyam));
-
-        // 2. Hitung Pakan Sapi
-        int sumPakanSapi = allKonsumsi.stream()
-                .filter(k -> "Pakan Sapi".equalsIgnoreCase(k.getTipe()))
-                .mapToInt(Konsumsi::getStok)
-                .sum();
-        if (totalPakanSapi != null) totalPakanSapi.setText(String.valueOf(sumPakanSapi));
-
-        // 3. Hitung Vitamin
-        int sumVitamin = allKonsumsi.stream()
-                .filter(k -> "Vitamin".equalsIgnoreCase(k.getTipe()))
-                .mapToInt(Konsumsi::getStok)
-                .sum();
-        if (totalVitamin != null) totalVitamin.setText(String.valueOf(sumVitamin));
-
-        // 4. Hitung Obat
-        int sumObat = allKonsumsi.stream()
-                .filter(k -> "Obat".equalsIgnoreCase(k.getTipe()))
-                .mapToInt(Konsumsi::getStok)
-                .sum();
-        if (totalObat != null) totalObat.setText(String.valueOf(sumObat));
-    }
-    
-    
 }

@@ -1,0 +1,43 @@
+/* =========================================
+   STYLE UNTUK KARTU DASHBOARD (ANCHORPANE)
+   ========================================= */
+
+/* Class umum untuk semua kartu chart */
+.chart-card {
+    -fx-background-color: white;       /* Latar belakang putih bersih */
+    -fx-background-radius: 15px;       /* Sudut melengkung */
+    -fx-border-radius: 15px;
+    /* Efek bayangan halus (Soft Shadow) agar terlihat timbul */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+    -fx-padding: 10px;
+}
+
+/* Efek Hover (Saat mouse di atas kartu) - Opsional */
+.chart-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 6); /* Bayangan menebal */
+    -fx-cursor: default;
+}
+
+/* Judul Grafik (Label di pojok kiri atas kartu) */
+.chart-title {
+    -fx-font-family: "Segoe UI", "Nirmala UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Label Saran/Analisis (Teks di bawah chart) */
+.chart-analysis-text {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-text-fill: #666666;
+    -fx-alignment: CENTER;
+}
+
+/* Khusus Kartu Wabah Penyakit (Bisa diberi border merah tipis jika mau) */
+.card-danger {
+    -fx-border-color: rgba(231, 76, 60, 0.3); /* Merah transparan */
+    -fx-border-width: 1px;
+    -fx-border-radius: 15px;
+}

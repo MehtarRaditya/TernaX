@@ -25,12 +25,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import utility.Session;
 
@@ -85,6 +87,14 @@ public class PeternakKonsumsiController implements Initializable {
     private Label lblInfo1;
     @FXML
     private Label lblInfo2;
+    @FXML
+    private Button btnNotifikasi;
+    @FXML
+    private Label lblJumlahNotif;
+    @FXML
+    private VBox panelNotifikasi;
+    @FXML
+    private ListView<String> listPesanNotif;
 
     /**
      * Initializes the controller class.
@@ -95,9 +105,16 @@ public class PeternakKonsumsiController implements Initializable {
         loadHewan();
         loadKonsumsi();
         initFormComponents();
-        
+    
         lblStatus.setText("Silakan pilih hewan di tabel sebelum beri pakan!.");
         lblStatus.setStyle("-fx-text-fill: blue; -fx-font-weight: bold;");
+        
+        // Sembunyikan panel notif di awal
+        if (panelNotifikasi != null) panelNotifikasi.setVisible(false);
+        
+        // Cek Notifikasi Awal
+        refreshNotifikasi();
+        
     }
 
     private void initTable() {
@@ -108,8 +125,6 @@ public class PeternakKonsumsiController implements Initializable {
         
         tvHewan.setItems(hewanList);
 
-        // === LISTENER PENTING ===
-        // Saat Hewan dipilih -> Jalankan Filter
         tvHewan.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 filterPakanPintar(newVal.getJenis());
@@ -117,17 +132,12 @@ public class PeternakKonsumsiController implements Initializable {
         });
     }
     
-    // === [LOGIKA FILTER YANG SUDAH DIPERBAIKI] ===
     private void filterPakanPintar(String namaHewanLengkap) {
-        // 1. Bersihkan pilihan lama
         chbKonsumsi.getSelectionModel().clearSelection();
         lblStok.setText("-");
         
         if (namaHewanLengkap == null) return;
         String hewanLower = namaHewanLengkap.toLowerCase();
-
-        // 2. Tentukan Kata Kunci Hewan
-        // Kita cari kata "sapi", "ayam", "kambing" di dalam nama hewan yg dipilih
         String keywordHewan = "";
         
         if (hewanLower.contains("sapi")) keywordHewan = "sapi";
@@ -135,37 +145,29 @@ public class PeternakKonsumsiController implements Initializable {
         else if (hewanLower.contains("kambing")) keywordHewan = "kambing";
         else if (hewanLower.contains("domba")) keywordHewan = "domba";
         else if (hewanLower.contains("bebek")) keywordHewan = "bebek";
-        else keywordHewan = "umum"; // Kalau hewan tidak dikenal
+        else keywordHewan = "umum"; 
 
         ObservableList<Konsumsi> filteredList = FXCollections.observableArrayList();
 
-        // 3. Loop Semua Data Konsumsi
         for (Konsumsi k : allKonsumsiList) {
-            String tipe = k.getTipe().toLowerCase(); // Contoh: "pakan sapi", "vitamin", "obat"
+            String tipe = k.getTipe().toLowerCase(); 
 
-            // SYARAT 1: Tipe Vitamin -> MUNCUL SEMUA
             if (tipe.contains("vitamin")) {
                 filteredList.add(k);
             }
-            // SYARAT 2: Tipe Obat -> MUNCUL SEMUA
             else if (tipe.contains("obat")) {
                 filteredList.add(k);
             }
-            // SYARAT 3: Pakan -> Hanya muncul jika TIPE mengandung KATA KUNCI HEWAN
-            // (Misal: keyword "sapi", maka "pakan sapi" masuk. "pakan ayam" tidak masuk)
             else if (!keywordHewan.equals("umum") && tipe.contains(keywordHewan)) {
                 filteredList.add(k);
             }
         }
 
-        // 4. Tampilkan Hasil
         chbKonsumsi.setItems(filteredList);
         
-        // Debugging / Info Status
         if (filteredList.isEmpty()) {
             lblStatus.setText("Tidak ada pakan untuk " + keywordHewan);
             lblStatus.setStyle("-fx-text-fill: red;");
-            // Fallback: Jika kosong banget, tampilkan semua biar tidak error
             chbKonsumsi.setItems(allKonsumsiList);
         } else {
             lblStatus.setText("Menampilkan: Obat, Vitamin & Pakan " + keywordHewan);
@@ -187,19 +189,15 @@ public class PeternakKonsumsiController implements Initializable {
     
     private void cekStokRealtime(Konsumsi k) {
         int stok = konsumsiDAO.getStokById(k.getId()); 
-        
-        // Cek Tipe untuk menentukan Satuan
         String tipe = k.getTipe().toLowerCase();
-        String satuan = "Kg"; // Default untuk pakan
+        String satuan = "Kg"; 
         
         if (tipe.contains("vitamin") || tipe.contains("obat")) {
-            satuan = "Pcs"; // Bisa ganti jadi "Botol" atau "Ampul" sesukamu
+            satuan = "Pcs"; 
         }
         
-        // Set Text Label
         lblStok.setText(stok + " " + satuan);
         
-        // Warnai Merah kalau Habis
         if (stok <= 0) {
             lblStok.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
             lblStok.setText("Habis (0 " + satuan + ")");
@@ -208,62 +206,196 @@ public class PeternakKonsumsiController implements Initializable {
         }
     }
 
+    // 1. UPDATE LOAD HEWAN (Agar Tabel hanya isi hewan milik sendiri)
     private void loadHewan() {
         hewanList.clear();
-        List<Hewan> allData = hewanDAO.getAll(); 
         
-        // DEBUG: Cetak total data yang ditarik dari DB
-        System.out.println("================ DEBUG DATA HEWAN ================");
-        System.out.println("Total data di Database: " + allData.size());
+        // Ambil User Login
+        Karyawan userLogin = Session.getLoggedInKaryawan();
+        if (userLogin == null) return;
 
-        for (Hewan h : allData) {
+        // Panggil Method Filter di DAO
+        List<Hewan> myData = hewanDAO.getByPeternak(userLogin.getId()); 
+        
+        for (Hewan h : myData) {
             String kondisi = h.getKondisi();
-            
-            // Bersihkan spasi tidak sengaja (trim)
-            if (kondisi != null) {
-                kondisi = kondisi.trim(); 
-            } else {
-                kondisi = "KOSONG";
-            }
+            if (kondisi != null) kondisi = kondisi.trim(); 
+            else kondisi = "KOSONG";
 
-
-            // LOGIKA FILTER (Dibuat lebih longgar)
+            // Filter status Hidup
             if (kondisi.equalsIgnoreCase("Alive") || 
                 kondisi.equalsIgnoreCase("Hidup") || 
                 kondisi.equalsIgnoreCase("Sehat")) {
-                
                 hewanList.add(h);
+            }
         }
-        System.out.println("==================================================");
-        
-        // Peringatan kalau tabel kosong
-        if (hewanList.isEmpty()) {
-            System.out.println("Tabel Kosong! Cek apakah status di database benar-benar 'Alive'?");
-        }
-    }
     }
 
     private void loadKonsumsi() {
         allKonsumsiList.clear();
+        
+        // 1. Ambil Semua Data Konsumsi dari Database
         List<Konsumsi> data = konsumsiDAO.getAll();
-        allKonsumsiList.addAll(data); // Simpan ke Master List
+        allKonsumsiList.addAll(data);
 
-        // Kosongkan di awal (biar user klik tabel dulu)
+        // 2. Kosongkan ComboBox dulu
         chbKonsumsi.setItems(FXCollections.observableArrayList());
 
+        // 3. Atur Converter (Agar yang tampil nama, tapi yang disimpan objek)
         chbKonsumsi.setConverter(new StringConverter<>() {
             @Override
             public String toString(Konsumsi k) {
+                // Tampilkan Nama + Tipe (Contoh: "Vitamin B Komplex (Vitamin)")
                 return (k == null) ? "" : (k.getName() + " (" + k.getTipe() + ")");
             }
+
             @Override
-            public Konsumsi fromString(String string) { return null; }
+            public Konsumsi fromString(String string) {
+                // Tidak perlu diimplementasikan untuk ComboBox read-only
+                return null; 
+            }
         });
     }    
 
+    // ===== TOMBOL BERI MAKAN (SUDAH DIPERBAIKI) =====
     @FXML
-    private void btnHewan(ActionEvent event) {
+    private void handleButtonBeriMakan(ActionEvent event) {
+        // 1. Cek Karyawan Login
+        Karyawan karyawan = Session.getLoggedInKaryawan();
+        if (karyawan == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Belum ada karyawan yang login.");
+            return;
+        }
+
+        // 2. Ambil Data dari Inputan
+        Hewan hewan = tvHewan.getSelectionModel().getSelectedItem();
+        Konsumsi konsumsi = chbKonsumsi.getValue(); // <--- INI OBJEK KONSUMSI LENGKAP
+        Double qtyDouble = spnKuantitas.getValue();
+        int qty = qtyDouble.intValue(); 
+
+        // 3. Validasi Input Kosong
+        if (hewan == null) {
+            lblStatus.setText("Pilih hewan dulu!");
+            lblStatus.setStyle("-fx-text-fill: red;");
+            return;
+        }
+        if (konsumsi == null) {
+            lblStatus.setText("Pilih jenis pakan/vitamin!");
+            lblStatus.setStyle("-fx-text-fill: red;");
+            return;
+        }
+        if (qty <= 0) {
+            lblStatus.setText("Kuantitas harus > 0");
+            lblStatus.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        // --- DEBUGGING (Bisa dihapus nanti) ---
+        // Cek di konsol apakah ID yang diambil benar
+        System.out.println("DEBUG: Pilihan User -> " + konsumsi.getName() + " (ID: " + konsumsi.getId() + ")");
+        
+        // 4. Validasi Stok (Pakai ID dari objek konsumsi yang dipilih)
+        int stok = konsumsiDAO.getStokById(konsumsi.getId());
+        if (stok < qty) {
+            showAlert(Alert.AlertType.WARNING, "Stok Kurang", 
+                      "Stok " + konsumsi.getName() + " tersisa: " + stok + ", Dibutuhkan: " + qty);
+            return;
+        }
+
+        // 5. Siapkan Objek Pemakaian
+        PemakaianKonsumsi pk = new PemakaianKonsumsi();
+        pk.setIdHewan(hewan.getId());
+        
+        // --- PERBAIKAN UTAMA: AMBIL ID LANGSUNG DARI OBJEK ---
+        pk.setIdKonsumsi(konsumsi.getId()); // Pastikan ini mengambil ID yang benar (misal Vitamin=7)
+        
+        pk.setKuantitas(qty);
+        pk.setIdKaryawan(Integer.parseInt(karyawan.getId()));
+
         try {
+            // 6. Simpan ke Database
+            pemakaianDAO.beriPakan(pk); 
+
+            // 7. Feedback Sukses
+            lblStatus.setText("Berhasil: " + qty + " " + konsumsi.getName() + " ke " + hewan.getJenis());
+            lblStatus.setStyle("-fx-text-fill: green;");
+            
+            // Update Info Stok Realtime di Label
+            cekStokRealtime(konsumsi);
+            
+            // Reset Spinner
+            spnKuantitas.getValueFactory().setValue(0.0);
+            
+            // Refresh Notifikasi
+            refreshNotifikasi();
+            
+            showAlert(Alert.AlertType.INFORMATION, "Sukses", "Data berhasil disimpan!");
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Database Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    // ===== LOGIKA NOTIFIKASI =====
+    private void refreshNotifikasi() {
+        // Cek Login
+        Karyawan userLogin = Session.getLoggedInKaryawan();
+        if (userLogin == null) return;
+
+        ObservableList<String> semuaNotifikasi = FXCollections.observableArrayList();
+
+        // A. Pesan dari Manager (Tetap ambil, karena biasanya personal by Nama)
+        List<String> pesanManager = utility.NotifikasiService.getPesanUntuk(userLogin.getName());
+        if (pesanManager != null && !pesanManager.isEmpty()) {
+            semuaNotifikasi.addAll(pesanManager);
+        }
+
+        // B. Riwayat Aktivitas (PERBAIKAN DI SINI)
+        // Pakai method baru getRiwayatByPeternak(id)
+        List<String> riwayatAktivitas = pemakaianDAO.getRiwayatByPeternak(userLogin.getId());
+        
+        if (riwayatAktivitas != null && !riwayatAktivitas.isEmpty()) {
+            semuaNotifikasi.addAll(riwayatAktivitas);
+        }
+
+        // C. Update UI
+        if (!semuaNotifikasi.isEmpty()) {
+            lblJumlahNotif.setVisible(true);
+            lblJumlahNotif.setText(String.valueOf(semuaNotifikasi.size()));
+            listPesanNotif.setItems(semuaNotifikasi);
+        } else {
+            lblJumlahNotif.setVisible(false);
+            listPesanNotif.setItems(FXCollections.observableArrayList("Belum ada pesan / aktivitas."));
+        }
+    }
+
+    @FXML
+    private void handleKlikNotifikasi(ActionEvent event) {
+       // Cek dulu panelnya null atau tidak (Safety)
+        if (panelNotifikasi == null) return;
+
+        boolean isVisible = panelNotifikasi.isVisible();
+        panelNotifikasi.setVisible(!isVisible); // Toggle (Buka/Tutup)
+        
+        // Jika panel BARU SAJA DIBUKA (sebelumnya false, sekarang mau jadi true)
+        if (!isVisible) {
+            refreshNotifikasi(); // Refresh data terbaru
+            panelNotifikasi.toFront(); // Pastikan panel muncul di paling depan layer
+        }
+    }
+    
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    // ===== NAVIGASI =====
+    @FXML private void btnHewan(ActionEvent event) {
+    try {
             // 1. Ambil Stage (Layar) dari tombol btnProduk
             javafx.stage.Stage stage = (javafx.stage.Stage) btHewan.getScene().getWindow();
             
@@ -288,8 +420,23 @@ public class PeternakKonsumsiController implements Initializable {
         }
     }
 
+    private void movePage(ActionEvent event, String fxml) {
+        try {
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            java.io.File file = new java.io.File("src/main/java/Views/" + fxml);
+            java.net.URL url = file.toURI().toURL();
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(url);
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Gagal pindah ke " + fxml);
+            e.printStackTrace();
+        }
+    }
+
     @FXML
-    private void btnProduk(ActionEvent event) {
+    private void handleActionToProdukPeternak(ActionEvent event) {
         try {
             // 1. Ambil Stage (Layar) dari tombol btnProduk
             javafx.stage.Stage stage = (javafx.stage.Stage) btnProduk.getScene().getWindow();
@@ -316,12 +463,12 @@ public class PeternakKonsumsiController implements Initializable {
     }
 
     @FXML
-    private void btnKonsum(ActionEvent event) {
+    private void handleActionToProdukKonsumsi(ActionEvent event) {
     }
 
     @FXML
-    private void btnLogout(ActionEvent event) {
-         try {
+    private void handleActionLogout(ActionEvent event) {
+        try {
             // 1. Ambil Stage (Layar) dari tombol btnProduk
             javafx.stage.Stage stage = (javafx.stage.Stage) btnLogout.getScene().getWindow();
             
@@ -345,72 +492,6 @@ public class PeternakKonsumsiController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void handleButtonBeriMakan(ActionEvent event) {
-        Karyawan karyawan = Session.getLoggedInKaryawan();
-        if (karyawan == null) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Belum ada karyawan yang login.");
-            return;
-        }
-
-        Hewan hewan = tvHewan.getSelectionModel().getSelectedItem();
-        Konsumsi konsumsi = chbKonsumsi.getValue();
-        Double qtyDouble = spnKuantitas.getValue();
-        int qty = qtyDouble.intValue(); 
-
-        if (hewan == null) {
-            lblStatus.setText("Pilih hewan dulu!");
-            lblStatus.setStyle("-fx-text-fill: red;");
-            return;
-        }
-        if (konsumsi == null) {
-            lblStatus.setText("Pilih jenis pakan!");
-            lblStatus.setStyle("-fx-text-fill: red;");
-            return;
-        }
-        if (qty <= 0) {
-            lblStatus.setText("Kuantitas harus > 0");
-            lblStatus.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        int stok = konsumsiDAO.getStokById(konsumsi.getId());
-        if (stok < qty) {
-            showAlert(Alert.AlertType.WARNING, "Stok Kurang", 
-                    "Stok tersisa: " + stok + ", Dibutuhkan: " + qty);
-            return;
-        }
-
-        PemakaianKonsumsi pk = new PemakaianKonsumsi();
-        pk.setIdHewan(hewan.getId());
-        pk.setIdKonsumsi(konsumsi.getId());
-        pk.setKuantitas(qty);
-        pk.setIdKaryawan(Integer.parseInt(karyawan.getId()));
-
-        try {
-            pemakaianDAO.beriPakan(pk); 
-
-            lblStatus.setText("Berhasil: " + qty + "Kg ke " + hewan.getJenis());
-            lblStatus.setStyle("-fx-text-fill: green;");
-            
-            cekStokRealtime(konsumsi);
-            spnKuantitas.getValueFactory().setValue(0.0);
-            
-            showAlert(Alert.AlertType.INFORMATION, "Sukses", "Data berhasil disimpan!");
-
-        } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Gagal", "Database Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
     
-    private void showAlert(Alert.AlertType type, String title, String msg) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-    
+   
 }

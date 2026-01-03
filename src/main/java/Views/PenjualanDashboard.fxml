@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
@@ -16,11 +18,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="648.0" prefWidth="1016.0" style="-fx-background-color: #f0f2f5;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PenjualanController">
+<AnchorPane id="AnchorPane" prefHeight="648.0" prefWidth="1016.0" style="-fx-background-color: #f0f2f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PenjualanController">
    <children>
       <Pane prefHeight="70.0" prefWidth="1035.0" style="-fx-background-color: #2c3e50;">
          <children>
-            <Button fx:id="btnKembali" layoutX="958.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleKembali" style="-fx-background-color: #e74c3c;" text="Kembali" textFill="WHITE">
+            <Button fx:id="btnKembali" layoutX="958.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleKembali" styleClass="btn-back" text="Kembali" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -70,10 +72,10 @@
 
             <TableView fx:id="tvKatalog" layoutX="20.0" layoutY="60.0" prefHeight="316.0" prefWidth="460.0">
               <columns>
-                <TableColumn fx:id="colKatNama" prefWidth="200.0" text="Nama Produk" />
-                <TableColumn fx:id="colKatStok" prefWidth="80.0" text="Stok" />
+                <TableColumn fx:id="colKatNama" prefWidth="177.80864334106445" text="Nama Produk" />
+                <TableColumn fx:id="colKatStok" prefWidth="103.51309204101562" text="Stok" />
                   <TableColumn fx:id="colKatSatuan" prefWidth="70.0" text="Satuan" />
-                  <TableColumn fx:id="colKatHarga" prefWidth="100.0" text="Harga (@)" />
+                  <TableColumn fx:id="colKatHarga" prefWidth="109.3565338400141" text="Harga (@)" />
               </columns>
             </TableView>
 
@@ -83,7 +85,7 @@
                </font>
             </Label>
 
-            <Button fx:id="btnTambah" layoutX="321.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleTambahKeKeranjang" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #27ae60; -fx-cursor: hand;" text="TAMBAH KE KERANJANG" textFill="WHITE">
+            <Button fx:id="btnTambah" layoutX="309.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleTambahKeKeranjang" prefHeight="40.0" prefWidth="172.0" styleClass="btn-add" text="TAMBAH KE KERANJANG" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -91,7 +93,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Spinner fx:id="spQtyInput" layoutX="19.0" layoutY="479.0" prefHeight="45.0" prefWidth="268.0" />
+            <Spinner fx:id="spQtyInput" layoutX="19.0" layoutY="479.0" prefHeight="45.0" prefWidth="268.0" styleClass="spinner-underline" />
+            <DatePicker fx:id="dateTglTransaksi" layoutX="18.0" layoutY="407.0" prefHeight="40.0" prefWidth="160.0" />
+            <Label layoutX="13.0" layoutY="385.0" text="Tanggal Transaksi" textFill="#7f8c8d">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
 
@@ -104,7 +112,7 @@
             </Label>
             <Separator layoutX="20.0" layoutY="48.0" prefHeight="2.0" prefWidth="424.0" />
 
-            <Button fx:id="btnHapusItem" layoutX="330.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleHapusItem" style="-fx-background-color: #e74c3c; -fx-cursor: hand;" text="Hapus Item Terpilih" textFill="WHITE">
+            <Button fx:id="btnHapusItem" layoutX="320.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleHapusItem" prefHeight="33.0" prefWidth="126.0" styleClass="btn-delete" text="Hapus Item Terpilih" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
@@ -137,10 +145,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUangBayar" alignment="CENTER_RIGHT" layoutX="167.0" layoutY="72.0" prefHeight="40.0" prefWidth="230.0" promptText="0" style="-fx-font-size: 16px; -fx-font-weight: bold;">
+                  <TextField fx:id="txtUangBayar" alignment="CENTER_RIGHT" layoutX="167.0" layoutY="72.0" prefHeight="40.0" prefWidth="230.0" promptText="0" styleClass="text-field">
                   </TextField>
       
-                  <Button fx:id="btnBayar" layoutX="30.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleBayar" prefHeight="45.0" prefWidth="368.0" style="-fx-background-color: #2980b9; -fx-cursor: hand;" text="PROSES PEMBAYARAN" textFill="WHITE">
+                  <Button fx:id="btnBayar" layoutX="30.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleBayar" prefHeight="45.0" prefWidth="368.0" styleClass="btn-submit" text="PROSES PEMBAYARAN" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -153,4 +161,11 @@
          </children>
       </AnchorPane>
    </children>
+   <stylesheets>
+      <URL value="@Table.css" />
+      <URL value="@Button.css" />
+      <URL value="@tanggal.css" />
+      <URL value="@textField.css" />
+      <URL value="@spinner.css" />
+   </stylesheets>
 </AnchorPane>
