@@ -6,35 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4731397e-e6eb-47f0-8c7c-2f57ffb4bc05" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LogistikDashboardController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LogistikKonsumsiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/LogistikKonsumsiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/LogistikQCController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/LogistikQCController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/ManagerDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/ManagerDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/ManagerKaryawanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/ManagerKaryawanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PageLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PageLoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PenjualanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PenjualanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakHewanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakHewanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakKonsumsiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakKonsumsiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakPanenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakPanenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/HewanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/HewanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/PemakaianKonsumsiDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/PemakaianKonsumsiDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/PembelianDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/PenjualanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/PenjualanDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/ProdukDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/ProdukDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/PemakaianKonsumsi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/PemakaianKonsumsi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Pembelian.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Produk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Produk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/RiwayatKonsumsi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/RiwayatKonsumsi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/Button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/Button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/LogistikDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/LogistikDashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/LogistikQC.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/LogistikQC.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/ManagerKaryawan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/ManagerKaryawan.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/PenjualanDashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/PenjualanDashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/pane.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/pane.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/peternakHewan.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/peternakHewan.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Views/peternakKonsumsi.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Views/peternakKonsumsi.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +37,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Programming/Java/project/TernaX/src/main/java/utility",
     "node.js.detected.package.eslint": "true",
