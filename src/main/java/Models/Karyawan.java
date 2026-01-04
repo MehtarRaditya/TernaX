@@ -1,7 +1,7 @@
 package Models;
 
 public class Karyawan {
-    private String id;
+    private int id;
     private String name;
     private String role;
     private String tanggalDirekrut;
@@ -9,8 +9,7 @@ public class Karyawan {
     private String akun;
     private String password;
 
-    public Karyawan(String id, String name, String role, String tanggalDirekrut, int gaji, String akun,
-            String password) {
+    public Karyawan() {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -20,16 +19,11 @@ public class Karyawan {
         this.password = password;
     }
 
-    public Karyawan() {
-    }
-    
-    
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,9 +73,5 @@ public class Karyawan {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setIdKaryawan(int id) {
-        this.id = String.valueOf(id);
     }
 }

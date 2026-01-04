@@ -27,7 +27,7 @@ public class KonsumsiDAO {
 
                 pstmt.setString(1, k.getName());
                 pstmt.setString(2, k.getTipe());
-                pstmt.setInt(3, Integer.parseInt(karyawan.getId()));
+                pstmt.setInt(3, karyawan.getId());
 
                 pstmt.executeUpdate();
                 

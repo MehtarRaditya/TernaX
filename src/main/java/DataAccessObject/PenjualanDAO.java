@@ -34,7 +34,7 @@ public class PenjualanDAO {
             psJual.setDouble(1, total);
             psJual.setDouble(2, bayar);
             psJual.setDouble(3, kembalian);
-            psJual.setString(4, Session.getLoggedInKaryawan().getId());
+            psJual.setInt(4, Session.getLoggedInKaryawan().getId());
             
             // Masukkan tanggal yang dikirim dari Controller
             psJual.setString(5, tanggal); 

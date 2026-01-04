@@ -32,13 +32,6 @@ public class KaryawanDAO {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 karyawan = new Karyawan(
-                        rs.getString("id"),
-                        rs.getString("nama"),
-                        rs.getString("role"),
-                        rs.getString("tanggal_rekrut"),
-                        rs.getInt("gaji"),
-                        rs.getString("akun"),
-                        rs.getString("password")
                 );
             }
         }catch (SQLException e) {
@@ -79,7 +72,7 @@ public class KaryawanDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             // Masukkan ID di urutan pertama
-            ps.setString(1, k.getId()); 
+            ps.setInt(1, k.getId());
             
             // Geser data lainnya ke urutan berikutnya
             ps.setString(2, k.getName());
@@ -108,7 +101,7 @@ public class KaryawanDAO {
 
             while (rs.next()) {
                 Karyawan k = new Karyawan();
-                k.setId(String.valueOf(rs.getInt("id")));
+                k.setId(rs.getInt("id"));
                 k.setName(rs.getString("nama"));
                 k.setAkun(rs.getString("akun"));         // Sesuai Model
                 k.setPassword(rs.getString("password"));
@@ -135,7 +128,7 @@ public class KaryawanDAO {
             ps.setString(4, k.getRole());
             ps.setDouble(5, k.getGaji());
             ps.setString(6, k.getTanggalDirekrut());
-            ps.setInt(7, Integer.parseInt(k.getId()));
+            ps.setInt(7, k.getId());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {

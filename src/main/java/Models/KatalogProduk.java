@@ -6,13 +6,6 @@ public class KatalogProduk {
     private String satuan;
     private double harga; // Tambahan biar lengkap
     private double stok;
-
-    public KatalogProduk(int id, String namaProduk, String satuan, double harga) {
-        this.id = id;
-        this.namaProduk = namaProduk;
-        this.satuan = satuan;
-        this.harga = harga;
-    }
     
     public KatalogProduk(int id, String namaProduk, String satuan, double harga, double stok) {
         this.id = id;

@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import utility.Session;
@@ -51,7 +50,7 @@ public class HewanDAO {
                 pstmt.setDouble(2, hewan.getBerat());
                 pstmt.setInt(3, hewan.getUsia());
                 pstmt.setString(4, hewan.getKelamin());
-                pstmt.setString(5, karyawan.getId());
+                pstmt.setInt(5, karyawan.getId());
                 pstmt.setString(6, hewan.getKondisi());
                 pstmt.setString(7, hewan.getPenyakit());
 
@@ -217,14 +216,6 @@ public class HewanDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     list.add(new Hewan(
-                        rs.getInt("id"),
-                        rs.getString("jenis"),
-                        rs.getString("kelamin"),
-                        rs.getDouble("berat"),
-                        rs.getInt("usia_bulan"), 
-                        rs.getString("kondisi"),
-                        rs.getString("pemilik"), 
-                        rs.getString("penyakit")
                     ));
                 }
             }
@@ -273,9 +264,9 @@ public class HewanDAO {
             
             // Cek jika null (misal karyawannya sudah dihapus)
             if (nama == null) {
-                h.setPemilik("Tidak Diketahui");
+                h.setPemilik(Integer.parseInt("Tidak Diketahui"));
             } else {
-                h.setPemilik(nama); 
+                h.setPemilik(Integer.parseInt(nama));
             }
 
             list.add(h);
@@ -310,7 +301,7 @@ public class HewanDAO {
                     h.setBerat(rs.getDouble("berat"));
                     h.setUsia(rs.getInt("usia_bulan")); // Sesuai DB kamu
                     h.setKelamin(rs.getString("kelamin"));
-                    h.setPemilik(rs.getString("pemilik"));
+                    h.setPemilik(rs.getInt("pemilik"));
                     h.setKondisi(rs.getString("kondisi"));
                     h.setPenyakit(rs.getString("penyakit"));
                     list.add(h);

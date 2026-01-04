@@ -17,15 +17,6 @@ public class DetailPembelian {
     public DetailPembelian() {
     }
     
-    
-
-    public DetailPembelian(int id, int idPembelian, int idKonsumsi, int kuantitas) {
-        this.id = id;
-        this.idPembelian = idPembelian;
-        this.idKonsumsi = idKonsumsi;
-        this.kuantitas = kuantitas;
-    }
-    
     public DetailPembelian(int idPembelian, int idKonsumsi, int kuantitas) {
         this.idPembelian = idPembelian;
         this.idKonsumsi = idKonsumsi;

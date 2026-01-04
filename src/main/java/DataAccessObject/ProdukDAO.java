@@ -270,7 +270,7 @@ public class ProdukDAO {
             // --- LANGKAH A: Update Status & Pemeriksa ---
             psUpdateStatus = conn.prepareStatement(sqlStatus);
             psUpdateStatus.setString(1, statusBaru);
-            psUpdateStatus.setInt(2, Integer.parseInt(karyawanLogistik.getId()));
+            psUpdateStatus.setInt(2, karyawanLogistik.getId());
             psUpdateStatus.setInt(3, idTransaksi);
 
             int affected = psUpdateStatus.executeUpdate();

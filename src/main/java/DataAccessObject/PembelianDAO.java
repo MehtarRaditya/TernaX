@@ -45,7 +45,7 @@ public class PembelianDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, transaksi.getTanggalPembelian());
-            pstmt.setInt(2, Integer.parseInt(karyawan.getId())); // kamu pakai getId() String
+            pstmt.setInt(2, karyawan.getId()); // kamu pakai getId() String
 
             int affected = pstmt.executeUpdate();
             if (affected == 0) return -1;

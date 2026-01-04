@@ -9,15 +9,13 @@ public class Hewan {
     private double berat;
     private int usia;
     private String kondisi;
-    private String pemilik;
+    private int pemilik;
     private String penyakit;
 
     public Hewan() {
     }
-    
-    
 
-    public Hewan(int id, String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
+    public Hewan(int id, String jenis, String kelamin, double berat, int usia, String kondisi, int pemilik, String penyakit) {
         this.id = id;
         this.jenis = jenis;
         this.kelamin = kelamin;
@@ -27,7 +25,7 @@ public class Hewan {
         this.pemilik = pemilik;
         this.penyakit = penyakit;
     }
-    
+
     public Hewan(String jenis, String kelamin, double berat, int usia, String kondisi, String penyakit) {
         this.jenis = jenis;
         this.kelamin = kelamin;
@@ -37,7 +35,7 @@ public class Hewan {
         this.penyakit = penyakit;
     }
 
-    public Hewan(String jenis, String kelamin, double berat, int usia, String kondisi, String pemilik, String penyakit) {
+    public Hewan(String jenis, String kelamin, double berat, int usia, String kondisi, int pemilik, String penyakit) {
         this.jenis = jenis;
         this.kelamin = kelamin;
         this.berat = berat;
@@ -95,11 +93,11 @@ public class Hewan {
         this.kondisi = kondisi;
     }
 
-    public String getPemilik() {
+    public int getPemilik() {
         return pemilik;
     }
 
-    public void setPemilik(String pemilik) {
+    public void setPemilik(int pemilik) {
         this.pemilik = pemilik;
     }
 
@@ -110,6 +108,6 @@ public class Hewan {
     public void setPenyakit(String penyakit) {
         this.penyakit = penyakit;
     }
-    
-    
+
+
 }

@@ -7,7 +7,6 @@ package Controllers;
 import DataAccessObject.HewanDAO;
 import DataAccessObject.KaryawanDAO;
 import DataAccessObject.ProdukDAO;
-import Models.Hewan;
 import Models.Karyawan;
 import java.net.URL;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -230,7 +228,7 @@ public class ManagerDashboardController implements Initializable {
             return;
         }
         try{
-            Karyawan baru = new Karyawan(id, name, role, tanggalDirekrut, gaji, akun,password);
+            Karyawan baru = new Karyawan();
         
             // Simpan ke database via DAO
             karyawanDAO.addKaryawan(baru);
