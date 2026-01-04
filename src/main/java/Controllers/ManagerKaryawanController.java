@@ -172,7 +172,7 @@ public class ManagerKaryawanController implements Initializable {
             // Kita pakai waktu sekarang biar unik. Ambil 6 digit terakhir saja biar ga kepanjangan.
             // Contoh hasil ID: "882910"
             String idUnik = String.valueOf(System.currentTimeMillis()).substring(7);
-            k.setId(idUnik);
+            k.setId(Integer.parseInt(idUnik));
             // ----------------------------------------------
 
             k.setName(nama);
@@ -271,7 +271,7 @@ public class ManagerKaryawanController implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-            if (karyawanDAO.deleteKaryawan(selected.getId())) {
+            if (karyawanDAO.deleteKaryawan(String.valueOf(selected.getId()))) {
                 showAlert("Sukses", "Karyawan dihapus.");
                 refreshTable(); // Statistik otomatis terupdate
             }

@@ -215,7 +215,7 @@ public class PeternakKonsumsiController implements Initializable {
         if (userLogin == null) return;
 
         // Panggil Method Filter di DAO
-        List<Hewan> myData = hewanDAO.getByPeternak(userLogin.getId()); 
+        List<Hewan> myData = hewanDAO.getByPeternak(String.valueOf(userLogin.getId()));
         
         for (Hewan h : myData) {
             String kondisi = h.getKondisi();
@@ -310,7 +310,7 @@ public class PeternakKonsumsiController implements Initializable {
         pk.setIdKonsumsi(konsumsi.getId()); // Pastikan ini mengambil ID yang benar (misal Vitamin=7)
         
         pk.setKuantitas(qty);
-        pk.setIdKaryawan(Integer.parseInt(karyawan.getId()));
+        pk.setIdKaryawan(Integer.parseInt(String.valueOf(karyawan.getId())));
 
         try {
             // 6. Simpan ke Database
@@ -353,7 +353,7 @@ public class PeternakKonsumsiController implements Initializable {
 
         // B. Riwayat Aktivitas (PERBAIKAN DI SINI)
         // Pakai method baru getRiwayatByPeternak(id)
-        List<String> riwayatAktivitas = pemakaianDAO.getRiwayatByPeternak(userLogin.getId());
+        List<String> riwayatAktivitas = pemakaianDAO.getRiwayatByPeternak(String.valueOf(userLogin.getId()));
         
         if (riwayatAktivitas != null && !riwayatAktivitas.isEmpty()) {
             semuaNotifikasi.addAll(riwayatAktivitas);

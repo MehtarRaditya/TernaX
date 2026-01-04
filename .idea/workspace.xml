@@ -7,20 +7,11 @@
     <list default="true" id="4731397e-e6eb-47f0-8c7c-2f57ffb4bc05" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/ManagerDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/ManagerDashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/HewanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/HewanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/KandangDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KaryawanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/KonsumsiDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/KonsumsiDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/PembelianDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/PembelianDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/PenjualanDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/PenjualanDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/ProdukDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataAccessObject/ProdukDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataAccessObject/ViewLogistikDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/DetailPembelian.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/DetailPembelian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Hewan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Hewan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Kandang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Karyawan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/KatalogProduk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/KatalogProduk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/LogistikRow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/ManagerKaryawanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/ManagerKaryawanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PemberianPakanDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PemberianPakanDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakHewanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakHewanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakKonsumsiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakKonsumsiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controllers/PeternakPanenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controllers/PeternakPanenController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +27,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4

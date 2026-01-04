@@ -141,7 +141,7 @@ public class PemberianPakanDashboardController implements Initializable {
         pk.setIdKonsumsi(konsumsi.getId());
         pk.setKuantitas(qty);
         // id_karyawan boleh di-set di DAO dari Session, tapi kalau model ada:
-        pk.setIdKaryawan(Integer.parseInt(karyawan.getId()));
+        pk.setIdKaryawan(Integer.parseInt(String.valueOf(karyawan.getId())));
 
         // 7) Eksekusi DAO (insert histori + update stok dalam 1 transaksi)
         try {

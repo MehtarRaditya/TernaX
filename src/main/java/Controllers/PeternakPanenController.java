@@ -130,7 +130,7 @@ public class PeternakPanenController implements Initializable {
 
         // 2. [PERUBAHAN] Panggil method getAllRiwayatByPeternak()
         // Jadi yang tampil di tabel cuma hasil panen dari hewan milik dia sendiri
-        List<Produk> list = produkDAO.getAllRiwayatByPeternak(userLogin.getId());
+        List<Produk> list = produkDAO.getAllRiwayatByPeternak(String.valueOf(userLogin.getId()));
         
         dataProduk = FXCollections.observableArrayList(list);
         tvProduk.setItems(dataProduk);

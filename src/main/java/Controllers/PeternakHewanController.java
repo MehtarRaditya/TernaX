@@ -279,7 +279,7 @@ public class PeternakHewanController implements Initializable {
         // 2. [PERUBAHAN UTAMA] Panggil method getByPeternak()
         // Jangan pakai hewanDAO.getAll() lagi!
         // Kita kirim ID User yang login ke DAO untuk difilter
-        List<Hewan> myData = hewanDAO.getByPeternak(userLogin.getId());
+        List<Hewan> myData = hewanDAO.getByPeternak(String.valueOf(userLogin.getId()));
         
         // 3. FILTER: Ambil hanya yang MASIH HIDUP (Logic lama tetap dipakai)
         List<Hewan> hewanHidup = myData.stream()
@@ -910,7 +910,7 @@ public class PeternakHewanController implements Initializable {
 
         // 2. [PERBAIKAN] Panggil getHewanSakit dengan ID User
         // Jadi yang diambil cuma hewan sakit punya dia sendiri
-        List<Hewan> hewanSakit = hewanDAO.getHewanSakit(userLogin.getId());
+        List<Hewan> hewanSakit = hewanDAO.getHewanSakit(String.valueOf(userLogin.getId()));
         
         int jumlah = hewanSakit.size();
 

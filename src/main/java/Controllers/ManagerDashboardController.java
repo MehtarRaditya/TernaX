@@ -181,7 +181,7 @@ public class ManagerDashboardController implements Initializable {
         Karyawan selectedKaryawan = tvKaryawan.getSelectionModel().getSelectedItem();
         if (selectedKaryawan != null) {
             // Hapus dari database via DAO
-            karyawanDAO.deleteKaryawan(selectedKaryawan.getId());
+            karyawanDAO.deleteKaryawan(String.valueOf(selectedKaryawan.getId()));
             
             // Refresh TableView
             loadDataFromDatabase();
