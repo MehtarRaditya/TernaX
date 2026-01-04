@@ -15,7 +15,7 @@ import utility.Session;
 
 public class ProdukDAO {
     public int getJumlahProdukByJenis(String jenis) {
-        String sql = "SELECT COUNT(*) FROM detail_produk WHERE jenis = ?";
+        String sql = "SELECT COUNT(*) FROM produk WHERE jenis = ?";
         int jumlah = 0;
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -37,7 +37,7 @@ public class ProdukDAO {
         return jumlah;
     }
 
-    public boolean addProduk(Produk detail_produk) {
+    public boolean addProduk(Produk produk) {
         Karyawan karyawan = Session.getLoggedInKaryawan();
         if (karyawan == null) {
             System.err.println("Gagal menambah: belum ada karyawan login.");
@@ -49,17 +49,17 @@ public class ProdukDAO {
 
         // CUMA INSERT KE TABEL TRANSAKSI (PRODUK)
         // Status awal 'Pending'. Stok Gudang JANGAN disentuh dulu!
-        String sqlInsert = "INSERT INTO detail_produk (id_produk, id_hewan, tanggal_diperoleh, kuantitas, status_kelayakan) VALUES (?, ?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO produk (id_produk, id_hewan, tanggal_diperoleh, kuantitas, status_kelayakan) VALUES (?, ?, ?, ?, ?)";
 
         try {
             conn = DatabaseConnection.getConnection();
 
             // Masukkan Data Panen
             pstmt = conn.prepareStatement(sqlInsert);
-            pstmt.setInt(1, detail_produk.getIdKatalog());
-            pstmt.setInt(2, detail_produk.getIdHewan());
-            pstmt.setString(3, detail_produk.getTanggalDiperoleh());
-            pstmt.setDouble(4, detail_produk.getKuantitas());
+            pstmt.setInt(1, produk.getIdKatalog());
+            pstmt.setInt(2, produk.getIdHewan());
+            pstmt.setString(3, produk.getTanggalDiperoleh());
+            pstmt.setDouble(4, produk.getKuantitas());
             pstmt.setString(5, "Pending");
 
             // Eksekusi Simpan
@@ -76,11 +76,11 @@ public class ProdukDAO {
         }
     }
 
-    public double getStokById(Connection conn, String detail_produkId) throws SQLException {
-        String sql = "SELECT kuantitas FROM detail_produk WHERE id = ?";
+    public double getStokById(Connection conn, String produkId) throws SQLException {
+        String sql = "SELECT kuantitas FROM produk WHERE id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            setId(ps, 1, detail_produkId);
+            setId(ps, 1, produkId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -89,19 +89,19 @@ public class ProdukDAO {
             }
         }
 
-        throw new SQLException("Produk tidak ditemukan (id=" + detail_produkId + ")");
+        throw new SQLException("Produk tidak ditemukan (id=" + produkId + ")");
     }
 
-    public void kurangiStok(Connection conn, String detail_produkId, double qty) throws SQLException {
+    public void kurangiStok(Connection conn, String produkId, double qty) throws SQLException {
         String sql = """
-            UPDATE detail_produk
+            UPDATE produk
             SET kuantitas = kuantitas - ?
             WHERE id = ?
         """;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, qty);
-            setId(ps, 2, detail_produkId);
+            setId(ps, 2, produkId);
             ps.executeUpdate();
         }
     }
@@ -118,7 +118,7 @@ public class ProdukDAO {
     public List<KatalogProduk> getKatalogList() {
         List<KatalogProduk> list = new ArrayList<>();
         // Sesuaikan nama kolom dengan tabel katalog_produk kamu
-        String sql = "SELECT id, nama_produk, satuan, harga_satuan,total_stok FROM produk";
+        String sql = "SELECT id, nama_produk, satuan, harga_satuan,total_stok FROM detail_produk";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -139,13 +139,13 @@ public class ProdukDAO {
         return list;
     }
 
-    // 3. AMBIL RIWAYAT (Pakai JOIN biar nama detail_produk muncul)
+    // 3. AMBIL RIWAYAT (Pakai JOIN biar nama produk muncul)
     public List<Produk> getAllRiwayat() {
         List<Produk> list = new ArrayList<>();
 
         String sql = "SELECT t.*, k.nama_produk, k.satuan " +
-                "FROM detail_produk t " +
-                "JOIN produk k ON t.id = k.id " +
+                "FROM produk t " +
+                "JOIN detail_produk k ON t.id = k.id " +
                 "ORDER BY t.tanggal_diperoleh DESC";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -179,8 +179,8 @@ public class ProdukDAO {
         // k = tabel katalog (namanya 'detail_produk' di database kamu)
         String sql = "SELECT t.id, t.id_produk, t.id_hewan, t.tanggal_diperoleh, t.kuantitas, t.status_kelayakan, " +
                 "k.nama_produk, k.satuan " +
-                "FROM detail_produk t " +
-                "JOIN produk k ON t.id_produk = k.id " + // <--- INI KUNCI JOINNYA
+                "FROM produk t " +
+                "JOIN detail_produk k ON t.id_produk = k.id " + // <--- INI KUNCI JOINNYA
                 "ORDER BY t.tanggal_diperoleh DESC";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -212,8 +212,8 @@ public class ProdukDAO {
         List<Produk> list = new ArrayList<>();
         String sql = "SELECT t.id, t.id_produk, t.id_hewan, t.tanggal_diperoleh, t.kuantitas, t.status_kelayakan, " +
                 "k.nama_produk, k.satuan " +
-                "FROM detail_produk t " +
-                "JOIN produk k ON t.id_produk = k.id " +
+                "FROM produk t " +
+                "JOIN detail_produk k ON t.id_produk = k.id " +
                 "WHERE t.status_kelayakan = 'Pending' " +  // Filter Pending
                 "ORDER BY t.tanggal_diperoleh ASC";
 
@@ -255,13 +255,13 @@ public class ProdukDAO {
         ResultSet rs = null;
 
         // Query 1: Update Status & Pemeriksa
-        String sqlStatus = "UPDATE detail_produk SET status_kelayakan = ?, pemeriksa = ? WHERE id = ?";
+        String sqlStatus = "UPDATE produk SET status_kelayakan = ?, pemeriksa = ? WHERE id = ?";
 
         // Query 2: Ambil Info Produk (ID Katalog & Kuantitas) untuk update stok
-        String sqlGetInfo = "SELECT id_produk, kuantitas FROM detail_produk WHERE id = ?";
+        String sqlGetInfo = "SELECT id_produk, kuantitas FROM produk WHERE id = ?";
 
         // Query 3: Tambah Stok ke Gudang Master
-        String sqlStok = "UPDATE produk SET total_stok = total_stok + ? WHERE id = ?";
+        String sqlStok = "UPDATE detail_produk SET total_stok = total_stok + ? WHERE id = ?";
 
         try {
             conn = DatabaseConnection.getConnection();
@@ -291,7 +291,7 @@ public class ProdukDAO {
                     int idKatalog = rs.getInt("id_produk");
                     double qtyPanen = rs.getDouble("kuantitas");
 
-                    // Tambahkan ke tabel produk (Gudang)
+                    // Tambahkan ke tabel detail_produk (Gudang)
                     psUpdateStok = conn.prepareStatement(sqlStok);
                     psUpdateStok.setDouble(1, qtyPanen);
                     psUpdateStok.setInt(2, idKatalog);
@@ -322,7 +322,7 @@ public class ProdukDAO {
         // Query Sederhana & Benar: Ambil langsung dari tabel master gudang
         // Filter: Hanya tampilkan jika stok > 0 (Opsional, biar menu gak penuh barang kosong)
         String sql = "SELECT id, nama_produk, satuan, harga_satuan, total_stok " +
-                "FROM produk " +
+                "FROM detail_produk " +
                 "WHERE total_stok > 0 " +
                 "ORDER BY nama_produk ASC";
 
@@ -350,14 +350,14 @@ public class ProdukDAO {
         List<Produk> list = new ArrayList<>();
 
         // PERBAIKAN SQL SESUAI STRUKTUR DB KAMU:
-        // 1. Kolom foreign key di tabel detail_produk namanya 'pemeriksa'
+        // 1. Kolom foreign key di tabel produk namanya 'pemeriksa'
         // 2. Kita JOIN ke tabel karyawan berdasarkan 't.pemeriksa = kar.id'
         String sql = "SELECT t.id, t.id_produk, t.id_hewan, t.tanggal_diperoleh, t.kuantitas, t.status_kelayakan, "
                 + "k.nama_produk, k.satuan, "
                 + "kar.nama AS nama_pemeriksa "
                 + // Ambil nama dari tabel karyawan
-                "FROM detail_produk t "
-                + "JOIN produk k ON t.id_produk = k.id "
+                "FROM produk t "
+                + "JOIN detail_produk k ON t.id_produk = k.id "
                 + "LEFT JOIN karyawan kar ON t.pemeriksa = kar.id "
                 + // <--- PERBAIKAN DI SINI (t.pemeriksa)
                 "ORDER BY t.tanggal_diperoleh DESC";
@@ -406,8 +406,8 @@ public class ProdukDAO {
     // --- [KHUSUS MANAGER] AMBIL STOK REAL-TIME DARI GUDANG (detail_produk) ---
     public double getTotalStokRealTime(String keyword) {
         double total = 0;
-        // Kita cari di produk karena ini stok yang 'Ready'
-        String sql = "SELECT SUM(total_stok) FROM produk WHERE nama_produk LIKE ?";
+        // Kita cari di detail_produk karena ini stok yang 'Ready'
+        String sql = "SELECT SUM(total_stok) FROM detail_produk WHERE nama_produk LIKE ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -432,10 +432,10 @@ public class ProdukDAO {
 
         if (isEqual) {
             // Hitung yang statusnya SAMA DENGAN "Layak"
-            sql = "SELECT COUNT(*) FROM detail_produk WHERE status_kelayakan = ?";
+            sql = "SELECT COUNT(*) FROM produk WHERE status_kelayakan = ?";
         } else {
             // Hitung yang statusnya BUKAN "Layak" (Pending, Buang, dll)
-            sql = "SELECT COUNT(*) FROM detail_produk WHERE status_kelayakan != ?";
+            sql = "SELECT COUNT(*) FROM produk WHERE status_kelayakan != ?";
         }
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -459,10 +459,10 @@ public class ProdukDAO {
     public List<Produk> getAllRiwayatByPeternak(String idPeternak) {
         List<Produk> list = new ArrayList<>();
 
-        // SQL Filter: Ambil detail_produk, JOIN ke produk (buat nama), JOIN ke hewan (buat cek pemilik)
+        // SQL Filter: Ambil produk, JOIN ke detail_produk (buat nama), JOIN ke hewan (buat cek pemilik)
         String sql = "SELECT p.*, k.nama_produk, k.satuan " +
-                "FROM detail_produk p " +
-                "JOIN produk k ON p.id_produk = k.id " +
+                "FROM produk p " +
+                "JOIN detail_produk k ON p.id_produk = k.id " +
                 "JOIN hewan h ON p.id_hewan = h.id " +
                 "WHERE h.pemilik = ? " + // <--- FILTER PEMILIK HEWAN
                 "ORDER BY p.tanggal_diperoleh DESC";
